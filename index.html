@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoinRush - Play Games</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#070b14;color:white;min-height:100vh}
+button{border:none;cursor:pointer;touch-action:manipulation}
+button:disabled{opacity:.55;cursor:not-allowed}
+
+/* WELCOME SCREEN */
+#welcome{
+ min-height:100vh;display:flex;flex-direction:column;
+ justify-content:center;align-items:center;text-align:center;
+ padding:25px;position:relative;overflow:hidden;
+ background:radial-gradient(circle,#24205b,#0b1020 55%,#070b14)
+}
+.coin-logo{
+ width:245px;height:245px;border-radius:50%;
+ display:flex;justify-content:center;align-items:center;
+ background:linear-gradient(145deg,#fff3a1,#ffc928 35%,#e88b00 75%,#ffdc63);
+ box-shadow:0 0 25px #ffcc3355,0 0 65px #ffb70033,
+ inset 0 0 0 8px #d88900,inset 0 0 0 13px #ffe990;
+ animation:floatCoin 3s ease-in-out infinite
+}
+.coin-inner{
+ width:78%;height:78%;border:2px solid #bd7400;border-radius:50%;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;
+ color:#492700
+}
+.coin-letter{font-size:42px;font-weight:1000}
+.coin-inner h1{font-size:24px;font-weight:1000;letter-spacing:1px;margin-top:7px}
+.coin-inner p{font-size:10px;font-weight:bold;letter-spacing:2px;margin-top:5px}
+.welcome-tagline{margin-top:35px;color:#c7d2fe;font-size:13px;letter-spacing:1px}
+
+.start-btn{
+ margin-top:28px;padding:16px 65px;border-radius:50px;
+ font-size:19px;font-weight:900;color:white;
+ background:linear-gradient(90deg,#6366f1,#9333ea);
+ box-shadow:0 8px 30px #6366f155
+}
+.welcome-footer{position:absolute;bottom:22px;color:#6b7280;font-size:12px}
+@keyframes floatCoin{
+ 0%,100%{transform:translateY(0) rotate(-2deg)}
+ 50%{transform:translateY(-10px) rotate(2deg)}
+}
+
+/* NAVIGATION */
+#app{display:none}
+header{position:sticky;top:0;z-index:10;background:#0b1020;border-bottom:1px solid #ffffff15}
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:15px;gap:10px}
+.logo{font-size:22px;font-weight:900;color:#818cf8;cursor:pointer}
+.nav-links{display:flex;gap:12px}
+.nav-links button{background:none;color:#ddd;font-size:13px}
+.coin-box{background:#eab30818;border:1px solid #eab30855;color:#facc15;padding:9px 10px;border-radius:10px;font-weight:bold;white-space:nowrap}
+
+/* PAGES */
+.page{display:none}
+.page.active{display:block}
+.container{max-width:1200px;margin:auto;padding:35px 18px}
+.hero{padding:38px 25px;border-radius:25px;background:linear-gradient(135deg,#4338ca,#7e22ce,#db2777)}
+.hero-small{color:#c7d2fe;font-size:12px;font-weight:bold;letter-spacing:2px}
+.hero h1{font-size:42px;margin-top:15px;line-height:1.1}
+.hero p{color:#e5e7eb;line-height:1.6;margin-top:15px}
+.primary-btn{margin-top:22px;padding:13px 22px;border-radius:10px;background:white;color:#312e81;font-weight:bold}
+.section-title{margin:35px 0 20px;font-size:27px}
+.page-title{font-size:34px;margin-bottom:10px}
+.page-subtitle{color:#9ca3af;margin-top:8px;line-height:1.5}
+
+/* GAME CARDS */
+.game-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.game-card{background:#111827;border:1px solid #ffffff15;border-radius:16px;overflow:hidden}
+.game-icon{padding:25px;text-align:center;font-size:48px}
+.blue{background:linear-gradient(135deg,#2563eb,#06b6d4)}
+.purple{background:linear-gradient(135deg,#4f46e5,#9333ea)}
+.pink{background:linear-gradient(135deg,#9333ea,#ec4899)}
+.orange{background:linear-gradient(135deg,#ea580c,#ef4444)}
+.game-content{padding:15px}
+.game-content h3{font-size:17px}
+.game-content p{color:#9ca3af;font-size:13px;line-height:1.5;margin-top:8px;min-height:58px}
+.play-btn{width:100%;padding:12px;margin-top:15px;border-radius:10px;color:white;font-weight:bold;background:#4f46e5}
+.play-btn:active,.start-btn:active{transform:scale(.98)}
+
+/* AD AND GAME AREAS */
+.ad-container,.game-container{
+ max-width:550px;margin:20px auto;padding:25px;border-radius:22px;
+ background:#111827;border:1px solid #ffffff15;text-align:center
+}
+.big-game-icon{
+ width:85px;height:85px;margin:0 auto 20px;border-radius:22px;
+ display:flex;justify-content:center;align-items:center;font-size:45px
+}
+.ad-box,.game-area{margin-top:25px;padding:22px 15px;background:#00000035;border-radius:15px}
+.progress-bg{height:10px;background:#374151;border-radius:20px;overflow:hidden;margin-top:20px}
+.progress-bar{height:100%;width:0;background:#818cf8;transition:width .2s}
+.progress-text{margin-top:10px;color:#9ca3af;font-size:13px}
+.back-btn{margin-top:22px;background:none;color:#9ca3af;padding:8px}
+.reward-message{color:#4ade80;font-weight:bold;margin-top:15px}
+
+/* MINI GAMES */
+.mini-game h2{font-size:22px;margin-bottom:12px}
+.mini-game p{margin:8px 0}
+.quiz-option{display:block}
+#memoryBoard button{min-width:0}
+#targetArena{width:100%;touch-action:manipulation}
+#targetButton{touch-action:manipulation}
+#gameResult h2{font-size:25px}
+[hidden]{display:none!important}
+
+/* WALLET AND PROFILE */
+.wallet-card{padding:30px;margin-top:25px;border-radius:20px;background:linear-gradient(90deg,#eab308,#f97316)}
+.wallet-card h2{font-size:48px;margin-top:10px}
+.profile-card{display:flex;align-items:center;gap:18px;padding:25px;margin-top:25px;border-radius:18px;background:#111827}
+.avatar{width:65px;height:65px;border-radius:50%;background:#4f46e5;display:flex;justify-content:center;align-items:center;font-size:30px;flex-shrink:0}
+footer{text-align:center;color:#6b7280;padding:30px 15px;font-size:12px;border-top:1px solid #ffffff15;margin-top:50px}
+
+@media(min-width:700px){
+ .game-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .hero{padding:55px}
+ .hero h1{font-size:55px}
+}
+@media(max-width:430px){
+ .navbar{padding:12px 9px}
+ .logo{font-size:18px}
+ .nav-links{gap:7px}
+ .nav-links button{font-size:11px}
+ .coin-box{font-size:12px;padding:8px}
+ .coin-logo{width:220px;height:220px}
+ .coin-inner h1{font-size:21px}
+ .hero h1{font-size:35px}
+ .container{padding:28px 13px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- FIRST PAGE -->
+<section id="welcome">
+ <div class="coin-logo">
+  <div class="coin-inner">
+   <div class="coin-letter">C</div>
+   <h1>COIN RUSH</h1>
+   <p>PLAY • HAVE FUN</p>
+  </div>
+ </div>
+ <p class="welcome-tagline">PLAY GAMES. COLLECT VIRTUAL COINS.</p>
+ <button class="start-btn" onclick="startApp()">START ➜</button>
+ <div class="welcome-footer">COINRUSH • VIRTUAL COINS ONLY</div>
+</section>
+
+<!-- MAIN WEBSITE -->
+<div id="app">
+<header>
+ <div class="navbar">
+  <div class="logo" onclick="showPage('home')">CoinRush</div>
+  <nav class="nav-links">
+   <button onclick="window.location.href='login.html'">Login</button>
+   <button onclick="showPage('home')">Home</button>
+   <button onclick="showPage('games')">Games</button>
+   <button onclick="showPage('wallet')">Wallet</button>
+   <button onclick="showPage('profile')">Profile</button>
+  </nav>
+  <div class="coin-box">🟡 <span id="coinBalance">100</span></div>
+ </div>
+</header>
+
+<!-- HOME -->
+<section id="home" class="page active">
+ <div class="container">
+  <div class="hero">
+   <div class="hero-small">WELCOME TO COINRUSH</div>
+   <h1>Play Games.<br>Earn Virtual Coins.</h1>
+   <p>Choose a game and enjoy fun mini-games with virtual points.</p>
+   <button class="primary-btn" onclick="showPage('games')">Explore Games →</button>
+  </div>
+  <h2 class="section-title">Recommended Games</h2>
+  <div class="game-grid" id="homeGames"></div>
+ </div>
+</section>
+
+<!-- ALL GAMES -->
+<section id="games" class="page">
+ <div class="container">
+  <h1 class="page-title">Available Games</h1>
+  <p class="page-subtitle">Choose your favourite game!</p>
+  <div class="game-grid" id="allGames" style="margin-top:25px"></div>
+ </div>
+</section>
+
+<!-- DEMO AD SCREEN -->
+<section id="ad" class="page">
+ <div class="container">
+  <div class="ad-container">
+   <div id="selectedIcon" class="big-game-icon"></div>
+   <h1 id="selectedGameName">Game</h1>
+   <p class="page-subtitle">Complete the demo step to unlock the game.</p>
+   <div class="ad-box" id="adContent"></div>
+   <button class="back-btn" onclick="exitAd()">← Back to Games</button>
+  </div>
+ </div>
+</section>
+
+<!-- PLAYABLE GAMES -->
+<section id="game" class="page">
+ <div class="container">
+  <div class="game-container">
+   <div id="gameIcon" class="big-game-icon"></div>
+   <h1 id="gameTitle">Game</h1>
+   <p id="gameInstructions" class="page-subtitle"></p>
+
+   <div class="game-area">
+
+    <!-- QUICK TAP -->
+    <div id="quickTap" class="mini-game" hidden>
+     <h2>Tap as fast as you can!</h2>
+     <p>Time: <span id="tapTime">10</span>s</p>
+     <p>Score: <span id="tapScore">0</span></p>
+     <button id="tapTarget" class="play-btn" onclick="tapTarget()" disabled>⚡ TAP HERE!</button>
+     <button id="tapStart" class="play-btn" onclick="startQuickTap()">Start Challenge</button>
+    </div>
+
+    <!-- QUIZ RUSH -->
+    <div id="quizRush" class="mini-game" hidden>
+     <p id="quizNumber">Question 1</p>
+     <h3 id="quizQuestion" style="margin:20px 0"></h3>
+     <div id="quizOptions"></div>
+     <p id="quizFeedback" class="reward-message"></p>
+     <button id="quizNext" class="play-btn" onclick="nextQuestion()" hidden>Next Question</button>
+    </div>
+
+    <!-- MEMORY MATCH -->
+    <div id="memoryMatch" class="mini-game" hidden>
+     <h2>Memory Match</h2>
+     <p>Find every matching pair!</p>
+     <p>Moves: <span id="memoryMoves">0</span></p>
+     <div id="memoryBoard" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:15px"></div>
+     <button class="play-btn" onclick="startMemory()">Restart Game</button>
+    </div>
+
+    <!-- TARGET RUSH -->
+    <div id="targetRush" class="mini-game" hidden>
+     <h2>Hit the target!</h2>
+     <p>Time: <span id="targetTime">15</span>s</p>
+     <p>Score: <span id="targetScore">0</span></p>
+     <div id="targetArena" style="height:260px;position:relative;overflow:hidden;background:#080d1a;border-radius:15px;margin-top:15px">
+      <button id="targetButton" onclick="hitTarget()" style="display:none;position:absolute;width:55px;height:55px;border-radius:50%;background:#ef4444;color:white;font-size:25px">🎯</button>
+     </div>
+     <button id="targetStart" class="play-btn" onclick="startTarget()">Start Challenge</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div id="gameResult" hidden>
+     <h2 id="resultTitle">Game Complete!</h2>
+     <p id="resultScore" style="margin-top:12px"></p>
+     <p id="resultReward" class="reward-message"></p>
+     <button class="play-btn" onclick="replayGame()">Play Again</button>
+    </div>
+
+   </div>
+   <button class="back-btn" onclick="exitGame()">← Back to Games</button>
+  </div>
+ </div>
+</section>
+
+<!-- WALLET -->
+<section id="wallet" class="page">
+ <div class="container">
+  <h1 class="page-title">Wallet</h1>
+  <div class="wallet-card">
+   <p>Virtual Coin Balance</p>
+   <h2 id="walletCoins">100</h2>
+  </div>
+  <p class="page-subtitle">Demo points only — not money.</p>
+ </div>
+</section>
+
+<!-- PROFILE -->
+<section id="profile" class="page">
+ <div class="container">
+  <h1 class="page-title">Profile</h1>
+  <div class="profile-card">
+   <div class="avatar">👤</div>
+   <div><h2>CoinRush Player</h2><p class="page-subtitle">Demo account</p></div>
+  </div>
+ </div>
+</section>
+
+<footer>CoinRush • Virtual rewards prototype</footer>
+</div>
+
+<script>
+  
+const games=[
+ {id:1,name:"Quick Tap",icon:"⚡",description:"Tap quickly in 10 seconds.",color:"blue"},
+ {id:2,name:"Quiz Rush",icon:"🧠",description:"Answer quiz questions.",color:"purple"},
+ {id:3,name:"Memory Match",icon:"🃏",description:"Find matching card pairs.",color:"pink"},
+ {id:4,name:"Target Rush",icon:"🎯",description:"Hit targets in 15 seconds.",color:"orange"}
+];
+
+let coins=100;
+let selectedGame=null;
+let adCompleted=false;
+let adProgress=0;
+let adTimer=null;
+let gameTimer=null;
+let targetMover=null;
+let gameRunning=false;
+let gameRewarded=false;
+let gameScore=0;
+let quizIndex=0;
+let quizScore=0;
+let memoryCards=[];
+let flippedCards=[];
+let matchedPairs=0;
+let memoryMoves=0;
+
+const quizQuestions=[
+ {q:"Which planet is known as the Red Planet?",options:["Earth","Mars","Venus","Jupiter"],answer:1},
+ {q:"How many days are in a week?",options:["5","6","7","8"],answer:2},
+ {q:"Which is the largest ocean?",options:["Atlantic","Indian","Arctic","Pacific"],answer:3},
+ {q:"What is 8 × 7?",options:["48","54","56","64"],answer:2},
+ {q:"Which star is closest to Earth?",options:["Sirius","The Sun","Polaris","Vega"],answer:1}
+];
+
+function startApp(){
+ document.getElementById("welcome").style.display="none";
+ document.getElementById("app").style.display="block";
+ showPage("home");
+}
+
+function showPage(name){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(name).classList.add("active");
+ window.scrollTo(0,0);
+}
+
+function createGameCard(g){
+ return `<div class="game-card">
+  <div class="game-icon ${g.color}">${g.icon}</div>
+  <div class="game-content">
+   <h3>${g.name}</h3>
+   <p>${g.description}</p>
+   <button class="play-btn" onclick="openGame(${g.id})">Play Now</button>
+  </div>
+ </div>`;
+}
+
+function loadGames(){
+ document.getElementById("homeGames").innerHTML=games.map(createGameCard).join("");
+ document.getElementById("allGames").innerHTML=games.map(createGameCard).join("");
+}
+
+function stopTimers(){
+ clearInterval(gameTimer);
+ clearInterval(targetMover);
+ clearInterval(adTimer);
+ gameTimer=null;
+ targetMover=null;
+ adTimer=null;
+ gameRunning=false;
+}
+
+function openGame(id){
+ stopTimers();
+ selectedGame=games.find(g=>g.id===id);
+ if(!selectedGame)return;
+ adCompleted=false;
+ adProgress=0;
+
+ document.getElementById("selectedGameName").textContent=selectedGame.name;
+ const icon=document.getElementById("selectedIcon");
+ icon.textContent=selectedGame.icon;
+ icon.className="big-game-icon "+selectedGame.color;
+
+ document.getElementById("adContent").innerHTML=`
+  <div style="font-size:45px">📺</div>
+  <p style="margin-top:10px">Rewarded-ad demo</p>
+  <p class="progress-text">This is a simulated demo, not a real ad.</p>
+  <div class="progress-bg"><div id="progressBar" class="progress-bar"></div></div>
+  <div id="progressText" class="progress-text">0% completed</div>
+  <button id="adButton" class="play-btn" onclick="startAd()">Continue to Demo</button>`;
+ showPage("ad");
+}
+
+function exitAd(){
+ stopTimers();
+ showPage("games");
+}
+
+function startAd(){
+ if(adTimer||adCompleted)return;
+ document.getElementById("adButton").disabled=true;
+ document.getElementById("adButton").textContent="Loading demo...";
+ adProgress=0;
+
+ adTimer=setInterval(()=>{
+  adProgress=Math.min(adProgress+10,100);
+  const bar=document.getElementById("progressBar");
+  const text=document.getElementById("progressText");
+  if(bar)bar.style.width=adProgress+"%";
+  if(text)text.textContent=adProgress+"% completed";
+
+  if(adProgress>=100){
+   clearInterval(adTimer);
+   adTimer=null;
+   adCompleted=true;
+   document.getElementById("adContent").innerHTML=`
+    <div style="font-size:45px">✅</div>
+    <h3 style="color:#4ade80;margin-top:10px">Demo Unlocked!</h3>
+    <button class="play-btn" onclick="playGame()">Play Now →</button>`;
+  }
+ },150);
+}
+
+function playGame(){
+ if(!adCompleted||!selectedGame)return;
+ stopTimers();
+ gameRewarded=false;
+ gameScore=0;
+
+ document.querySelectorAll(".mini-game").forEach(e=>e.hidden=true);
+ document.getElementById("gameResult").hidden=true;
+ document.getElementById("gameTitle").textContent=selectedGame.name;
+ document.getElementById("gameInstructions").textContent="Have fun playing!";
+ const icon=document.getElementById("gameIcon");
+ icon.textContent=selectedGame.icon;
+ icon.className="big-game-icon "+selectedGame.color;
+
+ showPage("game");
+
+ if(selectedGame.id===1){
+  document.getElementById("quickTap").hidden=false;
+  resetQuickTap();
+ }else if(selectedGame.id===2){
+  document.getElementById("quizRush").hidden=false;
+  startQuiz();
+ }else if(selectedGame.id===3){
+  document.getElementById("memoryMatch").hidden=false;
+  startMemory();
+ }else if(selectedGame.id===4){
+  document.getElementById("targetRush").hidden=false;
+  resetTarget();
+ }
+}
+
+function finishGame(score,message){
+ if(gameRewarded)return;
+ stopTimers();
+ gameRewarded=true;
+
+ const reward=Math.max(0,Math.min(20,Math.floor(score)));
+ coins+=reward;
+ document.getElementById("coinBalance").textContent=coins;
+ document.getElementById("walletCoins").textContent=coins;
+
+ if (selectedGame && selectedGame.id) {
+  fetch("/api/game-reward", {
+   method: "POST",
+   headers: { "Content-Type": "application/json" },
+   body: JSON.stringify({ gameId: selectedGame.id })
+  })
+   .then(res => res.ok ? res.json() : null)
+   .then(data => {
+    if (data && data.virtualCoins !== undefined) {
+     coins = data.virtualCoins;
+     document.getElementById("coinBalance").textContent = coins;
+     document.getElementById("walletCoins").textContent = coins;
+    }
+   })
+   .catch(() => {});
+ }
+
+ document.querySelectorAll(".mini-game").forEach(e=>e.hidden=true);
+ document.getElementById("gameResult").hidden=false;
+ document.getElementById("resultTitle").textContent="Game Complete!";
+ document.getElementById("resultScore").textContent=message;
+ document.getElementById("resultReward").textContent="+"+reward+" virtual coins added!";
+}
+
+function replayGame(){playGame()}
+
+function exitGame(){
+ stopTimers();
+ showPage("games");
+}
+
+/* QUICK TAP */
+function resetQuickTap(){
+ document.getElementById("tapTime").textContent="10";
+ document.getElementById("tapScore").textContent="0";
+ document.getElementById("tapTarget").disabled=true;
+ document.getElementById("tapStart").disabled=false;
+}
+
+function startQuickTap(){
+ stopTimers();
+ gameScore=0;
+ let time=10;
+ gameRunning=true;
+ document.getElementById("tapScore").textContent="0";
+ document.getElementById("tapTime").textContent=time;
+ document.getElementById("tapTarget").disabled=false;
+ document.getElementById("tapStart").disabled=true;
+
+ gameTimer=setInterval(()=>{
+  time--;
+  document.getElementById("tapTime").textContent=time;
+  if(time<=0){
+   document.getElementById("tapTarget").disabled=true;
+   document.getElementById("tapStart").disabled=false;
+   finishGame(gameScore,"Taps: "+gameScore);
+  }
+ },1000);
+}
+
+function tapTarget(){
+ if(!gameRunning||gameRewarded)return;
+ gameScore++;
+ document.getElementById("tapScore").textContent=gameScore;
+}
+
+/* QUIZ RUSH */
+function startQuiz(){
+ quizIndex=0;
+ quizScore=0;
+ showQuestion();
+}
+
+function showQuestion(){
+ const q=quizQuestions[quizIndex];
+ document.getElementById("quizNumber").textContent="Question "+(quizIndex+1)+" of "+quizQuestions.length;
+ document.getElementById("quizQuestion").textContent=q.q;
+ document.getElementById("quizFeedback").textContent="";
+ document.getElementById("quizNext").hidden=true;
+
+ document.getElementById("quizOptions").innerHTML=q.options.map((o,i)=>
+  `<button class="play-btn quiz-option" data-index="${i}">${o}</button>`
+ ).join("");
+
+ document.querySelectorAll(".quiz-option").forEach(button=>{
+  button.addEventListener("click",()=>{
+   if(button.disabled||gameRewarded)return;
+   document.querySelectorAll(".quiz-option").forEach(b=>b.disabled=true);
+   const answer=Number(button.dataset.index);
+   if(answer===q.answer){
+    quizScore++;
+    document.getElementById("quizFeedback").textContent="Correct! ✅";
+   }else{
+    document.getElementById("quizFeedback").textContent="Correct answer: "+q.options[q.answer];
+   }
+   const next=document.getElementById("quizNext");
+   next.hidden=false;
+   next.textContent=quizIndex===quizQuestions.length-1?"See Results":"Next Question";
+  });
+ });
+}
+
+function nextQuestion(){
+ quizIndex++;
+ if(quizIndex>=quizQuestions.length){
+  finishGame(quizScore*4,"Correct answers: "+quizScore+" / "+quizQuestions.length);
+  return;
+ }
+ showQuestion();
+}
+
+/* MEMORY MATCH */
+function startMemory(){
+ stopTimers();
+ const symbols=["🍎","🍋","🍇","🍒","⭐","🚀","🐱","⚽"];
+ memoryCards=[...symbols,...symbols]
+  .sort(()=>Math.random()-.5)
+  .map((symbol,id)=>({id,symbol,matched:false,flipped:false}));
+ flippedCards=[];
+ matchedPairs=0;
+ memoryMoves=0;
+ document.getElementById("memoryMoves").textContent="0";
+ renderMemory();
+}
+
+function renderMemory(){
+ const board=document.getElementById("memoryBoard");
+ board.innerHTML=memoryCards.map(c=>`
+  <button data-card="${c.id}" style="height:58px;border-radius:10px;font-size:24px;background:${c.matched?'#166534':'#312e81'};color:white">
+   ${c.matched||c.flipped?c.symbol:"❔"}
+  </button>`).join("");
+
+ board.querySelectorAll("button").forEach(button=>{
+  button.addEventListener("click",()=>flipMemoryCard(Number(button.dataset.card)));
+ });
+}
+
+function flipMemoryCard(id){
+ if(gameRewarded||flippedCards.length>=2)return;
+ const card=memoryCards.find(c=>c.id===id);
+ if(!card||card.matched||card.flipped)return;
+
+ card.flipped=true;
+ flippedCards.push(card);
+ renderMemory();
+
+ if(flippedCards.length===2){
+  memoryMoves++;
+  document.getElementById("memoryMoves").textContent=memoryMoves;
+  const [a,b]=flippedCards;
+
+  if(a.symbol===b.symbol){
+   a.matched=true;
+   b.matched=true;
+   flippedCards=[];
+   matchedPairs++;
+   renderMemory();
+   if(matchedPairs===8){
+    finishGame(Math.max(5,20-memoryMoves),"All pairs matched in "+memoryMoves+" moves!");
+   }
+  }else{
+   gameTimer=setTimeout(()=>{
+    a.flipped=false;
+    b.flipped=false;
+    flippedCards=[];
+    gameTimer=null;
+    renderMemory();
+   },700);
+  }
+ }
+}
+
+/* TARGET RUSH */
+function resetTarget(){
+ document.getElementById("targetTime").textContent="15";
+ document.getElementById("targetScore").textContent="0";
+ document.getElementById("targetButton").style.display="none";
+ document.getElementById("targetStart").disabled=false;
+}
+
+function moveTarget(){
+ const arena=document.getElementById("targetArena");
+ const target=document.getElementById("targetButton");
+ const maxX=Math.max(0,arena.clientWidth-60);
+ const maxY=Math.max(0,arena.clientHeight-60);
+ target.style.left=Math.floor(Math.random()*(maxX+1))+"px";
+ target.style.top=Math.floor(Math.random()*(maxY+1))+"px";
+}
+
+function startTarget(){
+ stopTimers();
+ gameScore=0;
+ let time=15;
+ gameRunning=true;
+ document.getElementById("targetScore").textContent="0";
+ document.getElementById("targetTime").textContent=time;
+ document.getElementById("targetStart").disabled=true;
+ document.getElementById("targetButton").style.display="block";
+ moveTarget();
+ targetMover=setInterval(moveTarget,800);
+
+ gameTimer=setInterval(()=>{
+  time--;
+  document.getElementById("targetTime").textContent=time;
+  if(time<=0){
+   document.getElementById("targetButton").style.display="none";
+   document.getElementById("targetStart").disabled=false;
+   finishGame(gameScore,"Targets hit: "+gameScore);
+  }
+ },1000);
+}
+
+function hitTarget(){
+ if(!gameRunning||gameRewarded)return;
+ gameScore++;
+ document.getElementById("targetScore").textContent=gameScore;
+ moveTarget();
+}
+
+loadGames();
+
+// Synchronize session with MongoDB backend
+async function checkAuthStatus() {
+ try {
+  const cached = JSON.parse(localStorage.getItem("coinrush_user") || "null");
+  if (cached && cached.name) {
+   const loginBtn = document.querySelector(".nav-links button");
+   if (loginBtn) loginBtn.textContent = "👤 " + cached.name;
+  }
+
+  const res = await fetch("/api/me");
+  if (!res.ok) return;
+  const data = await res.json();
+
+  if (data && data.user) {
+   coins = Number(data.user.virtualCoins);
+   document.getElementById("coinBalance").textContent = coins;
+   const walletCoins = document.getElementById("walletCoins");
+   if (walletCoins) walletCoins.textContent = coins;
+
+   // Update navigation login button to user name + logout action
+   const loginBtn = document.querySelector(".nav-links button");
+   if (loginBtn) {
+    loginBtn.textContent = "👤 " + data.user.name + " (Logout)";
+    loginBtn.onclick = async () => {
+     if (confirm("Log out of CoinRush?")) {
+      await fetch("/api/logout", { method: "POST" });
+      localStorage.removeItem("coinrush_user");
+      window.location.reload();
+     }
+    };
+   }
+
+   // Update profile card
+   const profileCard = document.querySelector(".profile-card");
+   if (profileCard) {
+    profileCard.innerHTML = `
+     <div class="avatar">👤</div>
+     <div>
+      <h2>${data.user.name}</h2>
+      <p class="page-subtitle">${data.user.email} • MongoDB Verified</p>
+     </div>`;
+   }
+  }
+ } catch (e) {
+  // Graceful fallback if backend is offline
+ }
+}
+
+checkAuthStatus();
+</script>
+</body>
+</html>
