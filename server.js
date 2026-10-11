@@ -13,7 +13,7 @@ const { rateLimit } = require("express-rate-limit");
 // Models
 const User = require("./models/User");
 const Transaction = require("./models/Transaction");
-const GameClaim = require("./models/GameClaim");
+const GameClaim = require(models/GameClaim");
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/coinrush";
 const SESSION_SECRET = process.env.SESSION_SECRET || "default_coinrush_super_secret_session_key_32_chars";
