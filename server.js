@@ -459,6 +459,34 @@ app.post("/api/logout", requireLogin, (req, res) => {
   });
 });
 
+// 8. LEADERBOARD & PLAYERS HISTORY (Ranking by highest coins)
+app.get("/api/leaderboard", async (req, res) => {
+  try {
+    const totalPlayers = await User.countDocuments();
+    const topUsers = await User.find({})
+      .select("name email virtualCoins createdAt")
+      .sort({ virtualCoins: -1, createdAt: 1 })
+      .limit(100);
+
+    const leaderboard = topUsers.map((u, index) => ({
+      rank: index + 1,
+      id: u._id.toString(),
+      name: u.name,
+      email: u.email,
+      virtualCoins: u.virtualCoins,
+      createdAt: u.createdAt
+    }));
+
+    return res.json({
+      totalPlayers,
+      leaderboard
+    });
+  } catch (error) {
+    console.error("Leaderboard Error:", error.message);
+    return res.status(500).json({ error: "Could not load leaderboard." });
+  }
+});
+
 // 404 Handler for APIs
 app.use("/api", (req, res) => {
   res.status(404).json({ error: "API endpoint not found." });
