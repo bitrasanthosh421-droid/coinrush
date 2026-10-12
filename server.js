@@ -154,8 +154,12 @@ const Transaction = mongoose.models.Transaction || mongoose.model("Transaction",
 const GameClaim = mongoose.models.GameClaim || mongoose.model("GameClaim", gameClaimSchema);
 const Withdrawal = mongoose.models.Withdrawal || mongoose.model("Withdrawal", withdrawalSchema);
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/coinrush";
-const SESSION_SECRET = process.env.SESSION_SECRET || "default_coinrush_super_secret_session_key_32_chars";
+const MONGODB_URI =
+  process.env.MONGODB_URI ||
+  "mongodb+srv://bitrasanthosh421_db_user:LagVfh6Fbd7bzhAD@cluster0.xakh9xr.mongodb.net/coinrush?retryWrites=true&w=majority&appName=Cluster0";
+const SESSION_SECRET =
+  process.env.SESSION_SECRET ||
+  "myverylongandsecretkeythatisatleast32characters_coinrush_secure";
 const PORT = Number(process.env.PORT) || 3000;
 const production = process.env.NODE_ENV === "production";
 
@@ -182,20 +186,26 @@ const mongoConnectPromise = mongoose
   })
   .catch((err) => {
     console.error("⚠️ MongoDB connection error:", err.message);
-    throw err;
+    return null;
   });
 
 // Session Management with MongoStore
+const sessionStore = MongoStore.create({
+  clientPromise: mongoConnectPromise,
+  collectionName: "user_sessions",
+  ttl: 7 * 24 * 60 * 60
+});
+
+sessionStore.on("error", (error) => {
+  console.warn("⚠️ Session store event:", error.message);
+});
+
 const sessionConfig = {
   name: "coinrush.sid",
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({
-    clientPromise: mongoConnectPromise,
-    collectionName: "user_sessions",
-    ttl: 7 * 24 * 60 * 60
-  }),
+  store: sessionStore,
   cookie: {
     httpOnly: true,
     secure: production,
@@ -702,23 +712,20 @@ function getLocalIpAddress() {
 }
 
 // Start Web Server
-async function startServer() {
+function startServer() {
   const localIp = getLocalIpAddress();
 
-  try {
-    await mongoConnectPromise;
-    app.listen(PORT, "0.0.0.0", () => {
-      console.log(`🚀 CoinRush server running on all network interfaces:`);
-      console.log(`💻 Local computer:         http://localhost:${PORT}`);
-      console.log(`📱 Other devices on Wi-Fi: http://${localIp}:${PORT}`);
-      console.log(`📄 Login page:             http://${localIp}:${PORT}/login.html`);
-      console.log(`🎮 Dashboard:              http://${localIp}:${PORT}/index.html`);
-    });
-  } catch (error) {
-    app.listen(PORT, "0.0.0.0", () => {
-      console.log(`🚀 CoinRush server running on http://${localIp}:${PORT} (Database connection pending)`);
-    });
-  }
+  const server = app.listen(PORT, "0.0.0.0", () => {
+    console.log(`🚀 CoinRush server running on port ${PORT}:`);
+    console.log(`💻 Local computer:         http://localhost:${PORT}`);
+    console.log(`📱 Other devices on Wi-Fi: http://${localIp}:${PORT}`);
+    console.log(`📄 Login page:             http://${localIp}:${PORT}/login.html`);
+    console.log(`🎮 Dashboard:              http://${localIp}:${PORT}/index.html`);
+  });
+
+  server.on("error", (err) => {
+    console.error("❌ Server listen error:", err.message);
+  });
 }
 
 startServer();
