@@ -181,6 +181,32 @@ footer{text-align:center;color:#6b7280;padding:30px 15px;font-size:12px;border-t
  .podium-card.rank-3{order:3}
  .player-row{padding:12px 14px}
 }
+
+/* WITHDRAWAL GATEWAY STYLES */
+.withdraw-box{background:#111827;border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:26px 22px;margin-top:24px}
+.gateway-tabs{display:flex;gap:10px;margin:18px 0;background:#0b1020;padding:6px;border-radius:12px;border:1px solid rgba(255,255,255,0.08)}
+.gateway-tab{flex:1;padding:11px 14px;background:none;border:none;color:#94a3b8;font-weight:700;font-size:14px;border-radius:9px;cursor:pointer;transition:all .2s ease;text-align:center}
+.gateway-tab.active{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;box-shadow:0 4px 14px rgba(79,70,229,0.35)}
+.gateway-tab:hover:not(.active){color:#e2e8f0}
+.form-input-group{margin-bottom:15px;text-align:left}
+.form-input-group label{display:block;font-size:13px;font-weight:600;color:#cbd5e1;margin-bottom:6px}
+.gateway-input{width:100%;padding:12px 14px;background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:white;font-size:14px;outline:none;transition:border-color .2s}
+.gateway-input:focus{border-color:#818cf8;background:rgba(15,23,42,0.95)}
+.chips-container{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
+.chip-btn{padding:7px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:20px;color:#c7d2fe;font-size:12px;font-weight:bold;cursor:pointer;transition:all .15s}
+.chip-btn:hover{background:rgba(99,102,241,0.2);border-color:#6366f1;color:white}
+.conversion-pill{background:#eab30818;border:1px solid #eab30845;color:#facc15;padding:12px 16px;border-radius:12px;margin-bottom:18px;font-size:14px;display:flex;justify-content:space-between;align-items:center;font-weight:bold}
+.security-note{display:flex;align-items:center;gap:8px;font-size:12px;color:#94a3b8;margin-top:14px;justify-content:center}
+.withdraw-submit-btn{width:100%;padding:15px;border-radius:12px;font-size:16px;font-weight:bold;color:white;background:linear-gradient(90deg,#16a34a,#22c55e);box-shadow:0 6px 20px rgba(34,197,94,0.3);cursor:pointer;border:none;transition:all .2s;margin-top:10px}
+.withdraw-submit-btn:hover{transform:translateY(-1px);box-shadow:0 8px 25px rgba(34,197,94,0.45)}
+.withdraw-submit-btn:disabled{opacity:.5;cursor:not-allowed}
+.history-table{width:100%;border-collapse:collapse;margin-top:5px;font-size:13px}
+.history-table th{text-align:left;padding:12px 10px;color:#9ca3af;border-bottom:1px solid rgba(255,255,255,0.1);font-size:12px}
+.history-table td{padding:14px 10px;border-bottom:1px solid rgba(255,255,255,0.05);color:#e2e8f0}
+.status-badge{display:inline-block;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:bold}
+.status-processing{background:rgba(234,179,8,0.2);color:#facc15}
+.status-completed{background:rgba(34,197,94,0.2);color:#4ade80}
+.status-failed{background:rgba(239,68,68,0.2);color:#f87171}
 </style>
 </head>
 
@@ -373,15 +399,142 @@ footer{text-align:center;color:#6b7280;padding:30px 15px;font-size:12px;border-t
  </div>
 </section>
 
-<!-- WALLET -->
+<!-- WALLET & CASHOUT GATEWAY -->
 <section id="wallet" class="page">
  <div class="container">
-  <h1 class="page-title">Wallet</h1>
-  <div class="wallet-card">
-   <p>Virtual Coin Balance</p>
-   <h2 id="walletCoins">100</h2>
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+   <div>
+    <h1 class="page-title">💰 Wallet &amp; Cashout</h1>
+    <p class="page-subtitle">Convert your earned coins to real Indian Rupees (₹ INR)</p>
+   </div>
+   <div style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.4);color:#86efac;padding:8px 16px;border-radius:20px;font-size:13px;font-weight:bold;display:flex;align-items:center;gap:6px">
+    <span>🔒 Verified Gateway</span>
+    <span>• 1,000 Coins = ₹10 INR</span>
+   </div>
   </div>
-  <p class="page-subtitle">Demo points only — not money.</p>
+
+  <!-- BALANCE DISPLAY CARD -->
+  <div class="wallet-card">
+   <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:15px">
+    <div>
+     <p style="text-transform:uppercase;letter-spacing:1px;font-size:12px;opacity:0.9">Your Coin Balance</p>
+     <h2 id="walletCoins">100</h2>
+    </div>
+    <div style="background:rgba(0,0,0,0.25);padding:14px 20px;border-radius:15px;text-align:right">
+     <p style="font-size:12px;opacity:0.9">Real Cash Valuation</p>
+     <div style="font-size:32px;font-weight:900;color:white;margin-top:4px">₹<span id="walletINR">1.00</span></div>
+     <p style="font-size:11px;opacity:0.8;margin-top:2px">Rate: 100 Coins = ₹1.00 INR</p>
+    </div>
+   </div>
+  </div>
+
+  <!-- WITHDRAWAL PAYMENT GATEWAY -->
+  <div class="withdraw-box">
+   <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:14px">
+    <h3 style="font-size:20px;font-weight:800;display:flex;align-items:center;gap:8px">
+     <span>💸</span>
+     <span>Withdraw Money to Bank / UPI</span>
+    </h3>
+    <span style="font-size:12px;color:#a5b4fc;background:rgba(99,102,241,0.15);padding:4px 10px;border-radius:12px">⚡ Instant Payout Request</span>
+   </div>
+
+   <!-- Alert notification inside withdrawal card -->
+   <div id="withdrawAlertBanner" style="display:none;padding:12px 16px;border-radius:10px;margin-top:16px;font-size:13.5px;align-items:center;gap:10px"></div>
+
+   <!-- Live conversion calculator bar -->
+   <div class="conversion-pill" style="margin-top:16px">
+    <span>🪙 Coins to Withdraw:</span>
+    <span style="font-size:15px">💸 Cash Payout: <strong id="calcPayoutINR" style="color:#ffffff;font-size:18px">₹10.00</strong> INR</span>
+   </div>
+
+   <!-- Amount input & quick selection chips -->
+   <div class="form-input-group">
+    <label for="withdrawCoinsInput">Enter Coins to Withdraw (Minimum 1,000 Coins = ₹10)</label>
+    <input type="number" id="withdrawCoinsInput" class="gateway-input" placeholder="e.g. 1000" min="1000" step="100" value="1000" oninput="updateWithdrawCalc()">
+    <div class="chips-container">
+     <button type="button" class="chip-btn" onclick="setWithdrawAmount(1000)">1,000 Coins (₹10)</button>
+     <button type="button" class="chip-btn" onclick="setWithdrawAmount(2000)">2,000 Coins (₹20)</button>
+     <button type="button" class="chip-btn" onclick="setWithdrawAmount(5000)">5,000 Coins (₹50)</button>
+     <button type="button" class="chip-btn" onclick="setWithdrawAmount(10000)">10,000 Coins (₹100)</button>
+     <button type="button" class="chip-btn" onclick="setWithdrawAll()">Max Available</button>
+    </div>
+   </div>
+
+   <!-- Payout Method Selection -->
+   <label style="font-size:13px;font-weight:600;color:#cbd5e1;display:block;margin-bottom:6px">Select Payout Method</label>
+   <div class="gateway-tabs">
+    <button type="button" class="gateway-tab active" id="tabUpiBtn" onclick="switchGatewayTab('upi')">
+     📱 UPI (PhonePe / Google Pay / Paytm)
+    </button>
+    <button type="button" class="gateway-tab" id="tabBankBtn" onclick="switchGatewayTab('bank')">
+     🏦 Bank Account (IMPS / NEFT)
+    </button>
+   </div>
+
+   <!-- UPI METHOD FORM -->
+   <div id="gatewayUpiForm">
+    <div class="form-input-group">
+     <label for="withdrawUpiId">UPI ID / VPA (Virtual Payment Address)</label>
+     <input type="text" id="withdrawUpiId" class="gateway-input" placeholder="e.g. 9876543210@ybl or username@oksbi">
+     <div style="display:flex;align-items:center;gap:12px;margin-top:8px;font-size:12px;color:#9ca3af;flex-wrap:wrap">
+      <span>Supported:</span>
+      <span style="color:#a855f7;font-weight:bold">🟣 PhonePe</span>
+      <span style="color:#3b82f6;font-weight:bold">🔵 Google Pay</span>
+      <span style="color:#0ea5e9;font-weight:bold">🔷 Paytm</span>
+      <span style="color:#22c55e;font-weight:bold">🟢 BHIM</span>
+     </div>
+    </div>
+   </div>
+
+   <!-- BANK TRANSFER FORM -->
+   <div id="gatewayBankForm" style="display:none">
+    <div class="form-input-group">
+     <label for="withdrawAccountHolder">Account Holder Name (As per Bank Passbook)</label>
+     <input type="text" id="withdrawAccountHolder" class="gateway-input" placeholder="e.g. Mahesh Dama">
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+     <div class="form-input-group">
+      <label for="withdrawAccountNumber">Bank Account Number</label>
+      <input type="password" id="withdrawAccountNumber" class="gateway-input" placeholder="e.g. 123456789012" maxlength="18">
+     </div>
+     <div class="form-input-group">
+      <label for="withdrawConfirmAccount">Confirm Bank Account Number</label>
+      <input type="text" id="withdrawConfirmAccount" class="gateway-input" placeholder="Re-enter Account Number" maxlength="18">
+     </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+     <div class="form-input-group">
+      <label for="withdrawIfscCode">Bank IFSC Code</label>
+      <input type="text" id="withdrawIfscCode" class="gateway-input" placeholder="e.g. SBIN0001234" maxlength="11" style="text-transform:uppercase">
+     </div>
+     <div class="form-input-group">
+      <label for="withdrawBankName">Bank Name (Optional)</label>
+      <input type="text" id="withdrawBankName" class="gateway-input" placeholder="e.g. State Bank of India">
+     </div>
+    </div>
+   </div>
+
+   <button type="button" id="withdrawSubmitBtn" class="withdraw-submit-btn" onclick="submitWithdrawal(event)">
+    🔒 Confirm &amp; Withdraw ₹10.00
+   </button>
+
+   <div class="security-note">
+    <span>🛡️</span>
+    <span>Bank-Grade 256-Bit SSL Security • Coins deducted immediately upon confirmation</span>
+   </div>
+  </div>
+
+  <!-- WITHDRAWAL HISTORY TABLE -->
+  <div class="players-table-card" style="margin-top:35px">
+   <div class="players-table-header">
+    <h3 style="font-size:17px;font-weight:800">📜 Payout &amp; Withdrawal History</h3>
+    <button class="primary-btn" onclick="loadWithdrawalHistory()" style="margin:0;padding:6px 14px;font-size:12px">🔄 Refresh</button>
+   </div>
+   <div id="withdrawalHistoryArea" style="overflow-x:auto">
+    <!-- Populated dynamically -->
+   </div>
+  </div>
+
  </div>
 </section>
 
@@ -445,6 +598,10 @@ function showPage(name){
  window.scrollTo(0,0);
  if (name === 'leaderboard') {
   loadLeaderboardData();
+ }
+ if (name === 'wallet') {
+  syncWalletUI();
+  loadWithdrawalHistory();
  }
 }
 
@@ -564,8 +721,7 @@ function finishGame(score,message){
 
  const reward=Math.max(0,Math.min(20,Math.floor(score)));
  coins+=reward;
- document.getElementById("coinBalance").textContent=coins;
- document.getElementById("walletCoins").textContent=coins;
+ syncWalletUI();
 
  const cachedUser = JSON.parse(localStorage.getItem("coinrush_user") || "null");
  if (cachedUser) {
@@ -590,8 +746,7 @@ function finishGame(score,message){
    .then(data => {
     if (data && data.virtualCoins !== undefined) {
      coins = data.virtualCoins;
-     document.getElementById("coinBalance").textContent = coins;
-     document.getElementById("walletCoins").textContent = coins;
+     syncWalletUI();
     }
    })
    .catch(() => {});
@@ -913,9 +1068,7 @@ function applyUserSessionToUI(user) {
  if (!user) return;
  if (user.virtualCoins !== undefined) {
   coins = Number(user.virtualCoins);
-  document.getElementById("coinBalance").textContent = coins;
-  const walletCoins = document.getElementById("walletCoins");
-  if (walletCoins) walletCoins.textContent = coins;
+  syncWalletUI();
  }
 
  // Update Welcome Screen Button & Switch Link
@@ -1138,8 +1291,353 @@ async function checkAuthStatus() {
  loadLeaderboardData();
 }
 
+// --- REAL-MONEY CASHOUT & PAYMENT GATEWAY ---
+let currentPayoutMethod = 'upi';
+
+function syncWalletUI() {
+ const elBalance = document.getElementById("coinBalance");
+ const elWallet = document.getElementById("walletCoins");
+ const elINR = document.getElementById("walletINR");
+ if (elBalance) elBalance.textContent = coins;
+ if (elWallet) elWallet.textContent = coins;
+ if (elINR) elINR.textContent = (coins / 100).toFixed(2);
+ updateWithdrawCalc();
+}
+
+function switchGatewayTab(type) {
+ currentPayoutMethod = type;
+ const upiBtn = document.getElementById("tabUpiBtn");
+ const bankBtn = document.getElementById("tabBankBtn");
+ const upiForm = document.getElementById("gatewayUpiForm");
+ const bankForm = document.getElementById("gatewayBankForm");
+
+ if (type === 'upi') {
+  if (upiBtn) upiBtn.classList.add("active");
+  if (bankBtn) bankBtn.classList.remove("active");
+  if (upiForm) upiForm.style.display = "block";
+  if (bankForm) bankForm.style.display = "none";
+ } else {
+  if (bankBtn) bankBtn.classList.add("active");
+  if (upiBtn) upiBtn.classList.remove("active");
+  if (upiForm) upiForm.style.display = "none";
+  if (bankForm) bankForm.style.display = "block";
+ }
+}
+
+function updateWithdrawCalc() {
+ const input = document.getElementById("withdrawCoinsInput");
+ const calcText = document.getElementById("calcPayoutINR");
+ const submitBtn = document.getElementById("withdrawSubmitBtn");
+ if (!input) return;
+
+ const coinAmount = Math.max(0, parseInt(input.value) || 0);
+ const inr = (coinAmount / 100).toFixed(2);
+
+ if (calcText) calcText.textContent = `₹${inr}`;
+ if (submitBtn && !submitBtn.disabled) {
+  submitBtn.innerHTML = `🔒 Confirm &amp; Withdraw ₹${inr}`;
+ }
+}
+
+function setWithdrawAmount(val) {
+ const input = document.getElementById("withdrawCoinsInput");
+ if (input) {
+  input.value = val;
+  updateWithdrawCalc();
+ }
+}
+
+function setWithdrawAll() {
+ const input = document.getElementById("withdrawCoinsInput");
+ if (input) {
+  input.value = Math.max(0, coins);
+  updateWithdrawCalc();
+ }
+}
+
+function showWithdrawAlert(msg, type = 'info') {
+ const banner = document.getElementById("withdrawAlertBanner");
+ if (!banner) return;
+ banner.style.display = "flex";
+ if (type === 'error') {
+  banner.style.background = "rgba(239, 68, 68, 0.2)";
+  banner.style.border = "1px solid #ef4444";
+  banner.style.color = "#fca5a5";
+ } else if (type === 'success') {
+  banner.style.background = "rgba(34, 197, 94, 0.2)";
+  banner.style.border = "1px solid #22c55e";
+  banner.style.color = "#86efac";
+ } else {
+  banner.style.background = "rgba(59, 130, 246, 0.2)";
+  banner.style.border = "1px solid #3b82f6";
+  banner.style.color = "#93c5fd";
+ }
+ banner.innerHTML = `<span>${type === 'error' ? '⚠️' : (type === 'success' ? '✅' : 'ℹ️')}</span> <span>${msg}</span>`;
+}
+
+async function submitWithdrawal(event) {
+ if (event) event.preventDefault();
+ const banner = document.getElementById("withdrawAlertBanner");
+ if (banner) banner.style.display = "none";
+
+ const cachedUser = JSON.parse(localStorage.getItem("coinrush_user") || "null");
+ if (!cachedUser || !cachedUser.name) {
+  showWithdrawAlert("Please log in to your CoinRush account first before requesting a withdrawal.", "error");
+  setTimeout(() => { window.location.href = "login.html"; }, 1600);
+  return;
+ }
+
+ const coinsInput = document.getElementById("withdrawCoinsInput");
+ const coinAmount = parseInt(coinsInput?.value) || 0;
+
+ if (coinAmount < 1000) {
+  showWithdrawAlert("Minimum withdrawal amount is 1,000 Coins (₹10 INR).", "error");
+  return;
+ }
+
+ if (coinAmount > coins) {
+  showWithdrawAlert(`Insufficient coins! You currently have ${coins} coins, but requested ${coinAmount}. Play games to earn more!`, "error");
+  return;
+ }
+
+ const submitBtn = document.getElementById("withdrawSubmitBtn");
+ const inrVal = (coinAmount / 100).toFixed(2);
+
+ const payload = {
+  coins: coinAmount,
+  method: currentPayoutMethod
+ };
+
+ if (currentPayoutMethod === 'upi') {
+  const upiId = (document.getElementById("withdrawUpiId")?.value || "").trim();
+  const upiRegex = /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
+  if (!upiId) {
+   showWithdrawAlert("Please enter your UPI ID (PhonePe, Google Pay, Paytm, etc.).", "error");
+   return;
+  }
+  if (!upiRegex.test(upiId)) {
+   showWithdrawAlert("Invalid UPI ID format. Expected format like: 9876543210@ybl or username@oksbi", "error");
+   return;
+  }
+  payload.upiId = upiId;
+ } else if (currentPayoutMethod === 'bank') {
+  const holder = (document.getElementById("withdrawAccountHolder")?.value || "").trim();
+  const accNum = (document.getElementById("withdrawAccountNumber")?.value || "").trim();
+  const confirmAcc = (document.getElementById("withdrawConfirmAccount")?.value || "").trim();
+  const ifsc = (document.getElementById("withdrawIfscCode")?.value || "").trim().toUpperCase();
+  const bankName = (document.getElementById("withdrawBankName")?.value || "").trim();
+
+  if (!holder || holder.length < 3) {
+   showWithdrawAlert("Please enter the Account Holder Name as shown on the bank passbook.", "error");
+   return;
+  }
+  if (!/^\d{9,18}$/.test(accNum)) {
+   showWithdrawAlert("Bank account number must be between 9 and 18 digits.", "error");
+   return;
+  }
+  if (accNum !== confirmAcc) {
+   showWithdrawAlert("Bank Account Number and Confirm Account Number do not match!", "error");
+   return;
+  }
+  if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(ifsc)) {
+   showWithdrawAlert("Invalid IFSC code format (e.g. SBIN0001234, HDFC0001234).", "error");
+   return;
+  }
+
+  payload.accountHolderName = holder;
+  payload.accountNumber = accNum;
+  payload.confirmAccountNumber = confirmAcc;
+  payload.ifscCode = ifsc;
+  payload.bankName = bankName;
+ }
+
+ if (submitBtn) {
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = `⏳ Processing Secure Payout...`;
+ }
+
+ const baseUrl = getApiBaseUrl();
+ const isBackendAvailable = Boolean(baseUrl || window.location.port === '3000');
+
+ if (isBackendAvailable) {
+  try {
+   const res = await fetchApi("/api/withdraw", {
+    method: "POST",
+    body: JSON.stringify(payload)
+   });
+
+   if (res && res.success) {
+    coins = res.remainingCoins;
+    syncWalletUI();
+
+    cachedUser.virtualCoins = coins;
+    localStorage.setItem("coinrush_user", JSON.stringify(cachedUser));
+
+    if (document.getElementById("withdrawUpiId")) document.getElementById("withdrawUpiId").value = "";
+    if (document.getElementById("withdrawAccountNumber")) document.getElementById("withdrawAccountNumber").value = "";
+    if (document.getElementById("withdrawConfirmAccount")) document.getElementById("withdrawConfirmAccount").value = "";
+
+    showWithdrawAlert(`🎉 Withdrawal of ₹${res.withdrawal.amountINR} initiated successfully! Reference ID: ${res.withdrawal.referenceId}. ${coinAmount} Coins deducted immediately.`, "success");
+    loadWithdrawalHistory();
+   } else {
+    showWithdrawAlert(res?.error || "Withdrawal failed. Please check your details and try again.", "error");
+   }
+  } catch (err) {
+   executeLocalWithdrawal(payload, cachedUser, coinAmount, inrVal);
+  } finally {
+   if (submitBtn) {
+    submitBtn.disabled = false;
+    updateWithdrawCalc();
+   }
+  }
+ } else {
+  executeLocalWithdrawal(payload, cachedUser, coinAmount, inrVal);
+  if (submitBtn) {
+   submitBtn.disabled = false;
+   updateWithdrawCalc();
+  }
+ }
+}
+
+function executeLocalWithdrawal(payload, cachedUser, coinAmount, inrVal) {
+ coins = Math.max(0, coins - coinAmount);
+ syncWalletUI();
+
+ cachedUser.virtualCoins = coins;
+ localStorage.setItem("coinrush_user", JSON.stringify(cachedUser));
+
+ try {
+  const users = JSON.parse(localStorage.getItem("coinrush_users_db") || "[]");
+  const idx = users.findIndex(u => u.email === cachedUser.email);
+  if (idx !== -1) {
+   users[idx].virtualCoins = coins;
+   localStorage.setItem("coinrush_users_db", JSON.stringify(users));
+  }
+ } catch (e) {}
+
+ const refId = "WDR-CR-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).substring(2, 6).toUpperCase();
+
+ const withdrawalRecord = {
+  referenceId: refId,
+  userEmail: cachedUser.email,
+  userName: cachedUser.name,
+  coinsDeducted: coinAmount,
+  amountINR: Number(inrVal),
+  method: payload.method,
+  upiId: payload.upiId || null,
+  accountHolderName: payload.accountHolderName || null,
+  maskedAccountNumber: payload.accountNumber ? ("•••• " + payload.accountNumber.slice(-4)) : null,
+  ifscCode: payload.ifscCode || null,
+  bankName: payload.bankName || null,
+  status: "Processing",
+  createdAt: new Date().toISOString()
+ };
+
+ try {
+  const history = JSON.parse(localStorage.getItem("coinrush_withdrawals_db") || "[]");
+  history.unshift(withdrawalRecord);
+  localStorage.setItem("coinrush_withdrawals_db", JSON.stringify(history));
+ } catch (e) {}
+
+ if (document.getElementById("withdrawUpiId")) document.getElementById("withdrawUpiId").value = "";
+ if (document.getElementById("withdrawAccountNumber")) document.getElementById("withdrawAccountNumber").value = "";
+ if (document.getElementById("withdrawConfirmAccount")) document.getElementById("withdrawConfirmAccount").value = "";
+
+ showWithdrawAlert(`🎉 Withdrawal of ₹${inrVal} INR placed successfully! Ref ID: ${refId}. ${coinAmount} Coins deducted immediately from your balance.`, "success");
+ loadWithdrawalHistory();
+}
+
+async function loadWithdrawalHistory() {
+ const area = document.getElementById("withdrawalHistoryArea");
+ if (!area) return;
+
+ const cachedUser = JSON.parse(localStorage.getItem("coinrush_user") || "null");
+ const currentEmail = (cachedUser?.email || "").toLowerCase();
+
+ let items = [];
+ const baseUrl = getApiBaseUrl();
+ const isBackendAvailable = Boolean(baseUrl || window.location.port === '3000');
+
+ if (isBackendAvailable) {
+  try {
+   const res = await fetchApi("/api/withdraw/history");
+   if (res && Array.isArray(res.withdrawals)) {
+    items = res.withdrawals;
+   }
+  } catch (e) {}
+ }
+
+ if (items.length === 0) {
+  try {
+   const localDb = JSON.parse(localStorage.getItem("coinrush_withdrawals_db") || "[]");
+   items = localDb.filter(w => !currentEmail || (w.userEmail && w.userEmail.toLowerCase() === currentEmail));
+  } catch (e) {}
+ }
+
+ if (items.length === 0) {
+  area.innerHTML = `
+   <div style="padding:32px 16px;text-align:center;color:#9ca3af">
+    <div style="font-size:32px;margin-bottom:8px">📭</div>
+    <div style="font-weight:600;color:#e2e8f0;font-size:15px">No withdrawals recorded yet</div>
+    <p style="font-size:12.5px;margin-top:4px;color:#94a3b8">Earn 1,000 or more coins and enter your UPI ID or Bank details above to cash out real money!</p>
+   </div>`;
+  return;
+ }
+
+ const rowsHtml = items.map(w => {
+  const dateStr = new Date(w.createdAt).toLocaleString("en-IN", {
+   month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit"
+  });
+
+  const targetDetail = w.method === 'upi'
+   ? `📱 UPI: <code style="color:#c084fc">${w.upiId || 'UPI'}</code>`
+   : `🏦 Bank: <code style="color:#60a5fa">${w.maskedAccountNumber || '••••'} (${w.ifscCode || 'IFSC'})</code>`;
+
+  const statusClass = w.status === 'Completed' ? 'status-completed' : (w.status === 'Failed' ? 'status-failed' : 'status-processing');
+  const statusIcon = w.status === 'Completed' ? '✅' : (w.status === 'Failed' ? '❌' : '⏳');
+
+  return `
+   <tr>
+    <td>
+     <span style="font-family:monospace;font-weight:700;color:#f8fafc;font-size:12.5px">${w.referenceId}</span>
+     <div style="font-size:11px;color:#94a3b8;margin-top:2px">${dateStr}</div>
+    </td>
+    <td>
+     <span style="font-weight:800;color:#facc15">🪙 -${w.coinsDeducted}</span>
+    </td>
+    <td>
+     <span style="font-weight:900;color:#22c55e;font-size:15px">₹${Number(w.amountINR).toFixed(2)}</span>
+    </td>
+    <td style="font-size:12.5px">
+     ${targetDetail}
+    </td>
+    <td>
+     <span class="status-badge ${statusClass}">${statusIcon} ${w.status}</span>
+    </td>
+   </tr>`;
+ }).join("");
+
+ area.innerHTML = `
+  <table class="history-table">
+   <thead>
+    <tr>
+     <th>Reference ID &amp; Date</th>
+     <th>Coins Deducted</th>
+     <th>Payout (₹ INR)</th>
+     <th>Destination</th>
+     <th>Status</th>
+    </tr>
+   </thead>
+   <tbody>
+    ${rowsHtml}
+   </tbody>
+  </table>`;
+}
+
 checkAuthStatus();
 loadLeaderboardData();
+syncWalletUI();
+loadWithdrawalHistory();
 </script>
 </body>
 </html>

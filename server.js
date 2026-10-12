@@ -72,7 +72,7 @@ const transactionSchema = new mongoose.Schema(
     transactionType: {
       type: String,
       required: true,
-      enum: ["game_reward", "signup_bonus", "spend", "transfer"]
+      enum: ["game_reward", "signup_bonus", "spend", "transfer", "withdraw"]
     },
     description: {
       type: String,
@@ -102,9 +102,57 @@ const gameClaimSchema = new mongoose.Schema({
   }
 });
 
+const withdrawalSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      index: true
+    },
+    referenceId: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true
+    },
+    coinsDeducted: {
+      type: Number,
+      required: true,
+      min: 1
+    },
+    amountINR: {
+      type: Number,
+      required: true,
+      min: 1
+    },
+    payoutMethod: {
+      type: String,
+      required: true,
+      enum: ["upi", "bank_transfer"]
+    },
+    payoutDetails: {
+      upiId: { type: String, trim: true },
+      accountNumber: { type: String, trim: true },
+      accountHolderName: { type: String, trim: true },
+      ifscCode: { type: String, trim: true },
+      bankName: { type: String, trim: true }
+    },
+    status: {
+      type: String,
+      default: "Processing",
+      enum: ["Processing", "Completed", "Failed", "Under Review"]
+    }
+  },
+  {
+    timestamps: true
+  }
+);
+
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 const Transaction = mongoose.models.Transaction || mongoose.model("Transaction", transactionSchema);
 const GameClaim = mongoose.models.GameClaim || mongoose.model("GameClaim", gameClaimSchema);
+const Withdrawal = mongoose.models.Withdrawal || mongoose.model("Withdrawal", withdrawalSchema);
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/coinrush";
 const SESSION_SECRET = process.env.SESSION_SECRET || "default_coinrush_super_secret_session_key_32_chars";
@@ -484,6 +532,155 @@ app.get("/api/leaderboard", async (req, res) => {
   } catch (error) {
     console.error("Leaderboard Error:", error.message);
     return res.status(500).json({ error: "Could not load leaderboard." });
+  }
+});
+
+// Rate limiter for withdrawal requests
+const withdrawLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 6,
+  message: { error: "Too many withdrawal attempts. Please wait a minute before trying again." }
+});
+
+// 9. SUBMIT SECURE WITHDRAWAL (1,000 Coins = 10 INR)
+app.post("/api/withdraw", requireLogin, withdrawLimiter, async (req, res) => {
+  try {
+    const coins = Math.floor(Number(req.body.coins));
+    const payoutMethod = String(req.body.payoutMethod || "").trim().toLowerCase();
+
+    // 1000 Coins = 10 INR (100 coins = 1 INR)
+    const MIN_COINS = 1000;
+    const CONVERSION_RATE = 100;
+
+    if (!Number.isInteger(coins) || coins < MIN_COINS) {
+      return res.status(400).json({
+        error: `Minimum withdrawal is ${MIN_COINS} coins (₹${MIN_COINS / CONVERSION_RATE} INR).`
+      });
+    }
+
+    const amountINR = Number((coins / CONVERSION_RATE).toFixed(2));
+
+    if (!["upi", "bank_transfer"].includes(payoutMethod)) {
+      return res.status(400).json({ error: "Please select a valid payout method (UPI or Bank Transfer)." });
+    }
+
+    const payoutDetails = {};
+
+    if (payoutMethod === "upi") {
+      const upiId = String(req.body.upiId || "").trim();
+      const upiRegex = /^[\w.\-_]{2,256}@[a-zA-Z]{2,64}$/;
+      if (!upiId || !upiRegex.test(upiId)) {
+        return res.status(400).json({ error: "Please enter a valid UPI ID (e.g. yourname@oksbi or 9876543210@ybl)." });
+      }
+      payoutDetails.upiId = upiId;
+    } else {
+      const accountNumber = String(req.body.accountNumber || "").trim();
+      const confirmAccount = String(req.body.confirmAccount || "").trim();
+      const accountHolder = String(req.body.accountHolder || "").trim();
+      const ifscCode = String(req.body.ifscCode || "").trim().toUpperCase();
+      const bankName = String(req.body.bankName || "").trim();
+
+      if (!accountHolder || accountHolder.length < 3) {
+        return res.status(400).json({ error: "Please provide a valid Account Holder Name." });
+      }
+      if (!/^\d{9,18}$/.test(accountNumber)) {
+        return res.status(400).json({ error: "Bank Account Number must be between 9 and 18 digits." });
+      }
+      if (accountNumber !== confirmAccount) {
+        return res.status(400).json({ error: "Bank Account Numbers do not match. Please verify." });
+      }
+      if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(ifscCode)) {
+        return res.status(400).json({ error: "Invalid IFSC Code. Example: SBIN0001234 or HDFC0001234." });
+      }
+
+      payoutDetails.accountNumber = accountNumber;
+      payoutDetails.accountHolderName = accountHolder;
+      payoutDetails.ifscCode = ifscCode;
+      payoutDetails.bankName = bankName || "Bank";
+    }
+
+    // Atomic Balance Check and Deduction (prevents double-spending)
+    const updatedUser = await User.findOneAndUpdate(
+      {
+        _id: req.session.userId,
+        virtualCoins: { $gte: coins }
+      },
+      {
+        $inc: { virtualCoins: -coins }
+      },
+      {
+        new: true
+      }
+    );
+
+    if (!updatedUser) {
+      return res.status(400).json({
+        error: "Insufficient coin balance for this withdrawal."
+      });
+    }
+
+    // Unique Reference ID
+    const referenceId = "WDR-CR-" + Date.now().toString(36).toUpperCase() + "-" + Math.floor(1000 + Math.random() * 9000);
+
+    // Save Payout Record
+    const withdrawal = await Withdrawal.create({
+      userId: req.session.userId,
+      referenceId,
+      coinsDeducted: coins,
+      amountINR,
+      payoutMethod,
+      payoutDetails,
+      status: "Processing"
+    });
+
+    // Record Transaction Audit Log
+    await Transaction.create({
+      userId: req.session.userId,
+      amount: -coins,
+      transactionType: "withdraw",
+      description: `Payout ₹${amountINR} (${payoutMethod.toUpperCase()}) Ref: ${referenceId}`
+    }).catch(err => console.error("Withdrawal transaction log error:", err.message));
+
+    return res.status(201).json({
+      message: `Withdrawal request for ₹${amountINR} (${coins} coins) submitted successfully!`,
+      referenceId,
+      amountINR,
+      coinsDeducted: coins,
+      newBalance: updatedUser.virtualCoins,
+      status: withdrawal.status,
+      createdAt: withdrawal.createdAt
+    });
+
+  } catch (error) {
+    console.error("Withdraw Error:", error);
+    return res.status(500).json({ error: "Failed to process withdrawal request: " + error.message });
+  }
+});
+
+// 10. GET WITHDRAWAL HISTORY
+app.get("/api/withdraw/history", requireLogin, async (req, res) => {
+  try {
+    const list = await Withdrawal.find({ userId: req.session.userId })
+      .sort({ createdAt: -1 })
+      .limit(50);
+
+    return res.json({
+      history: list.map(w => ({
+        id: w._id.toString(),
+        referenceId: w.referenceId,
+        coinsDeducted: w.coinsDeducted,
+        amountINR: w.amountINR,
+        payoutMethod: w.payoutMethod,
+        target: w.payoutMethod === "upi"
+          ? w.payoutDetails?.upiId
+          : `A/C ending in ...${String(w.payoutDetails?.accountNumber || "").slice(-4)} (${w.payoutDetails?.ifscCode || ""})`,
+        status: w.status,
+        createdAt: w.createdAt
+      }))
+    });
+  } catch (error) {
+    console.error("History Error:", error.message);
+    return res.status(500).json({ error: "Could not load withdrawal history." });
   }
 });
 
