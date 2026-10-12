@@ -597,15 +597,141 @@
 
     <!-- Footer Links -->
     <div class="auth-footer">
-      <div class="database-badge">
-        <span class="database-dot"></span>
-        <span>Connected to Node.js &amp; MongoDB Database</span>
+      <div class="database-badge" id="backendBadge">
+        <span class="database-dot" id="backendDot"></span>
+        <span id="backendStatusText">Checking connection...</span>
+      </div>
+      <div style="margin-top: 10px; font-size: 12px; text-align: center;">
+        <a href="javascript:void(0)" onclick="promptBackendUrl()" style="color: #a5b4fc; text-decoration: underline; cursor: pointer;">⚙️ Cloud Backend Settings (Render / API URL)</a>
       </div>
       <a href="index.html" class="back-link">← Return to CoinRush Home</a>
     </div>
   </div>
 
   <script>
+    // Local database simulation for GitHub Pages / Static Hosting
+    const LOCAL_USERS_KEY = 'coinrush_users_db';
+    const ACTIVE_USER_KEY = 'coinrush_user';
+
+    function getLocalUsers() {
+      try {
+        return JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveLocalUsers(users) {
+      localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(users));
+    }
+
+    function localLogin(email, password) {
+      const users = getLocalUsers();
+      const normalizedEmail = email.trim().toLowerCase();
+      let user = users.find(u => u.email.toLowerCase() === normalizedEmail);
+
+      if (user) {
+        if (user.password !== password) {
+          return { ok: false, error: 'Incorrect password. Please try again.' };
+        }
+      } else {
+        // First-time direct sign in on static host
+        const rawName = normalizedEmail.split('@')[0];
+        const formattedName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
+        user = {
+          id: 'usr_' + Date.now(),
+          name: formattedName,
+          email: normalizedEmail,
+          password: password,
+          virtualCoins: 100,
+          createdAt: new Date().toISOString()
+        };
+        users.push(user);
+        saveLocalUsers(users);
+      }
+
+      const publicUser = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        virtualCoins: user.virtualCoins || 100,
+        storage: 'Verified Account'
+      };
+      localStorage.setItem(ACTIVE_USER_KEY, JSON.stringify(publicUser));
+      return { ok: true, user: publicUser };
+    }
+
+    function localRegister(name, email, password) {
+      const users = getLocalUsers();
+      const normalizedEmail = email.trim().toLowerCase();
+      const exists = users.find(u => u.email.toLowerCase() === normalizedEmail);
+
+      if (exists) {
+        return { ok: false, error: 'This email is already registered. Please sign in.' };
+      }
+
+      const newUser = {
+        id: 'usr_' + Date.now(),
+        name: name.trim(),
+        email: normalizedEmail,
+        password: password,
+        virtualCoins: 100,
+        createdAt: new Date().toISOString()
+      };
+      users.push(newUser);
+      saveLocalUsers(users);
+
+      const publicUser = {
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+        virtualCoins: 100,
+        storage: 'Verified Account'
+      };
+      localStorage.setItem(ACTIVE_USER_KEY, JSON.stringify(publicUser));
+      return { ok: true, user: publicUser };
+    }
+
+    // Backend URL settings
+    function promptBackendUrl() {
+      const current = localStorage.getItem('coinrush_api_url') || '';
+      const input = prompt(
+        "Enter your live backend API URL (e.g. Render URL: https://coinrush-backend.onrender.com)\nLeave empty to use GitHub Pages mode:",
+        current
+      );
+      if (input !== null) {
+        if (input.trim()) {
+          localStorage.setItem('coinrush_api_url', input.trim().replace(/\/+$/, ''));
+          alert('Backend API URL saved! Connecting to cloud backend.');
+        } else {
+          localStorage.removeItem('coinrush_api_url');
+          alert('Cleared. CoinRush will run in seamless GitHub Pages mode.');
+        }
+        updateBackendBadge();
+      }
+    }
+
+    function updateBackendBadge() {
+      const url = localStorage.getItem('coinrush_api_url');
+      const text = document.getElementById('backendStatusText');
+      const dot = document.getElementById('backendDot');
+      if (!text || !dot) return;
+
+      if (url) {
+        text.textContent = 'Cloud Backend: ' + url.replace(/https?:\/\//, '').split('/')[0];
+        dot.style.background = '#22c55e';
+        dot.style.boxShadow = '0 0 8px #22c55e';
+      } else if (window.location.hostname.includes('github.io')) {
+        text.textContent = 'Active: GitHub Pages Mode (Ready to Play)';
+        dot.style.background = '#38bdf8';
+        dot.style.boxShadow = '0 0 8px #38bdf8';
+      } else {
+        text.textContent = 'Connected to Node.js & MongoDB Database';
+        dot.style.background = '#22c55e';
+        dot.style.boxShadow = '0 0 8px #22c55e';
+      }
+    }
+
     // Tab switching logic
     function switchTab(mode) {
       clearAlert();
@@ -656,20 +782,107 @@
       banner.style.display = 'none';
     }
 
+    // Detect backend URL (Render URL, localhost:3000, or local network)
+    function getApiBaseUrl() {
+      const custom = localStorage.getItem('coinrush_api_url');
+      if (custom && custom.trim()) {
+        return custom.trim().replace(/\/+$/, '');
+      }
+
+      if (
+        window.location.protocol === 'file:' ||
+        (window.location.hostname === 'localhost' && window.location.port !== '3000') ||
+        (window.location.hostname === '127.0.0.1' && window.location.port !== '3000')
+      ) {
+        return 'http://localhost:3000';
+      }
+
+      if (window.location.port === '3000') {
+        return '';
+      }
+
+      return '';
+    }
+
+    // Safe API fetch helper: reads as text first, NEVER crashes on HTML 404
+    async function fetchApi(endpoint, options = {}) {
+      const baseUrl = getApiBaseUrl();
+      if (!baseUrl && window.location.hostname.includes('github.io')) {
+        const err = new Error('Static GitHub Pages environment');
+        err.isStaticHost = true;
+        throw err;
+      }
+
+      const url = `${baseUrl}${endpoint}`;
+
+      const defaultHeaders = {
+        'Accept': 'application/json',
+        'bypass-tunnel-reminder': 'true'
+      };
+
+      if (options.body && (!options.headers || !options.headers['Content-Type'])) {
+        defaultHeaders['Content-Type'] = 'application/json';
+      }
+
+      const config = {
+        ...options,
+        credentials: 'include',
+        headers: {
+          ...defaultHeaders,
+          ...(options.headers || {})
+        }
+      };
+
+      const res = await fetch(url, config);
+      const text = await res.text();
+      let data = null;
+
+      try {
+        data = JSON.parse(text);
+      } catch (parseError) {
+        const err = new Error(`Server returned HTML response (${res.status})`);
+        err.isHtmlResponse = true;
+        err.status = res.status;
+        throw err;
+      }
+
+      if (!res.ok) {
+        const err = new Error((data && data.error) ? data.error : `Request failed (${res.status})`);
+        err.status = res.status;
+        err.data = data;
+        throw err;
+      }
+
+      return data;
+    }
+
     // Check existing session on page load
     async function checkCurrentSession() {
-      try {
-        const res = await fetch('/api/me');
-        if (!res.ok) return;
-        const data = await res.json();
-        if (data && data.user) {
-          const box = document.getElementById('alreadyLoggedInBox');
-          document.getElementById('loggedInUserName').textContent = data.user.name;
-          document.getElementById('loggedInUserEmail').textContent = data.user.email;
-          box.style.display = 'block';
+      updateBackendBadge();
+
+      // Check localStorage first
+      const cached = JSON.parse(localStorage.getItem(ACTIVE_USER_KEY) || 'null');
+      if (cached && cached.name) {
+        const box = document.getElementById('alreadyLoggedInBox');
+        document.getElementById('loggedInUserName').textContent = cached.name;
+        document.getElementById('loggedInUserEmail').textContent = cached.email;
+        box.style.display = 'block';
+      }
+
+      const baseUrl = getApiBaseUrl();
+      if (baseUrl || window.location.port === '3000') {
+        try {
+          const data = await fetchApi('/api/me');
+          if (data && data.user) {
+            localStorage.setItem(ACTIVE_USER_KEY, JSON.stringify(data.user));
+            const box = document.getElementById('alreadyLoggedInBox');
+            document.getElementById('loggedInUserName').textContent = data.user.name;
+            document.getElementById('loggedInUserEmail').textContent = data.user.email;
+            box.style.display = 'block';
+          }
+        } catch (err) {
+          // Silent ignore
         }
-      } catch (err) {
-        // Backend not yet running or network error - silent ignore
       }
     }
 
@@ -692,34 +905,49 @@
 
       submitBtn.disabled = true;
       spinner.style.display = 'inline-block';
-      btnText.textContent = 'Authenticating...';
+      btnText.textContent = 'Signing in...';
 
-      try {
-        const response = await fetch('/api/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
+      const baseUrl = getApiBaseUrl();
+      const isStaticSite = !baseUrl && (window.location.hostname.includes('github.io') || window.location.protocol === 'file:');
 
-        const data = await response.json();
+      // Attempt live backend if available
+      if (baseUrl || !isStaticSite) {
+        try {
+          const data = await fetchApi('/api/login', {
+            method: 'POST',
+            body: JSON.stringify({ email, password })
+          });
 
-        if (!response.ok) {
-          throw new Error(data.error || 'Login failed. Please check your credentials.');
+          showAlert(`Welcome back, ${data.user.name}! Redirecting to CoinRush...`, 'success');
+          if (data.user) {
+            localStorage.setItem(ACTIVE_USER_KEY, JSON.stringify(data.user));
+          }
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 1000);
+          return;
+
+        } catch (error) {
+          if (error.status === 400 || error.status === 401 || error.status === 409) {
+            showAlert(error.message, 'error');
+            submitBtn.disabled = false;
+            spinner.style.display = 'none';
+            btnText.textContent = 'Sign In to CoinRush';
+            return;
+          }
+          console.warn('Backend unavailable or static host, activating local sign in.');
         }
+      }
 
-        showAlert(`Welcome back, ${data.user.name}! Redirecting to CoinRush...`, 'success');
-        
-        // Cache user info locally for fast UI restoration
-        if (data.user) {
-          localStorage.setItem('coinrush_user', JSON.stringify(data.user));
-        }
-
+      // Local authentication for GitHub Pages mode
+      const result = localLogin(email, password);
+      if (result.ok) {
+        showAlert(`Welcome back, ${result.user.name}! Redirecting to CoinRush...`, 'success');
         setTimeout(() => {
           window.location.href = 'index.html';
-        }, 1200);
-
-      } catch (error) {
-        showAlert(error.message, 'error');
+        }, 1000);
+      } else {
+        showAlert(result.error, 'error');
         submitBtn.disabled = false;
         spinner.style.display = 'none';
         btnText.textContent = 'Sign In to CoinRush';
@@ -736,7 +964,6 @@
       const password = document.getElementById('regPassword').value;
       const confirmPassword = document.getElementById('regConfirmPassword').value;
 
-      // Client validation
       if (!name || name.length < 2) {
         showAlert('Please enter your name (minimum 2 characters).');
         return;
@@ -764,49 +991,66 @@
 
       submitBtn.disabled = true;
       spinner.style.display = 'inline-block';
-      btnText.textContent = 'Saving user to MongoDB...';
+      btnText.textContent = 'Creating account...';
 
-      try {
-        const response = await fetch('/api/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, password })
-        });
+      const baseUrl = getApiBaseUrl();
+      const isStaticSite = !baseUrl && (window.location.hostname.includes('github.io') || window.location.protocol === 'file:');
 
-        const data = await response.json();
+      // Attempt live backend first if configured
+      if (baseUrl || !isStaticSite) {
+        try {
+          const data = await fetchApi('/api/register', {
+            method: 'POST',
+            body: JSON.stringify({ name, email, password })
+          });
 
-        if (!response.ok) {
-          throw new Error(data.error || 'Failed to register account.');
+          showAlert('Account created & saved! Logging you in...', 'success');
+          if (data.user) {
+            localStorage.setItem(ACTIVE_USER_KEY, JSON.stringify(data.user));
+          }
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 1100);
+          return;
+
+        } catch (error) {
+          if (error.status === 400 || error.status === 409) {
+            showAlert(error.message, 'error');
+            submitBtn.disabled = false;
+            spinner.style.display = 'none';
+            btnText.textContent = 'Create Account';
+            return;
+          }
+          console.warn('Backend unavailable or static host, activating local account registration.');
         }
+      }
 
-        showAlert('Account created & saved to MongoDB! Logging you in...', 'success');
-
-        if (data.user) {
-          localStorage.setItem('coinrush_user', JSON.stringify(data.user));
-        }
-
+      // Local registration for GitHub Pages mode
+      const result = localRegister(name, email, password);
+      if (result.ok) {
+        showAlert('Account created successfully! 100 Starter Coins added. Logging you in...', 'success');
         setTimeout(() => {
           window.location.href = 'index.html';
-        }, 1300);
-
-      } catch (error) {
-        showAlert(error.message, 'error');
+        }, 1100);
+      } else {
+        showAlert(result.error, 'error');
         submitBtn.disabled = false;
         spinner.style.display = 'none';
-        btnText.textContent = 'Create Account in MongoDB';
+        btnText.textContent = 'Create Account';
       }
     }
 
     // Quick logout
     async function handleLogout() {
       try {
-        await fetch('/api/logout', { method: 'POST' });
-        localStorage.removeItem('coinrush_user');
-        document.getElementById('alreadyLoggedInBox').style.display = 'none';
-        showAlert('Logged out successfully.', 'success');
-      } catch (err) {
-        console.error(err);
-      }
+        const baseUrl = getApiBaseUrl();
+        if (baseUrl || window.location.port === '3000') {
+          await fetchApi('/api/logout', { method: 'POST' });
+        }
+      } catch (err) {}
+      localStorage.removeItem(ACTIVE_USER_KEY);
+      document.getElementById('alreadyLoggedInBox').style.display = 'none';
+      showAlert('Logged out successfully.', 'success');
     }
 
     // Auto-focus email field & check session

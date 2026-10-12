@@ -10,10 +10,101 @@ const session = require("express-session");
 const { MongoStore } = require("connect-mongo");
 const { rateLimit } = require("express-rate-limit");
 
-// Models
-const User = require("./models/User");
-const Transaction = require("./models/Transaction");
-const GameClaim = require("./models/GameClaim");
+// ========================================================
+// Mongoose Models
+// (Defined inline to ensure seamless execution on Render / Linux
+// without file-path or case-sensitivity errors like 'models/user')
+// ========================================================
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Name is required"],
+      trim: true,
+      minlength: [2, "Name must be at least 2 characters long"],
+      maxlength: [80, "Name must not exceed 80 characters"]
+    },
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+      lowercase: true,
+      trim: true,
+      match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please enter a valid email address"]
+    },
+    passwordHash: {
+      type: String,
+      required: [true, "Password hash is required"]
+    },
+    virtualCoins: {
+      type: Number,
+      default: 100,
+      min: [0, "Coins balance cannot be negative"]
+    }
+  },
+  {
+    timestamps: true
+  }
+);
+
+userSchema.methods.toPublicJSON = function () {
+  return {
+    id: this._id.toString(),
+    name: this.name,
+    email: this.email,
+    virtualCoins: this.virtualCoins,
+    createdAt: this.createdAt
+  };
+};
+
+const transactionSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      index: true
+    },
+    amount: {
+      type: Number,
+      required: true
+    },
+    transactionType: {
+      type: String,
+      required: true,
+      enum: ["game_reward", "signup_bonus", "spend", "transfer"]
+    },
+    description: {
+      type: String,
+      default: ""
+    }
+  },
+  {
+    timestamps: true
+  }
+);
+
+const gameClaimSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+    index: true
+  },
+  gameId: {
+    type: Number,
+    required: true
+  },
+  claimedAt: {
+    type: Date,
+    default: Date.now,
+    index: true
+  }
+});
+
+const User = mongoose.models.User || mongoose.model("User", userSchema);
+const Transaction = mongoose.models.Transaction || mongoose.model("Transaction", transactionSchema);
+const GameClaim = mongoose.models.GameClaim || mongoose.model("GameClaim", gameClaimSchema);
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/coinrush";
 const SESSION_SECRET = process.env.SESSION_SECRET || "default_coinrush_super_secret_session_key_32_chars";
@@ -22,11 +113,14 @@ const production = process.env.NODE_ENV === "production";
 
 const app = express();
 
+const cors = require("cors");
+
 // Security & Parsing
 app.disable("x-powered-by");
 if (production) {
   app.set("trust proxy", 1);
 }
+app.use(cors({ origin: true, credentials: true }));
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));

@@ -36,12 +36,25 @@ button:disabled{opacity:.55;cursor:not-allowed}
 .coin-inner p{font-size:10px;font-weight:bold;letter-spacing:2px;margin-top:5px}
 .welcome-tagline{margin-top:35px;color:#c7d2fe;font-size:13px;letter-spacing:1px}
 
-.start-btn{
- margin-top:28px;padding:16px 65px;border-radius:50px;
- font-size:19px;font-weight:900;color:white;
- background:linear-gradient(90deg,#6366f1,#9333ea);
- box-shadow:0 8px 30px #6366f155
+.welcome-login-btn{
+ margin-top:24px;padding:15px 55px;border-radius:50px;
+ font-size:17px;font-weight:900;color:#111827;
+ background:linear-gradient(135deg,#facc15,#f59e0b);
+ box-shadow:0 6px 25px rgba(250,204,21,0.45);
+ display:inline-flex;align-items:center;justify-content:center;gap:8px;
+ transition:all .25s ease
 }
+.welcome-login-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(250,204,21,0.65)}
+.welcome-login-btn:active{transform:scale(.98)}
+
+.start-btn{
+ margin-top:14px;padding:14px 62px;border-radius:50px;
+ font-size:17px;font-weight:900;color:white;
+ background:linear-gradient(90deg,#6366f1,#9333ea);
+ box-shadow:0 8px 30px #6366f155;
+ transition:all .25s ease
+}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px #6366f177}
 .welcome-footer{position:absolute;bottom:22px;color:#6b7280;font-size:12px}
 @keyframes floatCoin{
  0%,100%{transform:translateY(0) rotate(-2deg)}
@@ -148,7 +161,18 @@ footer{text-align:center;color:#6b7280;padding:30px 15px;font-size:12px;border-t
   </div>
  </div>
  <p class="welcome-tagline">PLAY GAMES. COLLECT VIRTUAL COINS.</p>
+ 
+ <!-- NEW LOGIN BUTTON ABOVE START BUTTON -->
+ <button class="welcome-login-btn" id="welcomeAuthBtn" onclick="handleWelcomeAuthClick()">
+  🔐 LOGIN / SIGN UP
+ </button>
+
  <button class="start-btn" onclick="startApp()">START ➜</button>
+
+ <div id="welcomeUserSwitch" style="display:none;margin-top:14px;font-size:13px;color:#94a3b8;cursor:pointer" onclick="handleWelcomeLogout()">
+  Not <span id="welcomeUserName" style="color:#facc15;font-weight:bold">User</span>? <span style="text-decoration:underline">Log out</span>
+ </div>
+
  <div class="welcome-footer">COINRUSH • VIRTUAL COINS ONLY</div>
 </section>
 
@@ -158,11 +182,11 @@ footer{text-align:center;color:#6b7280;padding:30px 15px;font-size:12px;border-t
  <div class="navbar">
   <div class="logo" onclick="showPage('home')">CoinRush</div>
   <nav class="nav-links">
-   <button onclick="window.location.href='login.html'">Login</button>
    <button onclick="showPage('home')">Home</button>
    <button onclick="showPage('games')">Games</button>
    <button onclick="showPage('wallet')">Wallet</button>
    <button onclick="showPage('profile')">Profile</button>
+   <button id="navAuthBtn" onclick="handleNavAuthClick()" style="background:rgba(99,102,241,0.2);padding:6px 12px;border-radius:12px;color:#c7d2fe;font-weight:bold;border:1px solid rgba(99,102,241,0.4)">🔐 Login</button>
   </nav>
   <div class="coin-box">🟡 <span id="coinBalance">100</span></div>
  </div>
@@ -457,13 +481,26 @@ function finishGame(score,message){
  document.getElementById("coinBalance").textContent=coins;
  document.getElementById("walletCoins").textContent=coins;
 
- if (selectedGame && selectedGame.id) {
-  fetch("/api/game-reward", {
+ const cachedUser = JSON.parse(localStorage.getItem("coinrush_user") || "null");
+ if (cachedUser) {
+  cachedUser.virtualCoins = coins;
+  localStorage.setItem("coinrush_user", JSON.stringify(cachedUser));
+  try {
+   const users = JSON.parse(localStorage.getItem("coinrush_users_db") || "[]");
+   const idx = users.findIndex(u => u.email === cachedUser.email);
+   if (idx !== -1) {
+    users[idx].virtualCoins = coins;
+    localStorage.setItem("coinrush_users_db", JSON.stringify(users));
+   }
+  } catch (e) {}
+ }
+
+ const baseUrl = getApiBaseUrl();
+ if ((baseUrl || window.location.port === '3000') && selectedGame && selectedGame.id) {
+  fetchApi("/api/game-reward", {
    method: "POST",
-   headers: { "Content-Type": "application/json" },
    body: JSON.stringify({ gameId: selectedGame.id })
   })
-   .then(res => res.ok ? res.json() : null)
    .then(data => {
     if (data && data.virtualCoins !== undefined) {
      coins = data.virtualCoins;
@@ -678,51 +715,167 @@ function hitTarget(){
 
 loadGames();
 
-// Synchronize session with MongoDB backend
+// Detect backend URL (Render URL, localhost:3000, or local network)
+function getApiBaseUrl() {
+ const custom = localStorage.getItem('coinrush_api_url');
+ if (custom && custom.trim()) {
+  return custom.trim().replace(/\/+$/, '');
+ }
+
+ if (
+  window.location.protocol === 'file:' ||
+  (window.location.hostname === 'localhost' && window.location.port !== '3000') ||
+  (window.location.hostname === '127.0.0.1' && window.location.port !== '3000')
+ ) {
+  return 'http://localhost:3000';
+ }
+ return '';
+}
+
+// Unified API fetch helper ensuring clean JSON communication without HTML parse errors
+async function fetchApi(endpoint, options = {}) {
+ const baseUrl = getApiBaseUrl();
+ if (!baseUrl && window.location.hostname.includes('github.io')) {
+  const err = new Error('Static GitHub Pages environment');
+  err.isStaticHost = true;
+  throw err;
+ }
+
+ const url = `${baseUrl}${endpoint}`;
+
+ const defaultHeaders = {
+  'Accept': 'application/json',
+  'bypass-tunnel-reminder': 'true'
+ };
+
+ if (options.body && (!options.headers || !options.headers['Content-Type'])) {
+  defaultHeaders['Content-Type'] = 'application/json';
+ }
+
+ const config = {
+  ...options,
+  credentials: 'include',
+  headers: {
+   ...defaultHeaders,
+   ...(options.headers || {})
+  }
+ };
+
+ const res = await fetch(url, config);
+ const text = await res.text();
+ let data = null;
+
+ try {
+  data = JSON.parse(text);
+ } catch (parseError) {
+  const err = new Error(`Server returned HTML response (${res.status})`);
+  err.isHtmlResponse = true;
+  err.status = res.status;
+  throw err;
+ }
+
+ if (!res.ok) {
+  const err = new Error((data && data.error) ? data.error : `Request failed with status ${res.status}`);
+  err.status = res.status;
+  throw err;
+ }
+
+ return data;
+}
+
+function handleWelcomeAuthClick() {
+ const cached = JSON.parse(localStorage.getItem("coinrush_user") || "null");
+ if (cached && cached.name) {
+  startApp();
+ } else {
+  window.location.href = "login.html";
+ }
+}
+
+function handleWelcomeLogout() {
+ if (confirm("Log out of CoinRush?")) {
+  const baseUrl = getApiBaseUrl();
+  if (baseUrl || window.location.port === '3000') {
+   try { fetchApi("/api/logout", { method: "POST" }); } catch (e) {}
+  }
+  localStorage.removeItem("coinrush_user");
+  window.location.reload();
+ }
+}
+
+function handleNavAuthClick() {
+ const cached = JSON.parse(localStorage.getItem("coinrush_user") || "null");
+ if (cached && cached.name) {
+  if (confirm("Log out of CoinRush?")) {
+   const baseUrl = getApiBaseUrl();
+   if (baseUrl || window.location.port === '3000') {
+    try { fetchApi("/api/logout", { method: "POST" }); } catch (e) {}
+   }
+   localStorage.removeItem("coinrush_user");
+   window.location.reload();
+  }
+ } else {
+  window.location.href = "login.html";
+ }
+}
+
+function applyUserSessionToUI(user) {
+ if (!user) return;
+ if (user.virtualCoins !== undefined) {
+  coins = Number(user.virtualCoins);
+  document.getElementById("coinBalance").textContent = coins;
+  const walletCoins = document.getElementById("walletCoins");
+  if (walletCoins) walletCoins.textContent = coins;
+ }
+
+ // Update Welcome Screen Button & Switch Link
+ const welcomeBtn = document.getElementById("welcomeAuthBtn");
+ if (welcomeBtn) {
+  welcomeBtn.innerHTML = `👤 Welcome, ${user.name} ➜`;
+ }
+ const welcomeSwitch = document.getElementById("welcomeUserSwitch");
+ const welcomeName = document.getElementById("welcomeUserName");
+ if (welcomeSwitch && welcomeName) {
+  welcomeName.textContent = user.name;
+  welcomeSwitch.style.display = "block";
+ }
+
+ // Update Navbar Auth Button
+ const navAuthBtn = document.getElementById("navAuthBtn");
+ if (navAuthBtn) {
+  navAuthBtn.textContent = `👤 ${user.name} (Logout)`;
+ }
+
+ // Update Profile Card
+ const profileCard = document.querySelector(".profile-card");
+ if (profileCard) {
+  profileCard.innerHTML = `
+   <div class="avatar">👤</div>
+   <div>
+    <h2>${user.name}</h2>
+    <p class="page-subtitle">${user.email || 'player@coinrush.com'} • ${user.storage || 'Player Account'}</p>
+   </div>`;
+ }
+}
+
+// Synchronize session with MongoDB backend or LocalStorage
 async function checkAuthStatus() {
  try {
   const cached = JSON.parse(localStorage.getItem("coinrush_user") || "null");
   if (cached && cached.name) {
-   const loginBtn = document.querySelector(".nav-links button");
-   if (loginBtn) loginBtn.textContent = "👤 " + cached.name;
+   applyUserSessionToUI(cached);
   }
 
-  const res = await fetch("/api/me");
-  if (!res.ok) return;
-  const data = await res.json();
-
-  if (data && data.user) {
-   coins = Number(data.user.virtualCoins);
-   document.getElementById("coinBalance").textContent = coins;
-   const walletCoins = document.getElementById("walletCoins");
-   if (walletCoins) walletCoins.textContent = coins;
-
-   // Update navigation login button to user name + logout action
-   const loginBtn = document.querySelector(".nav-links button");
-   if (loginBtn) {
-    loginBtn.textContent = "👤 " + data.user.name + " (Logout)";
-    loginBtn.onclick = async () => {
-     if (confirm("Log out of CoinRush?")) {
-      await fetch("/api/logout", { method: "POST" });
-      localStorage.removeItem("coinrush_user");
-      window.location.reload();
-     }
-    };
-   }
-
-   // Update profile card
-   const profileCard = document.querySelector(".profile-card");
-   if (profileCard) {
-    profileCard.innerHTML = `
-     <div class="avatar">👤</div>
-     <div>
-      <h2>${data.user.name}</h2>
-      <p class="page-subtitle">${data.user.email} • MongoDB Verified</p>
-     </div>`;
+  const baseUrl = getApiBaseUrl();
+  if (baseUrl || window.location.port === '3000') {
+   const data = await fetchApi("/api/me");
+   if (data && data.user) {
+    localStorage.setItem("coinrush_user", JSON.stringify(data.user));
+    applyUserSessionToUI(data.user);
    }
   }
  } catch (e) {
-  // Graceful fallback if backend is offline
+  // Graceful offline fallback
  }
 }
 
