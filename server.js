@@ -441,29 +441,32 @@ app.get("/api/wallet", requireLogin, async (req, res) => {
   }
 });
 
-// 6. DEMO GAME REWARD (Increases coins in MongoDB)
+// 6. HIGH-STAKES ARCADE GAME REWARD (Increases or deducts coins in MongoDB)
 app.post("/api/game-reward", requireLogin, async (req, res) => {
   const gameId = Number(req.body.gameId);
-  if (!Number.isInteger(gameId) || gameId < 1 || gameId > 4) {
+  if (!Number.isInteger(gameId) || gameId < 1 || gameId > 10) {
     return res.status(400).json({ error: "Invalid game ID." });
   }
 
   try {
-    // Check 60 second rate limit per game
-    const sixtySecondsAgo = new Date(Date.now() - 60 * 1000);
-    const recentClaim = await GameClaim.findOne({
-      userId: req.session.userId,
-      gameId: gameId,
-      claimedAt: { $gt: sixtySecondsAgo }
-    });
+    const reward = Math.max(0, Math.min(150, Number(req.body.reward) || 0));
+    const cost = Math.max(0, Math.min(100, Number(req.body.cost) || 0));
+    const net = reward - cost;
 
-    if (recentClaim) {
-      return res.status(429).json({
-        error: "Please wait 60 seconds before claiming another reward for this game."
+    // Atomic update user coins with net change
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: req.session.userId, ...(net < 0 ? { virtualCoins: { $gte: Math.abs(net) } } : {}) },
+      { $inc: { virtualCoins: net } },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      const u = await User.findById(req.session.userId);
+      return res.status(400).json({
+        error: "Insufficient coins or user not found.",
+        virtualCoins: u ? u.virtualCoins : 0
       });
     }
-
-    const reward = 5;
 
     // Record game claim
     await GameClaim.create({
@@ -472,28 +475,21 @@ app.post("/api/game-reward", requireLogin, async (req, res) => {
       claimedAt: new Date()
     });
 
-    // Update user coins
-    const updatedUser = await User.findByIdAndUpdate(
-      req.session.userId,
-      { $inc: { virtualCoins: reward } },
-      { new: true }
-    );
-
-    if (!updatedUser) {
-      return res.status(404).json({ error: "User not found." });
-    }
-
     // Record transaction
-    await Transaction.create({
-      userId: req.session.userId,
-      amount: reward,
-      transactionType: "game_reward",
-      description: "Virtual demo game reward"
-    });
+    if (net !== 0) {
+      await Transaction.create({
+        userId: req.session.userId,
+        amount: Math.abs(net),
+        transactionType: net > 0 ? "game_reward" : "spend",
+        description: `Game #${gameId} outcome (Stake: ${cost}, Won: ${reward})`
+      });
+    }
 
     return res.json({
       virtualCoins: updatedUser.virtualCoins,
-      reward
+      reward,
+      cost,
+      net
     });
   } catch (error) {
     console.error("Reward Error:", error.message);

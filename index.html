@@ -84,18 +84,31 @@ header{position:sticky;top:0;z-index:10;background:#0b1020;border-bottom:1px sol
 .page-subtitle{color:#9ca3af;margin-top:8px;line-height:1.5}
 
 /* GAME CARDS */
-.game-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
-.game-card{background:#111827;border:1px solid #ffffff15;border-radius:16px;overflow:hidden}
-.game-icon{padding:25px;text-align:center;font-size:48px}
+.game-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.game-card{position:relative;background:#111827;border:1px solid #ffffff15;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;transition:transform .2s,box-shadow .2s}
+.game-card:hover{transform:translateY(-4px);box-shadow:0 12px 25px rgba(0,0,0,0.5);border-color:#ffffff30}
+.game-badge{position:absolute;top:12px;right:12px;font-size:11px;font-weight:800;padding:4px 10px;border-radius:12px;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);color:#facc15;border:1px solid rgba(250,204,21,0.3)}
+.game-icon{padding:25px;text-align:center;font-size:52px}
 .blue{background:linear-gradient(135deg,#2563eb,#06b6d4)}
 .purple{background:linear-gradient(135deg,#4f46e5,#9333ea)}
 .pink{background:linear-gradient(135deg,#9333ea,#ec4899)}
 .orange{background:linear-gradient(135deg,#ea580c,#ef4444)}
-.game-content{padding:15px}
-.game-content h3{font-size:17px}
-.game-content p{color:#9ca3af;font-size:13px;line-height:1.5;margin-top:8px;min-height:58px}
-.play-btn{width:100%;padding:12px;margin-top:15px;border-radius:10px;color:white;font-weight:bold;background:#4f46e5}
+.red{background:linear-gradient(135deg,#991b1b,#dc2626)}
+.amber{background:linear-gradient(135deg,#d97706,#f59e0b)}
+.game-content{padding:18px;display:flex;flex-direction:column;flex-grow:1}
+.game-content h3{font-size:18px;font-weight:800}
+.game-content p{color:#9ca3af;font-size:12.5px;line-height:1.5;margin-top:6px;min-height:44px}
+.game-stake-info{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:12px;background:rgba(0,0,0,0.35);padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.08)}
+.stake-cost{color:#f87171;font-weight:700}
+.stake-win{color:#4ade80;font-weight:700}
+.play-btn{width:100%;padding:12px;margin-top:14px;border-radius:10px;color:white;font-weight:bold;background:#4f46e5;cursor:pointer;border:none}
 .play-btn:active,.start-btn:active{transform:scale(.98)}
+.controls-bar{display:flex;gap:10px;justify-content:center;margin-top:12px}
+.control-btn{flex:1;padding:12px 10px;font-size:14px;font-weight:bold;border-radius:10px;background:#374151;color:white;border:1px solid rgba(255,255,255,0.15);touch-action:manipulation;cursor:pointer}
+.control-btn:active{background:#4f46e5;transform:scale(0.96)}
+.nitro-btn{background:linear-gradient(135deg,#f59e0b,#ef4444);color:white;font-weight:900}
+.nitro-btn:active{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+.reload-btn{background:#dc2626;color:white;font-weight:bold}
 
 /* AD AND GAME AREAS */
 .ad-container,.game-container{
@@ -299,52 +312,103 @@ footer{text-align:center;color:#6b7280;padding:30px 15px;font-size:12px;border-t
    <h1 id="gameTitle">Game</h1>
    <p id="gameInstructions" class="page-subtitle"></p>
 
+   <!-- High Stakes Info Bar -->
+   <div id="gameStakeBar" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);padding:10px 16px;border-radius:12px;margin:12px 0 16px;font-size:13px">
+    <div>🪙 Entry Stake: <strong id="activeGameCost" style="color:#f87171">25 Coins</strong></div>
+    <div>🏆 Top Jackpot: <strong id="activeGameMaxWin" style="color:#4ade80">75 Coins</strong></div>
+   </div>
+
    <div class="game-area">
 
-    <!-- QUICK TAP -->
-    <div id="quickTap" class="mini-game" hidden>
-     <h2>Tap as fast as you can!</h2>
-     <p>Time: <span id="tapTime">10</span>s</p>
-     <p>Score: <span id="tapScore">0</span></p>
-     <button id="tapTarget" class="play-btn" onclick="tapTarget()" disabled>⚡ TAP HERE!</button>
-     <button id="tapStart" class="play-btn" onclick="startQuickTap()">Start Challenge</button>
-    </div>
-
-    <!-- QUIZ RUSH -->
-    <div id="quizRush" class="mini-game" hidden>
-     <p id="quizNumber">Question 1</p>
-     <h3 id="quizQuestion" style="margin:20px 0"></h3>
-     <div id="quizOptions"></div>
-     <p id="quizFeedback" class="reward-message"></p>
-     <button id="quizNext" class="play-btn" onclick="nextQuestion()" hidden>Next Question</button>
-    </div>
-
-    <!-- MEMORY MATCH -->
-    <div id="memoryMatch" class="mini-game" hidden>
-     <h2>Memory Match</h2>
-     <p>Find every matching pair!</p>
-     <p>Moves: <span id="memoryMoves">0</span></p>
-     <div id="memoryBoard" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:15px"></div>
-     <button class="play-btn" onclick="startMemory()">Restart Game</button>
-    </div>
-
-    <!-- TARGET RUSH -->
-    <div id="targetRush" class="mini-game" hidden>
-     <h2>Hit the target!</h2>
-     <p>Time: <span id="targetTime">15</span>s</p>
-     <p>Score: <span id="targetScore">0</span></p>
-     <div id="targetArena" style="height:260px;position:relative;overflow:hidden;background:#080d1a;border-radius:15px;margin-top:15px">
-      <button id="targetButton" onclick="hitTarget()" style="display:none;position:absolute;width:55px;height:55px;border-radius:50%;background:#ef4444;color:white;font-size:25px">🎯</button>
+    <!-- 1. CAR GAME: TURBO HIGHWAY RACER -->
+    <div id="carGame" class="mini-game" hidden>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13.5px">
+      <span>🛣️ Distance: <strong id="carScore" style="color:#facc15">0m</strong></span>
+      <span>⚡ Speed: <strong id="carSpeedText" style="color:#38bdf8">100 km/h</strong></span>
+      <span>🪙 Coins: <strong id="carCoinsCollected" style="color:#4ade80">0</strong></span>
      </div>
-     <button id="targetStart" class="play-btn" onclick="startTarget()">Start Challenge</button>
+     <canvas id="carCanvas" width="340" height="360" style="width:100%;max-width:340px;background:#0f172a;border-radius:14px;border:2px solid #334155;display:block;margin:0 auto"></canvas>
+     <div class="controls-bar">
+      <button type="button" class="control-btn" id="carBtnLeft">⬅️ Steer Left</button>
+      <button type="button" class="control-btn" id="carBtnRight">Steer Right ➡️</button>
+     </div>
+     <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">Keyboard: Left / Right arrows or A / D keys</p>
+     <button id="carStartBtn" class="play-btn" onclick="startCarGame()">🚦 Start High-Stakes Race</button>
     </div>
 
-    <!-- RESULTS -->
+    <!-- 2. BIKE GAME: MOTO RUSH 3D -->
+    <div id="bikeGame" class="mini-game" hidden>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13.5px">
+      <span>🛣️ Distance: <strong id="bikeScore" style="color:#facc15">0m</strong></span>
+      <span>⚡ Speed: <strong id="bikeSpeedText" style="color:#a855f7">120 km/h</strong></span>
+      <span>🚀 Nitro: <strong id="bikeNitroText" style="color:#f97316">READY</strong></span>
+     </div>
+     <canvas id="bikeCanvas" width="340" height="360" style="width:100%;max-width:340px;background:#090d16;border-radius:14px;border:2px solid #4338ca;display:block;margin:0 auto"></canvas>
+     <div class="controls-bar">
+      <button type="button" class="control-btn" id="bikeBtnLeft">⬅️ Left</button>
+      <button type="button" class="control-btn nitro-btn" id="bikeBtnNitro">🚀 NITRO (2x)</button>
+      <button type="button" class="control-btn" id="bikeBtnRight">Right ➡️</button>
+     </div>
+     <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">Hold Nitro button / Up Arrow for double speed &amp; points multiplier!</p>
+     <button id="bikeStartBtn" class="play-btn" onclick="startBikeGame()">🏍️ Start Superbike Ride</button>
+    </div>
+
+    <!-- 3. GUN GAME: GUN STRIKE BULLET RUSH -->
+    <div id="gunGame" class="mini-game" hidden>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13.5px">
+      <span>⏱️ Time: <strong id="gunTimerText" style="color:#f87171">20s</strong></span>
+      <span>🎯 Score: <strong id="gunScoreText" style="color:#facc15">0</strong></span>
+      <span>🔫 Ammo: <strong id="gunAmmoText" style="color:#38bdf8">6 / 6</strong></span>
+     </div>
+     <div id="gunRangeArena" style="position:relative;width:100%;max-width:350px;height:270px;margin:0 auto;background:radial-gradient(circle at center, #1e293b, #090d16);border:2px solid #ef4444;border-radius:14px;overflow:hidden;cursor:crosshair;user-select:none">
+      <div id="gunMuzzleFlash" style="position:absolute;inset:0;background:rgba(255,255,255,0.4);pointer-events:none;display:none;z-index:10"></div>
+      <div id="gunTargetsArea" style="position:absolute;inset:0"></div>
+     </div>
+     <div style="display:flex;gap:10px;justify-content:center;margin-top:12px">
+      <button type="button" class="control-btn reload-btn" onclick="gunReload()">🔄 RELOAD (R)</button>
+     </div>
+     <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">Shoot 🥷 Enemies (+15) &amp; 🎯 Targets (+20)! Avoid 💣 Bombs (-25) &amp; 🧍 Civilians (-30)!</p>
+     <button id="gunStartBtn" class="play-btn" onclick="startGunGame()">🎯 Start Tactical Mission</button>
+    </div>
+
+    <!-- 4. BLADE MASTER: KNIFE THROW -->
+    <div id="knifeGame" class="mini-game" hidden>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13.5px">
+      <span>🗡️ Knives Left: <strong id="knifeRemainingText" style="color:#facc15">8</strong></span>
+      <span>🎯 Stuck: <strong id="knifeStuckText" style="color:#4ade80">0 / 8</strong></span>
+     </div>
+     <canvas id="knifeCanvas" width="340" height="320" style="width:100%;max-width:340px;background:#0f172a;border-radius:14px;border:2px solid #eab308;display:block;margin:0 auto"></canvas>
+     <button type="button" id="knifeThrowBtn" class="play-btn" style="background:linear-gradient(135deg,#eab308,#f97316);font-size:17px;padding:14px;margin-top:14px" onclick="throwKnife()">🗡️ THROW BLADE!</button>
+     <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">Don't hit another blade! Wheel changes speed and direction!</p>
+     <button id="knifeStartBtn" class="play-btn" onclick="startKnifeGame()" style="margin-top:12px">⚔️ Start Challenge</button>
+    </div>
+
+    <!-- 5. TARGET HUNTER -->
+    <div id="targetRush" class="mini-game" hidden>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13.5px">
+      <span>⏱️ Time: <strong id="targetTime" style="color:#f87171">15s</strong></span>
+      <span>🎯 Score: <strong id="targetScore" style="color:#facc15">0</strong></span>
+      <span>🔥 Combo: <strong id="targetCombo" style="color:#4ade80">x1</strong></span>
+     </div>
+     <div id="targetArena" style="height:260px;position:relative;overflow:hidden;background:#080d1a;border-radius:15px;margin-top:12px;border:1px solid rgba(255,255,255,0.1)">
+      <button id="targetButton" onclick="hitTarget()" style="display:none;position:absolute;width:55px;height:55px;border-radius:50%;background:#ef4444;color:white;font-size:25px;border:none;cursor:pointer">🎯</button>
+     </div>
+     <button id="targetStart" class="play-btn" onclick="startTarget()" style="margin-top:12px">🎯 Start Hunt</button>
+    </div>
+
+    <!-- RESULTS & CASHOUT -->
     <div id="gameResult" hidden>
      <h2 id="resultTitle">Game Complete!</h2>
-     <p id="resultScore" style="margin-top:12px"></p>
+     <div style="margin:16px 0;padding:16px;background:rgba(0,0,0,0.4);border-radius:14px;border:1px solid rgba(255,255,255,0.1)">
+      <p id="resultScore" style="font-size:16px;font-weight:700"></p>
+      <div style="display:flex;justify-content:space-around;margin-top:12px;font-size:13.5px">
+       <div>Stake Paid: <strong id="resultStakePaid" style="color:#f87171">-0 🪙</strong></div>
+       <div>Won: <strong id="resultCoinsWon" style="color:#4ade80">+0 🪙</strong></div>
+       <div>Net Profit: <strong id="resultNetProfit" style="color:#facc15">0 🪙</strong></div>
+      </div>
+     </div>
      <p id="resultReward" class="reward-message"></p>
-     <button class="play-btn" onclick="replayGame()">Play Again</button>
+     <button class="play-btn" onclick="replayGame()" style="margin-top:15px">🎮 Play Again</button>
     </div>
 
    </div>
@@ -555,10 +619,11 @@ footer{text-align:center;color:#6b7280;padding:30px 15px;font-size:12px;border-t
 <script>
   
 const games=[
- {id:1,name:"Quick Tap",icon:"⚡",description:"Tap quickly in 10 seconds.",color:"blue"},
- {id:2,name:"Quiz Rush",icon:"🧠",description:"Answer quiz questions.",color:"purple"},
- {id:3,name:"Memory Match",icon:"🃏",description:"Find matching card pairs.",color:"pink"},
- {id:4,name:"Target Rush",icon:"🎯",description:"Hit targets in 15 seconds.",color:"orange"}
+ {id:1, name:"Turbo Highway", icon:"🏎️", description:"High-speed traffic dodge racer. Steer around cars and trucks at blistering speeds!", color:"orange", cost:25, maxWin:75, badge:"HARD 🔥"},
+ {id:2, name:"Moto Rush 3D", icon:"🏍️", description:"Superbike highway speedster! Hold Nitro boost for double speed & multiplier.", color:"purple", cost:30, maxWin:90, badge:"EXPERT ⚡"},
+ {id:3, name:"Gun Strike", icon:"🔫", description:"Tactical sniper shootout! Shoot bandits & targets, avoid bombs, reload fast.", color:"red", cost:35, maxWin:100, badge:"EXTREME 💀"},
+ {id:4, name:"Blade Master", icon:"🗡️", description:"Precision knife throwing into rotating wheel. Don't hit existing blades!", color:"amber", cost:20, maxWin:60, badge:"HARD 🔥"},
+ {id:5, name:"Target Hunter", icon:"🎯", description:"Lightning reflex precision target hunt with shrinking radius and combos.", color:"blue", cost:15, maxWin:45, badge:"PRO ⭐"}
 ];
 
 let coins=100;
@@ -567,24 +632,11 @@ let adCompleted=false;
 let adProgress=0;
 let adTimer=null;
 let gameTimer=null;
+let gameAnimFrame=null;
 let targetMover=null;
 let gameRunning=false;
 let gameRewarded=false;
 let gameScore=0;
-let quizIndex=0;
-let quizScore=0;
-let memoryCards=[];
-let flippedCards=[];
-let matchedPairs=0;
-let memoryMoves=0;
-
-const quizQuestions=[
- {q:"Which planet is known as the Red Planet?",options:["Earth","Mars","Venus","Jupiter"],answer:1},
- {q:"How many days are in a week?",options:["5","6","7","8"],answer:2},
- {q:"Which is the largest ocean?",options:["Atlantic","Indian","Arctic","Pacific"],answer:3},
- {q:"What is 8 × 7?",options:["48","54","56","64"],answer:2},
- {q:"Which star is closest to Earth?",options:["Sirius","The Sun","Polaris","Vega"],answer:1}
-];
 
 function startApp(){
  document.getElementById("welcome").style.display="none";
@@ -607,11 +659,16 @@ function showPage(name){
 
 function createGameCard(g){
  return `<div class="game-card">
+  <div class="game-badge">${g.badge}</div>
   <div class="game-icon ${g.color}">${g.icon}</div>
   <div class="game-content">
    <h3>${g.name}</h3>
    <p>${g.description}</p>
-   <button class="play-btn" onclick="openGame(${g.id})">Play Now</button>
+   <div class="game-stake-info">
+    <span class="stake-cost">🪙 Stake: ${g.cost}</span>
+    <span class="stake-win">🏆 Win Up to: ${g.maxWin}</span>
+   </div>
+   <button class="play-btn" onclick="openGame(${g.id})">🎮 Play Now (${g.cost} 🪙)</button>
   </div>
  </div>`;
 }
@@ -625,16 +682,34 @@ function stopTimers(){
  clearInterval(gameTimer);
  clearInterval(targetMover);
  clearInterval(adTimer);
- gameTimer=null;
- targetMover=null;
- adTimer=null;
- gameRunning=false;
+ if (typeof gunSpawner !== 'undefined' && gunSpawner) {
+  clearInterval(gunSpawner);
+  gunSpawner = null;
+ }
+ if (gameAnimFrame) {
+  cancelAnimationFrame(gameAnimFrame);
+  gameAnimFrame = null;
+ }
+ gameTimer = null;
+ targetMover = null;
+ adTimer = null;
+ gameRunning = false;
+ if (typeof carGameActive !== 'undefined') carGameActive = false;
+ if (typeof bikeActive !== 'undefined') bikeActive = false;
+ if (typeof gunActive !== 'undefined') gunActive = false;
+ if (typeof knifeActive !== 'undefined') knifeActive = false;
 }
 
 function openGame(id){
  stopTimers();
  selectedGame=games.find(g=>g.id===id);
  if(!selectedGame)return;
+
+ if(coins < selectedGame.cost){
+  alert(`⚠️ Insufficient Coins!\n\nThis high-stakes game costs ${selectedGame.cost} Coins to enter.\nYour current balance is ${coins} Coins.\n\nPlay Target Hunter (15 Coins) or check your daily bonus to earn more!`);
+  return;
+ }
+
  adCompleted=false;
  adProgress=0;
 
@@ -644,12 +719,25 @@ function openGame(id){
  icon.className="big-game-icon "+selectedGame.color;
 
  document.getElementById("adContent").innerHTML=`
-  <div style="font-size:45px">📺</div>
-  <p style="margin-top:10px">Rewarded-ad demo</p>
-  <p class="progress-text">This is a simulated demo, not a real ad.</p>
+  <div style="font-size:45px">${selectedGame.icon}</div>
+  <h3 style="margin-top:10px;font-size:18px;font-weight:800">${selectedGame.name}</h3>
+  <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.1);padding:12px;border-radius:12px;margin:14px 0;font-size:13px">
+   <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+    <span>🪙 Entry Stake:</span>
+    <strong style="color:#f87171">${selectedGame.cost} Coins</strong>
+   </div>
+   <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+    <span>🏆 Max Jackpot:</span>
+    <strong style="color:#4ade80">${selectedGame.maxWin} Coins</strong>
+   </div>
+   <div style="display:flex;justify-content:space-between">
+    <span>🔥 Difficulty:</span>
+    <strong style="color:#facc15">${selectedGame.badge}</strong>
+   </div>
+  </div>
   <div class="progress-bg"><div id="progressBar" class="progress-bar"></div></div>
-  <div id="progressText" class="progress-text">0% completed</div>
-  <button id="adButton" class="play-btn" onclick="startAd()">Continue to Demo</button>`;
+  <div id="progressText" class="progress-text">Tap below to enter arena...</div>
+  <button id="adButton" class="play-btn" onclick="startAd()">Enter Arena (${selectedGame.cost} 🪙 Stake)</button>`;
  showPage("ad");
 }
 
@@ -661,15 +749,15 @@ function exitAd(){
 function startAd(){
  if(adTimer||adCompleted)return;
  document.getElementById("adButton").disabled=true;
- document.getElementById("adButton").textContent="Loading demo...";
+ document.getElementById("adButton").textContent="Preparing arena...";
  adProgress=0;
 
  adTimer=setInterval(()=>{
-  adProgress=Math.min(adProgress+10,100);
+  adProgress=Math.min(adProgress+20,100);
   const bar=document.getElementById("progressBar");
   const text=document.getElementById("progressText");
   if(bar)bar.style.width=adProgress+"%";
-  if(text)text.textContent=adProgress+"% completed";
+  if(text)text.textContent=adProgress+"% ready";
 
   if(adProgress>=100){
    clearInterval(adTimer);
@@ -677,51 +765,88 @@ function startAd(){
    adCompleted=true;
    document.getElementById("adContent").innerHTML=`
     <div style="font-size:45px">✅</div>
-    <h3 style="color:#4ade80;margin-top:10px">Demo Unlocked!</h3>
+    <h3 style="color:#4ade80;margin-top:10px">Arena Unlocked!</h3>
     <button class="play-btn" onclick="playGame()">Play Now →</button>`;
   }
- },150);
+ },100);
 }
 
 function playGame(){
- if(!adCompleted||!selectedGame)return;
+ if(!selectedGame)return;
  stopTimers();
  gameRewarded=false;
  gameScore=0;
 
+ if(coins < selectedGame.cost){
+  alert(`⚠️ Insufficient Coins! You need ${selectedGame.cost} Coins to enter.`);
+  showPage("games");
+  return;
+ }
+
+ // Deduct Entry Stake immediately
+ const stakePaid = selectedGame.cost;
+ coins -= stakePaid;
+ syncWalletUI();
+
+ const cachedUser = JSON.parse(localStorage.getItem("coinrush_user") || "null");
+ if (cachedUser) {
+  cachedUser.virtualCoins = coins;
+  localStorage.setItem("coinrush_user", JSON.stringify(cachedUser));
+ }
+
  document.querySelectorAll(".mini-game").forEach(e=>e.hidden=true);
  document.getElementById("gameResult").hidden=true;
  document.getElementById("gameTitle").textContent=selectedGame.name;
- document.getElementById("gameInstructions").textContent="Have fun playing!";
+ document.getElementById("gameInstructions").textContent=selectedGame.description;
  const icon=document.getElementById("gameIcon");
  icon.textContent=selectedGame.icon;
  icon.className="big-game-icon "+selectedGame.color;
 
+ const costEl = document.getElementById("activeGameCost");
+ if(costEl) costEl.textContent = `${selectedGame.cost} Coins`;
+ const winEl = document.getElementById("activeGameMaxWin");
+ if(winEl) winEl.textContent = `${selectedGame.maxWin} Coins`;
+
  showPage("game");
 
  if(selectedGame.id===1){
-  document.getElementById("quickTap").hidden=false;
-  resetQuickTap();
+  document.getElementById("carGame").hidden=false;
+  initCarGame();
  }else if(selectedGame.id===2){
-  document.getElementById("quizRush").hidden=false;
-  startQuiz();
+  document.getElementById("bikeGame").hidden=false;
+  initBikeGame();
  }else if(selectedGame.id===3){
-  document.getElementById("memoryMatch").hidden=false;
-  startMemory();
+  document.getElementById("gunGame").hidden=false;
+  initGunGame();
  }else if(selectedGame.id===4){
+  document.getElementById("knifeGame").hidden=false;
+  initKnifeGame();
+ }else if(selectedGame.id===5){
   document.getElementById("targetRush").hidden=false;
   resetTarget();
  }
 }
 
-function finishGame(score,message){
+function finishGame(score,message,customWonCoins){
  if(gameRewarded)return;
  stopTimers();
  gameRewarded=true;
 
- const reward=Math.max(0,Math.min(20,Math.floor(score)));
- coins+=reward;
- syncWalletUI();
+ const cost = selectedGame ? (selectedGame.cost || 0) : 0;
+ let reward = 0;
+
+ if(typeof customWonCoins === 'number'){
+  reward = Math.max(0, Math.floor(customWonCoins));
+ } else {
+  reward = Math.max(0, Math.min(selectedGame?.maxWin || 50, Math.floor(score)));
+ }
+
+ if(reward > 0){
+  coins += reward;
+  syncWalletUI();
+ }
+
+ const net = reward - cost;
 
  const cachedUser = JSON.parse(localStorage.getItem("coinrush_user") || "null");
  if (cachedUser) {
@@ -741,7 +866,7 @@ function finishGame(score,message){
  if ((baseUrl || window.location.port === '3000') && selectedGame && selectedGame.id) {
   fetchApi("/api/game-reward", {
    method: "POST",
-   body: JSON.stringify({ gameId: selectedGame.id })
+   body: JSON.stringify({ gameId: selectedGame.id, reward: reward, cost: cost })
   })
    .then(data => {
     if (data && data.virtualCoins !== undefined) {
@@ -753,10 +878,30 @@ function finishGame(score,message){
  }
 
  document.querySelectorAll(".mini-game").forEach(e=>e.hidden=true);
- document.getElementById("gameResult").hidden=false;
- document.getElementById("resultTitle").textContent="Game Complete!";
- document.getElementById("resultScore").textContent=message;
- document.getElementById("resultReward").textContent="+"+reward+" virtual coins added!";
+ const resDiv = document.getElementById("gameResult");
+ resDiv.hidden=false;
+
+ document.getElementById("resultTitle").textContent = net > 0 ? "🎉 Epic Win!" : (net === 0 ? "⚖️ Break Even!" : "💥 Run Crashed!");
+ document.getElementById("resultScore").textContent = message;
+
+ const stakeEl = document.getElementById("resultStakePaid");
+ if(stakeEl) stakeEl.textContent = `-${cost} 🪙`;
+
+ const wonEl = document.getElementById("resultCoinsWon");
+ if(wonEl) wonEl.textContent = `+${reward} 🪙`;
+
+ const netEl = document.getElementById("resultNetProfit");
+ if(netEl) {
+  netEl.textContent = (net >= 0 ? `+${net}` : `${net}`) + " 🪙";
+  netEl.style.color = net > 0 ? "#4ade80" : (net === 0 ? "#facc15" : "#f87171");
+ }
+
+ const rewardEl = document.getElementById("resultReward");
+ if(rewardEl) {
+  if(net > 0) rewardEl.textContent = `🌟 Awesome run! You earned a net profit of +${net} coins!`;
+  else if(net === 0) rewardEl.textContent = `You recovered your ${cost} coin stake! Try again for the jackpot!`;
+  else rewardEl.textContent = `You lost your ${cost} coin stake. Practice and sharpen your reflexes!`;
+ }
 
  if (typeof loadLeaderboardData === 'function') {
   loadLeaderboardData();
@@ -770,158 +915,840 @@ function exitGame(){
  showPage("games");
 }
 
-/* QUICK TAP */
-function resetQuickTap(){
- document.getElementById("tapTime").textContent="10";
- document.getElementById("tapScore").textContent="0";
- document.getElementById("tapTarget").disabled=true;
- document.getElementById("tapStart").disabled=false;
+/* ========================================================
+   1. CAR GAME: TURBO HIGHWAY RACER
+   ======================================================== */
+let carCanvas, carCtx;
+let carPlayer = { lane: 1, targetX: 170, x: 170, y: 290, width: 34, height: 60 };
+let carLanes = [55, 170, 285];
+let carObstacles = [];
+let carCoins = [];
+let carRoadOffset = 0;
+let carSpeed = 5;
+let carDistance = 0;
+let carCoinsCount = 0;
+let carGameActive = false;
+
+function initCarGame() {
+ carCanvas = document.getElementById("carCanvas");
+ if (!carCanvas) return;
+ carCtx = carCanvas.getContext("2d");
+ carPlayer.lane = 1;
+ carPlayer.x = carLanes[1];
+ carPlayer.targetX = carLanes[1];
+ carObstacles = [];
+ carCoins = [];
+ carRoadOffset = 0;
+ carSpeed = 5;
+ carDistance = 0;
+ carCoinsCount = 0;
+ carGameActive = false;
+ document.getElementById("carScore").textContent = "0m";
+ document.getElementById("carSpeedText").textContent = "100 km/h";
+ document.getElementById("carCoinsCollected").textContent = "0";
+ document.getElementById("carStartBtn").disabled = false;
+ document.getElementById("carStartBtn").textContent = "🚦 Start High-Stakes Race";
+ drawCarScene();
+ setupCarControls();
 }
 
-function startQuickTap(){
+function setupCarControls() {
+ const btnL = document.getElementById("carBtnLeft");
+ const btnR = document.getElementById("carBtnRight");
+ if (btnL) btnL.onclick = () => carMoveLeft();
+ if (btnR) btnR.onclick = () => carMoveRight();
+}
+
+function carMoveLeft() {
+ if (!carGameActive) return;
+ if (carPlayer.lane > 0) {
+  carPlayer.lane--;
+  carPlayer.targetX = carLanes[carPlayer.lane];
+ }
+}
+
+function carMoveRight() {
+ if (!carGameActive) return;
+ if (carPlayer.lane < 2) {
+  carPlayer.lane++;
+  carPlayer.targetX = carLanes[carPlayer.lane];
+ }
+}
+
+function startCarGame() {
  stopTimers();
- gameScore=0;
- let time=10;
- gameRunning=true;
- document.getElementById("tapScore").textContent="0";
- document.getElementById("tapTime").textContent=time;
- document.getElementById("tapTarget").disabled=false;
- document.getElementById("tapStart").disabled=true;
+ initCarGame();
+ carGameActive = true;
+ gameRunning = true;
+ document.getElementById("carStartBtn").disabled = true;
+ document.getElementById("carStartBtn").textContent = "🏁 Racing in Progress...";
 
- gameTimer=setInterval(()=>{
-  time--;
-  document.getElementById("tapTime").textContent=time;
-  if(time<=0){
-   document.getElementById("tapTarget").disabled=true;
-   document.getElementById("tapStart").disabled=false;
-   finishGame(gameScore,"Taps: "+gameScore);
+ function loop() {
+  if (!carGameActive) return;
+  updateCarGame();
+  drawCarScene();
+  gameAnimFrame = requestAnimationFrame(loop);
+ }
+ gameAnimFrame = requestAnimationFrame(loop);
+}
+
+function updateCarGame() {
+ carDistance += 0.25 * (carSpeed / 5);
+ document.getElementById("carScore").textContent = Math.floor(carDistance) + "m";
+ const kmh = Math.floor(100 + (carSpeed - 5) * 15);
+ document.getElementById("carSpeedText").textContent = kmh + " km/h";
+
+ if (carSpeed < 12) {
+  carSpeed += 0.002;
+ }
+
+ carRoadOffset = (carRoadOffset + carSpeed) % 40;
+ carPlayer.x += (carPlayer.targetX - carPlayer.x) * 0.25;
+
+ if (Math.random() < 0.035 && carObstacles.length < 4) {
+  const lane = Math.floor(Math.random() * 3);
+  const tooClose = carObstacles.some(o => o.y < 90 && o.lane === lane);
+  if (!tooClose) {
+   const types = ['blue', 'yellow', 'truck', 'police'];
+   const t = types[Math.floor(Math.random() * types.length)];
+   carObstacles.push({
+    lane,
+    x: carLanes[lane],
+    y: -70,
+    width: t === 'truck' ? 38 : 34,
+    height: t === 'truck' ? 75 : 55,
+    speed: carSpeed * (t === 'truck' ? 0.6 : 0.75),
+    type: t
+   });
   }
- },1000);
+ }
+
+ if (Math.random() < 0.025 && carCoins.length < 3) {
+  const lane = Math.floor(Math.random() * 3);
+  const tooClose = carObstacles.some(o => Math.abs(o.y - (-40)) < 60 && o.lane === lane);
+  if (!tooClose) {
+   carCoins.push({ lane, x: carLanes[lane], y: -40, radius: 10 });
+  }
+ }
+
+ for (let i = carObstacles.length - 1; i >= 0; i--) {
+  const o = carObstacles[i];
+  o.y += carSpeed - o.speed + 2;
+
+  const dx = Math.abs(carPlayer.x - o.x);
+  const dy = Math.abs(carPlayer.y - o.y);
+  if (dx < (carPlayer.width + o.width) * 0.45 && dy < (carPlayer.height + o.height) * 0.45) {
+   carGameActive = false;
+   endCarGame(true);
+   return;
+  }
+
+  if (o.y > 420) carObstacles.splice(i, 1);
+ }
+
+ for (let i = carCoins.length - 1; i >= 0; i--) {
+  const c = carCoins[i];
+  c.y += carSpeed;
+  const dx = Math.abs(carPlayer.x - c.x);
+  const dy = Math.abs(carPlayer.y - c.y);
+  if (dx < 25 && dy < 35) {
+   carCoinsCount++;
+   carDistance += 10;
+   document.getElementById("carCoinsCollected").textContent = carCoinsCount;
+   carCoins.splice(i, 1);
+   continue;
+  }
+  if (c.y > 400) carCoins.splice(i, 1);
+ }
 }
 
-function tapTarget(){
- if(!gameRunning||gameRewarded)return;
- gameScore++;
- document.getElementById("tapScore").textContent=gameScore;
-}
+function drawCarScene() {
+ if (!carCtx) return;
+ const w = carCanvas.width;
+ const h = carCanvas.height;
 
-/* QUIZ RUSH */
-function startQuiz(){
- quizIndex=0;
- quizScore=0;
- showQuestion();
-}
+ carCtx.fillStyle = "#1e293b";
+ carCtx.fillRect(0, 0, w, h);
 
-function showQuestion(){
- const q=quizQuestions[quizIndex];
- document.getElementById("quizNumber").textContent="Question "+(quizIndex+1)+" of "+quizQuestions.length;
- document.getElementById("quizQuestion").textContent=q.q;
- document.getElementById("quizFeedback").textContent="";
- document.getElementById("quizNext").hidden=true;
+ carCtx.fillStyle = "#e2e8f0";
+ carCtx.fillRect(10, 0, 6, h);
+ carCtx.fillRect(w - 16, 0, 6, h);
 
- document.getElementById("quizOptions").innerHTML=q.options.map((o,i)=>
-  `<button class="play-btn quiz-option" data-index="${i}">${o}</button>`
- ).join("");
+ carCtx.fillStyle = "#15803d";
+ carCtx.fillRect(0, 0, 10, h);
+ carCtx.fillRect(w - 10, 0, 10, h);
 
- document.querySelectorAll(".quiz-option").forEach(button=>{
-  button.addEventListener("click",()=>{
-   if(button.disabled||gameRewarded)return;
-   document.querySelectorAll(".quiz-option").forEach(b=>b.disabled=true);
-   const answer=Number(button.dataset.index);
-   if(answer===q.answer){
-    quizScore++;
-    document.getElementById("quizFeedback").textContent="Correct! ✅";
-   }else{
-    document.getElementById("quizFeedback").textContent="Correct answer: "+q.options[q.answer];
-   }
-   const next=document.getElementById("quizNext");
-   next.hidden=false;
-   next.textContent=quizIndex===quizQuestions.length-1?"See Results":"Next Question";
-  });
+ carCtx.strokeStyle = "#f8fafc";
+ carCtx.lineWidth = 4;
+ carCtx.setLineDash([20, 20]);
+ carCtx.lineDashOffset = -carRoadOffset;
+
+ carCtx.beginPath();
+ carCtx.moveTo(w * 0.35, 0);
+ carCtx.lineTo(w * 0.35, h);
+ carCtx.stroke();
+
+ carCtx.beginPath();
+ carCtx.moveTo(w * 0.65, 0);
+ carCtx.lineTo(w * 0.65, h);
+ carCtx.stroke();
+ carCtx.setLineDash([]);
+
+ carCoins.forEach(c => {
+  carCtx.fillStyle = "#facc15";
+  carCtx.beginPath();
+  carCtx.arc(c.x, c.y, c.radius, 0, Math.PI * 2);
+  carCtx.fill();
+  carCtx.lineWidth = 2;
+  carCtx.strokeStyle = "#ca8a04";
+  carCtx.stroke();
+  carCtx.fillStyle = "#713f12";
+  carCtx.font = "bold 11px sans-serif";
+  carCtx.textAlign = "center";
+  carCtx.fillText("🪙", c.x, c.y + 4);
  });
+
+ carObstacles.forEach(o => {
+  drawVehicle(carCtx, o.x, o.y, o.width, o.height, o.type);
+ });
+
+ drawPlayerCar(carCtx, carPlayer.x, carPlayer.y, carPlayer.width, carPlayer.height);
 }
 
-function nextQuestion(){
- quizIndex++;
- if(quizIndex>=quizQuestions.length){
-  finishGame(quizScore*4,"Correct answers: "+quizScore+" / "+quizQuestions.length);
+function drawPlayerCar(ctx, x, y, w, h) {
+ ctx.save();
+ ctx.translate(x, y);
+
+ ctx.fillStyle = "rgba(0,0,0,0.5)";
+ ctx.fillRect(-w/2 + 2, -h/2 + 4, w, h);
+
+ ctx.fillStyle = "#dc2626";
+ ctx.beginPath();
+ ctx.roundRect(-w/2, -h/2, w, h, 8);
+ ctx.fill();
+
+ ctx.fillStyle = "#ffffff";
+ ctx.fillRect(-3, -h/2, 6, h);
+
+ ctx.fillStyle = "#1e293b";
+ ctx.fillRect(-w/2 + 4, -h/2 + 12, w - 8, 14);
+
+ ctx.fillStyle = "#fef08a";
+ ctx.fillRect(-w/2 + 3, -h/2 + 2, 7, 4);
+ ctx.fillRect(w/2 - 10, -h/2 + 2, 7, 4);
+
+ ctx.fillStyle = "#991b1b";
+ ctx.fillRect(-w/2 + 3, h/2 - 5, 6, 3);
+ ctx.fillRect(w/2 - 9, h/2 - 5, 6, 3);
+
+ ctx.restore();
+}
+
+function drawVehicle(ctx, x, y, w, h, type) {
+ ctx.save();
+ ctx.translate(x, y);
+
+ ctx.fillStyle = "rgba(0,0,0,0.4)";
+ ctx.fillRect(-w/2 + 2, -h/2 + 3, w, h);
+
+ if (type === 'truck') {
+  ctx.fillStyle = "#475569";
+  ctx.fillRect(-w/2, -h/2, w, h);
+  ctx.fillStyle = "#334155";
+  ctx.fillRect(-w/2 + 2, -h/2 + 4, w - 4, h - 22);
+ } else if (type === 'police') {
+  ctx.fillStyle = "#0f172a";
+  ctx.beginPath();
+  ctx.roundRect(-w/2, -h/2, w, h, 6);
+  ctx.fill();
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(-w/2, -6, w, 12);
+  ctx.fillStyle = (Date.now() % 400 < 200) ? "#ef4444" : "#3b82f6";
+  ctx.fillRect(-4, -4, 8, 8);
+ } else {
+  ctx.fillStyle = type === 'blue' ? '#2563eb' : '#eab308';
+  ctx.beginPath();
+  ctx.roundRect(-w/2, -h/2, w, h, 6);
+  ctx.fill();
+  ctx.fillStyle = "#1e293b";
+  ctx.fillRect(-w/2 + 4, -h/2 + 10, w - 8, 12);
+ }
+
+ ctx.restore();
+}
+
+function endCarGame(crashed) {
+ stopTimers();
+ const dist = Math.floor(carDistance);
+ let won = 0;
+ if (dist >= 160) won = 75; // 3x
+ else if (dist >= 90) won = 50; // 2x
+ else if (dist >= 45) won = 25; // 1x
+
+ const msg = (crashed ? "💥 CRASH! " : "") + `Drove ${dist}m at high speed and collected ${carCoinsCount} coins!`;
+ finishGame(dist, msg, won);
+}
+
+/* ========================================================
+   2. BIKE GAME: MOTO RUSH 3D
+   ======================================================== */
+let bikeCanvas, bikeCtx;
+let bikeX = 170, bikeY = 280;
+let bikeSpeed = 6;
+let bikeDistance = 0;
+let isNitro = false;
+let bikeObstacles = [];
+let bikeRoadOffset = 0;
+let bikeActive = false;
+
+function initBikeGame() {
+ bikeCanvas = document.getElementById("bikeCanvas");
+ if (!bikeCanvas) return;
+ bikeCtx = bikeCanvas.getContext("2d");
+ bikeX = 170;
+ bikeY = 280;
+ bikeSpeed = 6;
+ bikeDistance = 0;
+ isNitro = false;
+ bikeObstacles = [];
+ bikeRoadOffset = 0;
+ bikeActive = false;
+ document.getElementById("bikeScore").textContent = "0m";
+ document.getElementById("bikeSpeedText").textContent = "120 km/h";
+ document.getElementById("bikeNitroText").textContent = "READY 🚀";
+ document.getElementById("bikeStartBtn").disabled = false;
+ document.getElementById("bikeStartBtn").textContent = "🏍️ Start Superbike Ride";
+ drawBikeScene();
+ setupBikeControls();
+}
+
+function setupBikeControls() {
+ const btnL = document.getElementById("bikeBtnLeft");
+ const btnR = document.getElementById("bikeBtnRight");
+ const btnN = document.getElementById("bikeBtnNitro");
+ if (btnL) btnL.onclick = () => bikeMoveLeft();
+ if (btnR) btnR.onclick = () => bikeMoveRight();
+ if (btnN) {
+  btnN.onmousedown = () => bikeNitro(true);
+  btnN.onmouseup = () => bikeNitro(false);
+  btnN.ontouchstart = () => bikeNitro(true);
+  btnN.ontouchend = () => bikeNitro(false);
+ }
+}
+
+function bikeMoveLeft() {
+ if (!bikeActive) return;
+ bikeX = Math.max(45, bikeX - 45);
+}
+
+function bikeMoveRight() {
+ if (!bikeActive) return;
+ bikeX = Math.min(295, bikeX + 45);
+}
+
+function bikeNitro(active) {
+ isNitro = Boolean(active);
+ const el = document.getElementById("bikeNitroText");
+ if (el) {
+  el.textContent = isNitro ? "🔥 ACTIVE! (2x)" : "READY 🚀";
+  el.style.color = isNitro ? "#ef4444" : "#f97316";
+ }
+}
+
+function startBikeGame() {
+ stopTimers();
+ initBikeGame();
+ bikeActive = true;
+ gameRunning = true;
+ document.getElementById("bikeStartBtn").disabled = true;
+ document.getElementById("bikeStartBtn").textContent = "⚡ Blasting Down Highway...";
+
+ function loop() {
+  if (!bikeActive) return;
+  updateBikeGame();
+  drawBikeScene();
+  gameAnimFrame = requestAnimationFrame(loop);
+ }
+ gameAnimFrame = requestAnimationFrame(loop);
+}
+
+function updateBikeGame() {
+ const currentSpeed = isNitro ? (bikeSpeed * 1.8) : bikeSpeed;
+ bikeDistance += (isNitro ? 0.6 : 0.3) * (currentSpeed / 6);
+ document.getElementById("bikeScore").textContent = Math.floor(bikeDistance) + "m";
+ const kmh = Math.floor(120 + (currentSpeed - 6) * 12);
+ document.getElementById("bikeSpeedText").textContent = kmh + " km/h";
+
+ if (bikeSpeed < 14) bikeSpeed += 0.0025;
+ bikeRoadOffset = (bikeRoadOffset + currentSpeed) % 40;
+
+ if (Math.random() < 0.04 && bikeObstacles.length < 4) {
+  const lanes = [65, 135, 205, 275];
+  const x = lanes[Math.floor(Math.random() * lanes.length)];
+  const types = ['barrier', 'truck', 'oil'];
+  const t = types[Math.floor(Math.random() * types.length)];
+  bikeObstacles.push({
+   x,
+   y: -60,
+   type: t,
+   width: t === 'truck' ? 38 : 30,
+   height: t === 'truck' ? 70 : 26
+  });
+ }
+
+ for (let i = bikeObstacles.length - 1; i >= 0; i--) {
+  const o = bikeObstacles[i];
+  o.y += currentSpeed * (o.type === 'truck' ? 0.6 : 1);
+
+  const dx = Math.abs(bikeX - o.x);
+  const dy = Math.abs(bikeY - o.y);
+  if (dx < (22 + o.width) * 0.45 && dy < (45 + o.height) * 0.45) {
+   bikeActive = false;
+   endBikeGame(true, kmh);
+   return;
+  }
+
+  if (o.y > 400) bikeObstacles.splice(i, 1);
+ }
+}
+
+function drawBikeScene() {
+ if (!bikeCtx) return;
+ const w = bikeCanvas.width;
+ const h = bikeCanvas.height;
+
+ bikeCtx.fillStyle = "#090d16";
+ bikeCtx.fillRect(0, 0, w, h);
+
+ bikeCtx.fillStyle = isNitro ? "#ef4444" : "#6366f1";
+ bikeCtx.fillRect(8, 0, 4, h);
+ bikeCtx.fillRect(w - 12, 0, 4, h);
+
+ bikeCtx.strokeStyle = isNitro ? "rgba(249,115,22,0.8)" : "rgba(165,180,252,0.5)";
+ bikeCtx.lineWidth = 3;
+ bikeCtx.setLineDash([25, 20]);
+ bikeCtx.lineDashOffset = -bikeRoadOffset;
+
+ [w * 0.28, w * 0.5, w * 0.72].forEach(lx => {
+  bikeCtx.beginPath();
+  bikeCtx.moveTo(lx, 0);
+  bikeCtx.lineTo(lx, h);
+  bikeCtx.stroke();
+ });
+ bikeCtx.setLineDash([]);
+
+ bikeObstacles.forEach(o => {
+  bikeCtx.save();
+  bikeCtx.translate(o.x, o.y);
+  if (o.type === 'barrier') {
+   bikeCtx.fillStyle = "#ea580c";
+   bikeCtx.fillRect(-15, -10, 30, 20);
+   bikeCtx.fillStyle = "#ffffff";
+   bikeCtx.fillRect(-12, -7, 6, 14);
+   bikeCtx.fillRect(6, -7, 6, 14);
+  } else if (o.type === 'oil') {
+   bikeCtx.fillStyle = "rgba(15,23,42,0.9)";
+   bikeCtx.beginPath();
+   bikeCtx.ellipse(0, 0, 16, 10, 0, 0, Math.PI * 2);
+   bikeCtx.fill();
+  } else {
+   bikeCtx.fillStyle = "#334155";
+   bikeCtx.fillRect(-18, -35, 36, 70);
+   bikeCtx.fillStyle = "#e2e8f0";
+   bikeCtx.fillRect(-14, 20, 28, 10);
+  }
+  bikeCtx.restore();
+ });
+
+ bikeCtx.save();
+ bikeCtx.translate(bikeX, bikeY);
+
+ if (isNitro) {
+  bikeCtx.fillStyle = "#f97316";
+  bikeCtx.beginPath();
+  bikeCtx.moveTo(-6, 25);
+  bikeCtx.lineTo(6, 25);
+  bikeCtx.lineTo(0, 45 + Math.random() * 10);
+  bikeCtx.fill();
+ }
+
+ bikeCtx.fillStyle = "rgba(0,0,0,0.5)";
+ bikeCtx.fillRect(-8, -20, 16, 45);
+
+ bikeCtx.fillStyle = "#7c3aed";
+ bikeCtx.beginPath();
+ bikeCtx.roundRect(-7, -22, 14, 44, 4);
+ bikeCtx.fill();
+
+ bikeCtx.fillStyle = "rgba(250,204,21,0.25)";
+ bikeCtx.beginPath();
+ bikeCtx.moveTo(0, -22);
+ bikeCtx.lineTo(-25, -120);
+ bikeCtx.lineTo(25, -120);
+ bikeCtx.closePath();
+ bikeCtx.fill();
+
+ bikeCtx.fillStyle = "#ffffff";
+ bikeCtx.beginPath();
+ bikeCtx.arc(0, -2, 6, 0, Math.PI * 2);
+ bikeCtx.fill();
+
+ bikeCtx.restore();
+}
+
+function endBikeGame(crashed, kmh) {
+ stopTimers();
+ const dist = Math.floor(bikeDistance);
+ let won = 0;
+ if (dist >= 220) won = 90; // 3x
+ else if (dist >= 120) won = 60; // 2x
+ else if (dist >= 60) won = 30; // 1x
+
+ const msg = (crashed ? "💥 WIPEOUT at " + kmh + " km/h! " : "") + `Rode ${dist}m on superbike highway!`;
+ finishGame(dist, msg, won);
+}
+
+/* ========================================================
+   3. GUN GAME: GUN STRIKE BULLET RUSH
+   ======================================================== */
+let gunTime = 20;
+let gunScore = 0;
+let gunAmmo = 6;
+let gunReloading = false;
+let gunSpawner = null;
+let gunActive = false;
+
+function initGunGame() {
+ gunTime = 20;
+ gunScore = 0;
+ gunAmmo = 6;
+ gunReloading = false;
+ gunActive = false;
+ document.getElementById("gunTimerText").textContent = "20s";
+ document.getElementById("gunScoreText").textContent = "0";
+ document.getElementById("gunAmmoText").textContent = "6 / 6";
+ document.getElementById("gunStartBtn").disabled = false;
+ document.getElementById("gunStartBtn").textContent = "🎯 Start Tactical Mission";
+ const arena = document.getElementById("gunTargetsArea");
+ if (arena) arena.innerHTML = "";
+}
+
+function startGunGame() {
+ stopTimers();
+ initGunGame();
+ gunActive = true;
+ gameRunning = true;
+ document.getElementById("gunStartBtn").disabled = true;
+ document.getElementById("gunStartBtn").textContent = "🔥 Mission Active - Shoot!";
+
+ const arena = document.getElementById("gunRangeArena");
+ if (arena) {
+  arena.onmousedown = (e) => {
+   if (e.target === arena || e.target.id === "gunTargetsArea" || e.target.id === "gunMuzzleFlash") {
+    gunShoot(null);
+   }
+  };
+ }
+
+ gunSpawner = setInterval(spawnGunTarget, 650);
+
+ gameTimer = setInterval(() => {
+  gunTime--;
+  document.getElementById("gunTimerText").textContent = gunTime + "s";
+  if (gunTime <= 0) {
+   endGunGame();
+  }
+ }, 1000);
+}
+
+function gunReload() {
+ if (!gunActive || gunReloading) return;
+ gunReloading = true;
+ const ammoText = document.getElementById("gunAmmoText");
+ if (ammoText) ammoText.textContent = "⏳ RELOADING...";
+ setTimeout(() => {
+  gunAmmo = 6;
+  gunReloading = false;
+  if (ammoText) ammoText.textContent = "6 / 6";
+ }, 650);
+}
+
+function spawnGunTarget() {
+ if (!gunActive) return;
+ const area = document.getElementById("gunTargetsArea");
+ if (!area) return;
+
+ const types = [
+  { icon: "🥷", text: "Bandit", points: 15, isEnemy: true, duration: 1100 },
+  { icon: "🎯", text: "Bullseye", points: 20, isEnemy: true, duration: 900 },
+  { icon: "💣", text: "Bomb", points: -25, isEnemy: false, duration: 1400 },
+  { icon: "🧍", text: "Civilian", points: -30, isEnemy: false, duration: 1300 }
+ ];
+
+ const r = Math.random();
+ let item = types[0];
+ if (r < 0.45) item = types[0];
+ else if (r < 0.70) item = types[1];
+ else if (r < 0.88) item = types[2];
+ else item = types[3];
+
+ const el = document.createElement("div");
+ el.style.position = "absolute";
+ const left = Math.floor(15 + Math.random() * 260);
+ const top = Math.floor(15 + Math.random() * 180);
+ el.style.left = left + "px";
+ el.style.top = top + "px";
+ el.style.fontSize = "38px";
+ el.style.cursor = "pointer";
+ el.style.userSelect = "none";
+ el.style.transition = "transform .1s";
+ el.innerHTML = `<span>${item.icon}</span>`;
+
+ el.onmousedown = (e) => {
+  e.stopPropagation();
+  gunShoot(item, el);
+ };
+
+ area.appendChild(el);
+
+ setTimeout(() => {
+  if (el && el.parentNode) {
+   el.parentNode.removeChild(el);
+  }
+ }, item.duration);
+}
+
+function gunShoot(item, targetEl) {
+ if (!gunActive) return;
+
+ if (gunAmmo <= 0 || gunReloading) {
+  gunReload();
   return;
  }
- showQuestion();
-}
 
-/* MEMORY MATCH */
-function startMemory(){
- stopTimers();
- const symbols=["🍎","🍋","🍇","🍒","⭐","🚀","🐱","⚽"];
- memoryCards=[...symbols,...symbols]
-  .sort(()=>Math.random()-.5)
-  .map((symbol,id)=>({id,symbol,matched:false,flipped:false}));
- flippedCards=[];
- matchedPairs=0;
- memoryMoves=0;
- document.getElementById("memoryMoves").textContent="0";
- renderMemory();
-}
+ gunAmmo--;
+ document.getElementById("gunAmmoText").textContent = `${gunAmmo} / 6`;
 
-function renderMemory(){
- const board=document.getElementById("memoryBoard");
- board.innerHTML=memoryCards.map(c=>`
-  <button data-card="${c.id}" style="height:58px;border-radius:10px;font-size:24px;background:${c.matched?'#166534':'#312e81'};color:white">
-   ${c.matched||c.flipped?c.symbol:"❔"}
-  </button>`).join("");
+ const flash = document.getElementById("gunMuzzleFlash");
+ if (flash) {
+  flash.style.display = "block";
+  setTimeout(() => { flash.style.display = "none"; }, 50);
+ }
 
- board.querySelectorAll("button").forEach(button=>{
-  button.addEventListener("click",()=>flipMemoryCard(Number(button.dataset.card)));
- });
-}
+ if (item) {
+  gunScore = Math.max(0, gunScore + item.points);
+  document.getElementById("gunScoreText").textContent = gunScore;
 
-function flipMemoryCard(id){
- if(gameRewarded||flippedCards.length>=2)return;
- const card=memoryCards.find(c=>c.id===id);
- if(!card||card.matched||card.flipped)return;
-
- card.flipped=true;
- flippedCards.push(card);
- renderMemory();
-
- if(flippedCards.length===2){
-  memoryMoves++;
-  document.getElementById("memoryMoves").textContent=memoryMoves;
-  const [a,b]=flippedCards;
-
-  if(a.symbol===b.symbol){
-   a.matched=true;
-   b.matched=true;
-   flippedCards=[];
-   matchedPairs++;
-   renderMemory();
-   if(matchedPairs===8){
-    finishGame(Math.max(5,20-memoryMoves),"All pairs matched in "+memoryMoves+" moves!");
-   }
-  }else{
-   gameTimer=setTimeout(()=>{
-    a.flipped=false;
-    b.flipped=false;
-    flippedCards=[];
-    gameTimer=null;
-    renderMemory();
-   },700);
+  if (targetEl && targetEl.parentNode) {
+   targetEl.innerHTML = item.points > 0 ? "💥" : "❌";
+   setTimeout(() => {
+    if (targetEl && targetEl.parentNode) targetEl.parentNode.removeChild(targetEl);
+   }, 150);
   }
  }
 }
 
-/* TARGET RUSH */
+function endGunGame() {
+ stopTimers();
+ if (gunSpawner) clearInterval(gunSpawner);
+ gunActive = false;
+
+ let won = 0;
+ if (gunScore >= 180) won = 100; // 3x
+ else if (gunScore >= 110) won = 70; // 2x
+ else if (gunScore >= 60) won = 35; // 1x
+
+ finishGame(gunScore, `Mission complete! Tactical score: ${gunScore}`, won);
+}
+
+/* ========================================================
+   4. BLADE MASTER: KNIFE THROW
+   ======================================================== */
+let knifeCanvas, knifeCtx;
+let knifeAngle = 0;
+let knifeSpeed = 0.04;
+let knifeStuck = [];
+let flyingKnife = null;
+let remainingKnives = 8;
+let knifeActive = false;
+
+function initKnifeGame() {
+ knifeCanvas = document.getElementById("knifeCanvas");
+ if (!knifeCanvas) return;
+ knifeCtx = knifeCanvas.getContext("2d");
+ knifeAngle = 0;
+ knifeSpeed = 0.04;
+ knifeStuck = [];
+ flyingKnife = null;
+ remainingKnives = 8;
+ knifeActive = false;
+ document.getElementById("knifeRemainingText").textContent = "8";
+ document.getElementById("knifeStuckText").textContent = "0 / 8";
+ document.getElementById("knifeStartBtn").disabled = false;
+ document.getElementById("knifeStartBtn").textContent = "⚔️ Start Challenge";
+ drawKnifeScene();
+}
+
+function startKnifeGame() {
+ stopTimers();
+ initKnifeGame();
+ knifeActive = true;
+ gameRunning = true;
+ document.getElementById("knifeStartBtn").disabled = true;
+ document.getElementById("knifeStartBtn").textContent = "⚔️ Throw Carefully!";
+
+ let dirCounter = 0;
+ function loop() {
+  if (!knifeActive) return;
+
+  dirCounter++;
+  if (dirCounter % 120 === 0) {
+   knifeSpeed = (Math.random() > 0.5 ? 1 : -1) * (0.03 + Math.random() * 0.04);
+  }
+  knifeAngle += knifeSpeed;
+
+  if (flyingKnife) {
+   flyingKnife.y -= 20;
+   if (flyingKnife.y <= 175) {
+    checkKnifeHit();
+   }
+  }
+
+  drawKnifeScene();
+  gameAnimFrame = requestAnimationFrame(loop);
+ }
+ gameAnimFrame = requestAnimationFrame(loop);
+}
+
+function throwKnife() {
+ if (!knifeActive || flyingKnife || remainingKnives <= 0) return;
+ remainingKnives--;
+ document.getElementById("knifeRemainingText").textContent = remainingKnives;
+ flyingKnife = { x: 170, y: 280 };
+}
+
+function checkKnifeHit() {
+ const hitAngle = (-knifeAngle + Math.PI / 2) % (Math.PI * 2);
+ const normalizedHit = (hitAngle + Math.PI * 2) % (Math.PI * 2);
+
+ const collision = knifeStuck.some(a => {
+  let diff = Math.abs(a - normalizedHit);
+  if (diff > Math.PI) diff = Math.PI * 2 - diff;
+  return diff < 0.26;
+ });
+
+ if (collision) {
+  knifeActive = false;
+  endKnifeGame(false);
+ } else {
+  knifeStuck.push(normalizedHit);
+  flyingKnife = null;
+  document.getElementById("knifeStuckText").textContent = `${knifeStuck.length} / 8`;
+
+  if (knifeStuck.length >= 8) {
+   knifeActive = false;
+   endKnifeGame(true);
+  }
+ }
+}
+
+function drawKnifeScene() {
+ if (!knifeCtx) return;
+ const w = knifeCanvas.width;
+ const h = knifeCanvas.height;
+
+ knifeCtx.fillStyle = "#0f172a";
+ knifeCtx.fillRect(0, 0, w, h);
+
+ const cx = w / 2;
+ const cy = 115;
+ const r = 60;
+
+ knifeCtx.save();
+ knifeCtx.translate(cx, cy);
+ knifeCtx.rotate(knifeAngle);
+
+ knifeCtx.fillStyle = "#b45309";
+ knifeCtx.beginPath();
+ knifeCtx.arc(0, 0, r, 0, Math.PI * 2);
+ knifeCtx.fill();
+ knifeCtx.lineWidth = 4;
+ knifeCtx.strokeStyle = "#78350f";
+ knifeCtx.stroke();
+
+ knifeCtx.strokeStyle = "#92400e";
+ knifeCtx.lineWidth = 2;
+ knifeCtx.beginPath();
+ knifeCtx.arc(0, 0, r - 16, 0, Math.PI * 2);
+ knifeCtx.stroke();
+
+ knifeCtx.fillStyle = "#d97706";
+ knifeCtx.beginPath();
+ knifeCtx.arc(0, 0, 18, 0, Math.PI * 2);
+ knifeCtx.fill();
+
+ knifeStuck.forEach(ang => {
+  knifeCtx.save();
+  knifeCtx.rotate(ang);
+  knifeCtx.fillStyle = "#e2e8f0";
+  knifeCtx.fillRect(-3, r - 4, 6, 32);
+  knifeCtx.fillStyle = "#94a3b8";
+  knifeCtx.fillRect(-5, r + 28, 10, 12);
+  knifeCtx.restore();
+ });
+
+ knifeCtx.restore();
+
+ if (flyingKnife) {
+  knifeCtx.save();
+  knifeCtx.translate(flyingKnife.x, flyingKnife.y);
+  knifeCtx.fillStyle = "#e2e8f0";
+  knifeCtx.fillRect(-3, -20, 6, 28);
+  knifeCtx.fillStyle = "#94a3b8";
+  knifeCtx.fillRect(-5, 8, 10, 14);
+  knifeCtx.restore();
+ } else if (remainingKnives > 0) {
+  knifeCtx.save();
+  knifeCtx.translate(cx, 280);
+  knifeCtx.fillStyle = "#e2e8f0";
+  knifeCtx.fillRect(-3, -20, 6, 28);
+  knifeCtx.fillStyle = "#94a3b8";
+  knifeCtx.fillRect(-5, 8, 10, 14);
+  knifeCtx.restore();
+ }
+}
+
+function endKnifeGame(perfect) {
+ stopTimers();
+ const stuck = knifeStuck.length;
+ let won = 0;
+ if (stuck >= 8) won = 60; // 3x
+ else if (stuck >= 6) won = 40; // 2x
+ else if (stuck >= 4) won = 20; // 1x
+
+ const msg = (perfect ? "🏆 PERFECT MASTER! " : "⚔️ Blade Collided! ") + `Successfully stuck ${stuck} / 8 knives into rotating wheel!`;
+ finishGame(stuck * 10, msg, won);
+}
+
+/* ========================================================
+   5. TARGET HUNTER
+   ======================================================== */
+let targetComboCount = 1;
+
 function resetTarget(){
  document.getElementById("targetTime").textContent="15";
  document.getElementById("targetScore").textContent="0";
+ const comboEl = document.getElementById("targetCombo");
+ if (comboEl) comboEl.textContent = "x1";
  document.getElementById("targetButton").style.display="none";
  document.getElementById("targetStart").disabled=false;
+ targetComboCount = 1;
 }
 
 function moveTarget(){
  const arena=document.getElementById("targetArena");
  const target=document.getElementById("targetButton");
+ if (!arena || !target) return;
  const maxX=Math.max(0,arena.clientWidth-60);
  const maxY=Math.max(0,arena.clientHeight-60);
  target.style.left=Math.floor(Math.random()*(maxX+1))+"px";
@@ -931,14 +1758,17 @@ function moveTarget(){
 function startTarget(){
  stopTimers();
  gameScore=0;
+ targetComboCount=1;
  let time=15;
  gameRunning=true;
  document.getElementById("targetScore").textContent="0";
  document.getElementById("targetTime").textContent=time;
+ const comboEl = document.getElementById("targetCombo");
+ if (comboEl) comboEl.textContent = "x1";
  document.getElementById("targetStart").disabled=true;
  document.getElementById("targetButton").style.display="block";
  moveTarget();
- targetMover=setInterval(moveTarget,800);
+ targetMover=setInterval(moveTarget,650);
 
  gameTimer=setInterval(()=>{
   time--;
@@ -946,17 +1776,49 @@ function startTarget(){
   if(time<=0){
    document.getElementById("targetButton").style.display="none";
    document.getElementById("targetStart").disabled=false;
-   finishGame(gameScore,"Targets hit: "+gameScore);
+   let won = 0;
+   if (gameScore >= 20) won = 45; // 3x
+   else if (gameScore >= 12) won = 30; // 2x
+   else if (gameScore >= 6) won = 15; // 1x
+   finishGame(gameScore,"Target Hunter Complete! Final Score: "+gameScore, won);
   }
  },1000);
 }
 
 function hitTarget(){
  if(!gameRunning||gameRewarded)return;
- gameScore++;
+ targetComboCount = Math.min(5, targetComboCount + 1);
+ gameScore += targetComboCount;
  document.getElementById("targetScore").textContent=gameScore;
+ const comboEl = document.getElementById("targetCombo");
+ if (comboEl) comboEl.textContent = "x" + targetComboCount;
  moveTarget();
 }
+
+// Global Keyboard Controls
+window.addEventListener("keydown", (e) => {
+ if (selectedGame?.id === 1 && gameRunning) {
+  if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") carMoveLeft();
+  if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") carMoveRight();
+ }
+ if (selectedGame?.id === 2 && gameRunning) {
+  if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") bikeMoveLeft();
+  if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") bikeMoveRight();
+  if (e.key === "ArrowUp" || e.key === "w" || e.key === "W" || e.key === " ") bikeNitro(true);
+ }
+ if (selectedGame?.id === 3 && gameRunning) {
+  if (e.key === "r" || e.key === "R") gunReload();
+ }
+ if (selectedGame?.id === 4 && gameRunning) {
+  if (e.key === " " || e.key === "ArrowUp") throwKnife();
+ }
+});
+
+window.addEventListener("keyup", (e) => {
+ if (selectedGame?.id === 2 && gameRunning) {
+  if (e.key === "ArrowUp" || e.key === "w" || e.key === "W" || e.key === " ") bikeNitro(false);
+ }
+});
 
 loadGames();
 
