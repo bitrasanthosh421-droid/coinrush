@@ -109,6 +109,22 @@ header{position:sticky;top:0;z-index:10;background:#0b1020;border-bottom:1px sol
 .nitro-btn{background:linear-gradient(135deg,#f59e0b,#ef4444);color:white;font-weight:900}
 .nitro-btn:active{background:linear-gradient(135deg,#ef4444,#b91c1c)}
 .reload-btn{background:#dc2626;color:white;font-weight:bold}
+.cooldown-tracker-banner{
+ display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
+ margin:20px 0 16px;padding:14px 18px;border-radius:16px;
+ background:rgba(30,41,59,0.7);border:1px solid rgba(255,255,255,0.12);
+ backdrop-filter:blur(8px);
+}
+.cooldown-pill{
+ padding:7px 15px;border-radius:20px;font-size:12.5px;font-weight:800;
+ display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.cooldown-pill.ready{
+ background:rgba(34,197,94,0.18);border:1px solid rgba(34,197,94,0.5);color:#86efac;
+}
+.cooldown-pill.waiting{
+ background:rgba(234,179,8,0.18);border:1px solid rgba(234,179,8,0.5);color:#fde047;
+}
 
 /* AD AND GAME AREAS */
 .ad-container,.game-container{
@@ -276,18 +292,54 @@ footer{text-align:center;color:#6b7280;padding:30px 15px;font-size:12px;border-t
    <p>Choose a game and enjoy fun mini-games with virtual points.</p>
    <button class="primary-btn" onclick="showPage('games')">Explore Games →</button>
    <button class="primary-btn" onclick="showPage('leaderboard')" style="margin-left:10px;background:rgba(250,204,21,0.18);color:#facc15;border:1px solid rgba(250,204,21,0.4)">🏆 Leaderboard →</button>
-  </div>
-  <h2 class="section-title">Recommended Games</h2>
-  <div class="game-grid" id="homeGames"></div>
- </div>
-</section>
+   <div class="cooldown-tracker-banner">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+     <div style="font-size:28px">⏱️</div>
+     <div>
+      <div style="font-size:15px;font-weight:800;display:flex;align-items:center;gap:6px">
+       <span>Match Reward:</span>
+       <span style="color:#facc15">Get 50 Coins Per Match</span>
+      </div>
+      <div style="font-size:12px;color:#94a3b8;margin-top:2px">
+       Earn up to 50 coins per match. Gain another 50 coins after 5 minutes of playing!
+      </div>
+     </div>
+    </div>
+    <div class="cooldown-pill ready reward-cooldown-badge-elem">
+     🟢 50 Coins Ready!
+    </div>
+   </div>
 
-<!-- ALL GAMES -->
-<section id="games" class="page">
- <div class="container">
-  <h1 class="page-title">Available Games</h1>
-  <p class="page-subtitle">Choose your favourite game!</p>
-  <div class="game-grid" id="allGames" style="margin-top:25px"></div>
+   <h2 class="section-title">Recommended Games</h2>
+   <div class="game-grid" id="homeGames"></div>
+  </div>
+ </section>
+
+ <!-- ALL GAMES -->
+ <section id="games" class="page">
+  <div class="container">
+   <h1 class="page-title">Available Games</h1>
+   <p class="page-subtitle">Choose your favourite game!</p>
+
+   <div class="cooldown-tracker-banner">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+     <div style="font-size:28px">⏱️</div>
+     <div>
+      <div style="font-size:15px;font-weight:800;display:flex;align-items:center;gap:6px">
+       <span>Match Reward:</span>
+       <span style="color:#facc15">50 Coins Per Match</span>
+      </div>
+      <div style="font-size:12px;color:#94a3b8;margin-top:2px">
+       Duration rule: Play to earn 50 coins. Gain another 50 coins after 5 minutes!
+      </div>
+     </div>
+    </div>
+    <div class="cooldown-pill ready reward-cooldown-badge-elem">
+     🟢 50 Coins Ready!
+    </div>
+   </div>
+
+   <div class="game-grid" id="allGames" style="margin-top:15px"></div>
  </div>
 </section>
 
@@ -312,10 +364,10 @@ footer{text-align:center;color:#6b7280;padding:30px 15px;font-size:12px;border-t
    <h1 id="gameTitle">Game</h1>
    <p id="gameInstructions" class="page-subtitle"></p>
 
-   <!-- High Stakes Info Bar -->
+   <!-- 50 Coins & 5-Min Play Duration Info Bar -->
    <div id="gameStakeBar" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);padding:10px 16px;border-radius:12px;margin:12px 0 16px;font-size:13px">
-    <div>🪙 Entry Stake: <strong id="activeGameCost" style="color:#f87171">25 Coins</strong></div>
-    <div>🏆 Top Jackpot: <strong id="activeGameMaxWin" style="color:#4ade80">75 Coins</strong></div>
+    <div>🎮 Match Reward: <strong style="color:#facc15">50 Coins Max</strong></div>
+    <div>⏱️ Reward Status: <strong id="gameCooldownStatus" style="color:#4ade80">🟢 Ready to Earn</strong></div>
    </div>
 
    <div class="game-area">
@@ -619,11 +671,11 @@ footer{text-align:center;color:#6b7280;padding:30px 15px;font-size:12px;border-t
 <script>
   
 const games=[
- {id:1, name:"Turbo Highway", icon:"🏎️", description:"High-speed traffic dodge racer. Steer around cars and trucks at blistering speeds!", color:"orange", cost:25, maxWin:75, badge:"HARD 🔥"},
- {id:2, name:"Moto Rush 3D", icon:"🏍️", description:"Superbike highway speedster! Hold Nitro boost for double speed & multiplier.", color:"purple", cost:30, maxWin:90, badge:"EXPERT ⚡"},
- {id:3, name:"Gun Strike", icon:"🔫", description:"Tactical sniper shootout! Shoot bandits & targets, avoid bombs, reload fast.", color:"red", cost:35, maxWin:100, badge:"EXTREME 💀"},
- {id:4, name:"Blade Master", icon:"🗡️", description:"Precision knife throwing into rotating wheel. Don't hit existing blades!", color:"amber", cost:20, maxWin:60, badge:"HARD 🔥"},
- {id:5, name:"Target Hunter", icon:"🎯", description:"Lightning reflex precision target hunt with shrinking radius and combos.", color:"blue", cost:15, maxWin:45, badge:"PRO ⭐"}
+ {id:1, name:"Turbo Highway", icon:"🏎️", description:"High-speed traffic dodge racer. Steer around cars and trucks at blistering speeds!", color:"orange", cost:0, maxWin:50, badge:"HARD 🔥"},
+ {id:2, name:"Moto Rush 3D", icon:"🏍️", description:"Superbike highway speedster! Hold Nitro boost for double speed & multiplier.", color:"purple", cost:0, maxWin:50, badge:"EXPERT ⚡"},
+ {id:3, name:"Gun Strike", icon:"🔫", description:"Tactical sniper shootout! Shoot bandits & targets, avoid bombs, reload fast.", color:"red", cost:0, maxWin:50, badge:"EXTREME 💀"},
+ {id:4, name:"Blade Master", icon:"🗡️", description:"Precision knife throwing into rotating wheel. Don't hit existing blades!", color:"amber", cost:0, maxWin:50, badge:"HARD 🔥"},
+ {id:5, name:"Target Hunter", icon:"🎯", description:"Lightning reflex precision target hunt with shrinking radius and combos.", color:"blue", cost:0, maxWin:50, badge:"PRO ⭐"}
 ];
 
 let coins=100;
@@ -638,16 +690,67 @@ let gameRunning=false;
 let gameRewarded=false;
 let gameScore=0;
 
+// 5-Minute Play Duration Rule & Cooldown Helpers
+const COOLDOWN_DURATION_MS = 5 * 60 * 1000; // 5 minutes
+
+function getRewardCooldownRemaining() {
+ const lastClaim = parseInt(localStorage.getItem("coinrush_last_game_claim") || "0", 10);
+ if (!lastClaim) return 0;
+ const elapsed = Date.now() - lastClaim;
+ const remaining = Math.max(0, Math.ceil((COOLDOWN_DURATION_MS - elapsed) / 1000));
+ return remaining;
+}
+
+function formatRemainingTime(seconds) {
+ const m = Math.floor(seconds / 60);
+ const s = seconds % 60;
+ return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+}
+
+function updateRewardCooldownUI() {
+ const remaining = getRewardCooldownRemaining();
+ const badges = document.querySelectorAll(".reward-cooldown-badge-elem");
+ const gameStatusEl = document.getElementById("gameCooldownStatus");
+
+ if (remaining > 0) {
+  const formatted = formatRemainingTime(remaining);
+  badges.forEach(b => {
+   b.className = "cooldown-pill waiting reward-cooldown-badge-elem";
+   b.innerHTML = `⏳ Next 50 Coins in ${formatted}`;
+  });
+  if (gameStatusEl) {
+   gameStatusEl.style.color = "#f59e0b";
+   gameStatusEl.innerHTML = `⏳ 5-Min Cooldown: ${formatted}`;
+  }
+ } else {
+  badges.forEach(b => {
+   b.className = "cooldown-pill ready reward-cooldown-badge-elem";
+   b.innerHTML = `🟢 50 Coins Ready!`;
+  });
+  if (gameStatusEl) {
+   gameStatusEl.style.color = "#4ade80";
+   gameStatusEl.innerHTML = `🟢 Ready to Earn 50 Coins`;
+  }
+ }
+}
+
+setInterval(updateRewardCooldownUI, 1000);
+
 function startApp(){
  document.getElementById("welcome").style.display="none";
  document.getElementById("app").style.display="block";
  showPage("home");
+ updateRewardCooldownUI();
 }
 
 function showPage(name){
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
  document.getElementById(name).classList.add("active");
  window.scrollTo(0,0);
+ if (name === 'home' || name === 'games') {
+  loadGames();
+  updateRewardCooldownUI();
+ }
  if (name === 'leaderboard') {
   loadLeaderboardData();
  }
@@ -658,6 +761,8 @@ function showPage(name){
 }
 
 function createGameCard(g){
+ const rem = getRewardCooldownRemaining();
+ const statusBadge = rem > 0 ? `⏳ ${formatRemainingTime(rem)}` : `🟢 Ready`;
  return `<div class="game-card">
   <div class="game-badge">${g.badge}</div>
   <div class="game-icon ${g.color}">${g.icon}</div>
@@ -665,10 +770,10 @@ function createGameCard(g){
    <h3>${g.name}</h3>
    <p>${g.description}</p>
    <div class="game-stake-info">
-    <span class="stake-cost">🪙 Stake: ${g.cost}</span>
-    <span class="stake-win">🏆 Win Up to: ${g.maxWin}</span>
+    <span class="stake-win">🪙 Reward: Up to 50 Coins</span>
+    <span class="stake-cost" style="color:#a5b4fc">⏱️ 5-Min Duration Rule</span>
    </div>
-   <button class="play-btn" onclick="openGame(${g.id})">🎮 Play Now (${g.cost} 🪙)</button>
+   <button class="play-btn" onclick="openGame(${g.id})">🎮 Play Now (${statusBadge})</button>
   </div>
  </div>`;
 }
@@ -705,11 +810,6 @@ function openGame(id){
  selectedGame=games.find(g=>g.id===id);
  if(!selectedGame)return;
 
- if(coins < selectedGame.cost){
-  alert(`⚠️ Insufficient Coins!\n\nThis high-stakes game costs ${selectedGame.cost} Coins to enter.\nYour current balance is ${coins} Coins.\n\nPlay Target Hunter (15 Coins) or check your daily bonus to earn more!`);
-  return;
- }
-
  adCompleted=false;
  adProgress=0;
 
@@ -718,26 +818,30 @@ function openGame(id){
  icon.textContent=selectedGame.icon;
  icon.className="big-game-icon "+selectedGame.color;
 
+ const remaining = getRewardCooldownRemaining();
+ const statusText = remaining > 0 ? `⏳ Next 50 Coins in ${formatRemainingTime(remaining)} (Practice Play)` : `🟢 50 Coins Ready to Claim!`;
+ const statusColor = remaining > 0 ? `#f59e0b` : `#4ade80`;
+
  document.getElementById("adContent").innerHTML=`
   <div style="font-size:45px">${selectedGame.icon}</div>
   <h3 style="margin-top:10px;font-size:18px;font-weight:800">${selectedGame.name}</h3>
   <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.1);padding:12px;border-radius:12px;margin:14px 0;font-size:13px">
    <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-    <span>🪙 Entry Stake:</span>
-    <strong style="color:#f87171">${selectedGame.cost} Coins</strong>
+    <span>🪙 Match Reward:</span>
+    <strong style="color:#facc15">Up to 50 Coins</strong>
    </div>
    <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-    <span>🏆 Max Jackpot:</span>
-    <strong style="color:#4ade80">${selectedGame.maxWin} Coins</strong>
+    <span>⏱️ Duration Rule:</span>
+    <strong style="color:#a5b4fc">5 Minutes Play Cooldown</strong>
    </div>
    <div style="display:flex;justify-content:space-between">
-    <span>🔥 Difficulty:</span>
-    <strong style="color:#facc15">${selectedGame.badge}</strong>
+    <span>⚡ Reward Status:</span>
+    <strong style="color:${statusColor}">${statusText}</strong>
    </div>
   </div>
   <div class="progress-bg"><div id="progressBar" class="progress-bar"></div></div>
   <div id="progressText" class="progress-text">Tap below to enter arena...</div>
-  <button id="adButton" class="play-btn" onclick="startAd()">Enter Arena (${selectedGame.cost} 🪙 Stake)</button>`;
+  <button id="adButton" class="play-btn" onclick="startAd()">Enter Arena (Free Play)</button>`;
  showPage("ad");
 }
 
@@ -777,23 +881,6 @@ function playGame(){
  gameRewarded=false;
  gameScore=0;
 
- if(coins < selectedGame.cost){
-  alert(`⚠️ Insufficient Coins! You need ${selectedGame.cost} Coins to enter.`);
-  showPage("games");
-  return;
- }
-
- // Deduct Entry Stake immediately
- const stakePaid = selectedGame.cost;
- coins -= stakePaid;
- syncWalletUI();
-
- const cachedUser = JSON.parse(localStorage.getItem("coinrush_user") || "null");
- if (cachedUser) {
-  cachedUser.virtualCoins = coins;
-  localStorage.setItem("coinrush_user", JSON.stringify(cachedUser));
- }
-
  document.querySelectorAll(".mini-game").forEach(e=>e.hidden=true);
  document.getElementById("gameResult").hidden=true;
  document.getElementById("gameTitle").textContent=selectedGame.name;
@@ -802,10 +889,7 @@ function playGame(){
  icon.textContent=selectedGame.icon;
  icon.className="big-game-icon "+selectedGame.color;
 
- const costEl = document.getElementById("activeGameCost");
- if(costEl) costEl.textContent = `${selectedGame.cost} Coins`;
- const winEl = document.getElementById("activeGameMaxWin");
- if(winEl) winEl.textContent = `${selectedGame.maxWin} Coins`;
+ updateRewardCooldownUI();
 
  showPage("game");
 
@@ -832,21 +916,26 @@ function finishGame(score,message,customWonCoins){
  stopTimers();
  gameRewarded=true;
 
- const cost = selectedGame ? (selectedGame.cost || 0) : 0;
+ const remaining = getRewardCooldownRemaining();
  let reward = 0;
+ let canClaimReward = (remaining <= 0);
 
- if(typeof customWonCoins === 'number'){
-  reward = Math.max(0, Math.floor(customWonCoins));
+ if (canClaimReward) {
+  if(typeof customWonCoins === 'number'){
+   reward = Math.min(50, Math.max(0, Math.floor(customWonCoins)));
+  } else {
+   reward = Math.min(50, Math.max(0, Math.floor(score)));
+  }
  } else {
-  reward = Math.max(0, Math.min(selectedGame?.maxWin || 50, Math.floor(score)));
+  reward = 0;
  }
 
  if(reward > 0){
   coins += reward;
+  localStorage.setItem("coinrush_last_game_claim", Date.now().toString());
   syncWalletUI();
+  updateRewardCooldownUI();
  }
-
- const net = reward - cost;
 
  const cachedUser = JSON.parse(localStorage.getItem("coinrush_user") || "null");
  if (cachedUser) {
@@ -863,10 +952,10 @@ function finishGame(score,message,customWonCoins){
  }
 
  const baseUrl = getApiBaseUrl();
- if ((baseUrl || window.location.port === '3000') && selectedGame && selectedGame.id) {
+ if ((baseUrl || window.location.port === '3000') && selectedGame && selectedGame.id && reward > 0) {
   fetchApi("/api/game-reward", {
    method: "POST",
-   body: JSON.stringify({ gameId: selectedGame.id, reward: reward, cost: cost })
+   body: JSON.stringify({ gameId: selectedGame.id, reward: reward })
   })
    .then(data => {
     if (data && data.virtualCoins !== undefined) {
@@ -874,33 +963,44 @@ function finishGame(score,message,customWonCoins){
      syncWalletUI();
     }
    })
-   .catch(() => {});
+   .catch(err => {
+    if (err && err.status === 429) {
+     updateRewardCooldownUI();
+    }
+   });
  }
 
  document.querySelectorAll(".mini-game").forEach(e=>e.hidden=true);
  const resDiv = document.getElementById("gameResult");
  resDiv.hidden=false;
 
- document.getElementById("resultTitle").textContent = net > 0 ? "🎉 Epic Win!" : (net === 0 ? "⚖️ Break Even!" : "💥 Run Crashed!");
- document.getElementById("resultScore").textContent = message;
-
+ const resTitle = document.getElementById("resultTitle");
+ const resScore = document.getElementById("resultScore");
  const stakeEl = document.getElementById("resultStakePaid");
- if(stakeEl) stakeEl.textContent = `-${cost} 🪙`;
-
  const wonEl = document.getElementById("resultCoinsWon");
- if(wonEl) wonEl.textContent = `+${reward} 🪙`;
-
  const netEl = document.getElementById("resultNetProfit");
- if(netEl) {
-  netEl.textContent = (net >= 0 ? `+${net}` : `${net}`) + " 🪙";
-  netEl.style.color = net > 0 ? "#4ade80" : (net === 0 ? "#facc15" : "#f87171");
+ const rewardEl = document.getElementById("resultReward");
+
+ if (resScore) resScore.textContent = message;
+ if (stakeEl) stakeEl.textContent = "FREE (0 🪙)";
+ if (wonEl) wonEl.textContent = `+${reward} 🪙`;
+ if (netEl) {
+  netEl.textContent = `+${reward} 🪙`;
+  netEl.style.color = reward > 0 ? "#4ade80" : "#facc15";
  }
 
- const rewardEl = document.getElementById("resultReward");
- if(rewardEl) {
-  if(net > 0) rewardEl.textContent = `🌟 Awesome run! You earned a net profit of +${net} coins!`;
-  else if(net === 0) rewardEl.textContent = `You recovered your ${cost} coin stake! Try again for the jackpot!`;
-  else rewardEl.textContent = `You lost your ${cost} coin stake. Practice and sharpen your reflexes!`;
+ if (canClaimReward) {
+  if (reward > 0) {
+   if (resTitle) resTitle.textContent = `🎉 Match Reward: +${reward} Coins!`;
+   if (rewardEl) rewardEl.textContent = `🌟 Great gameplay! You earned ${reward} Coins (max 50/match). Next 50 coins will be available after 5 minutes of playing!`;
+  } else {
+   if (resTitle) resTitle.textContent = "💥 Match Ended!";
+   if (rewardEl) rewardEl.textContent = "Score higher in your run to win up to 50 Coins! Try again!";
+  }
+ } else {
+  if (resTitle) resTitle.textContent = "⏳ Practice Match Finished!";
+  const remFormatted = formatRemainingTime(remaining);
+  if (rewardEl) rewardEl.textContent = `⏱️ 5-Minute play duration rule active: You can gain another 50 coins in ${remFormatted}. Keep practicing!`;
  }
 
  if (typeof loadLeaderboardData === 'function') {
@@ -1181,9 +1281,9 @@ function endCarGame(crashed) {
  stopTimers();
  const dist = Math.floor(carDistance);
  let won = 0;
- if (dist >= 160) won = 75; // 3x
- else if (dist >= 90) won = 50; // 2x
- else if (dist >= 45) won = 25; // 1x
+ if (dist >= 120) won = 50;
+ else if (dist >= 70) won = 30;
+ else if (dist >= 35) won = 15;
 
  const msg = (crashed ? "💥 CRASH! " : "") + `Drove ${dist}m at high speed and collected ${carCoinsCount} coins!`;
  finishGame(dist, msg, won);
@@ -1400,9 +1500,9 @@ function endBikeGame(crashed, kmh) {
  stopTimers();
  const dist = Math.floor(bikeDistance);
  let won = 0;
- if (dist >= 220) won = 90; // 3x
- else if (dist >= 120) won = 60; // 2x
- else if (dist >= 60) won = 30; // 1x
+ if (dist >= 150) won = 50;
+ else if (dist >= 90) won = 30;
+ else if (dist >= 45) won = 15;
 
  const msg = (crashed ? "💥 WIPEOUT at " + kmh + " km/h! " : "") + `Rode ${dist}m on superbike highway!`;
  finishGame(dist, msg, won);
@@ -1554,9 +1654,9 @@ function endGunGame() {
  gunActive = false;
 
  let won = 0;
- if (gunScore >= 180) won = 100; // 3x
- else if (gunScore >= 110) won = 70; // 2x
- else if (gunScore >= 60) won = 35; // 1x
+ if (gunScore >= 130) won = 50;
+ else if (gunScore >= 75) won = 30;
+ else if (gunScore >= 35) won = 15;
 
  finishGame(gunScore, `Mission complete! Tactical score: ${gunScore}`, won);
 }
@@ -1722,9 +1822,9 @@ function endKnifeGame(perfect) {
  stopTimers();
  const stuck = knifeStuck.length;
  let won = 0;
- if (stuck >= 8) won = 60; // 3x
- else if (stuck >= 6) won = 40; // 2x
- else if (stuck >= 4) won = 20; // 1x
+ if (stuck >= 8) won = 50;
+ else if (stuck >= 6) won = 30;
+ else if (stuck >= 4) won = 15;
 
  const msg = (perfect ? "🏆 PERFECT MASTER! " : "⚔️ Blade Collided! ") + `Successfully stuck ${stuck} / 8 knives into rotating wheel!`;
  finishGame(stuck * 10, msg, won);
@@ -1777,9 +1877,9 @@ function startTarget(){
    document.getElementById("targetButton").style.display="none";
    document.getElementById("targetStart").disabled=false;
    let won = 0;
-   if (gameScore >= 20) won = 45; // 3x
-   else if (gameScore >= 12) won = 30; // 2x
-   else if (gameScore >= 6) won = 15; // 1x
+   if (gameScore >= 18) won = 50;
+   else if (gameScore >= 10) won = 30;
+   else if (gameScore >= 5) won = 15;
    finishGame(gameScore,"Target Hunter Complete! Final Score: "+gameScore, won);
   }
  },1000);

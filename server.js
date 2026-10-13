@@ -441,7 +441,27 @@ app.get("/api/wallet", requireLogin, async (req, res) => {
   }
 });
 
-// 6. HIGH-STAKES ARCADE GAME REWARD (Increases or deducts coins in MongoDB)
+// 6. GAME REWARD (Max 50 coins per match, 5-minute play duration cooldown)
+app.get("/api/game-reward/status", requireLogin, async (req, res) => {
+  try {
+    const FIVE_MINUTES = 5 * 60 * 1000;
+    const fiveMinutesAgo = new Date(Date.now() - FIVE_MINUTES);
+    const recentClaim = await GameClaim.findOne({
+      userId: req.session.userId,
+      claimedAt: { $gt: fiveMinutesAgo }
+    }).sort({ claimedAt: -1 });
+
+    if (recentClaim) {
+      const elapsed = Date.now() - recentClaim.claimedAt.getTime();
+      const remainingSeconds = Math.max(0, Math.ceil((FIVE_MINUTES - elapsed) / 1000));
+      return res.json({ canClaim: false, remainingSeconds });
+    }
+    return res.json({ canClaim: true, remainingSeconds: 0 });
+  } catch (e) {
+    return res.json({ canClaim: true, remainingSeconds: 0 });
+  }
+});
+
 app.post("/api/game-reward", requireLogin, async (req, res) => {
   const gameId = Number(req.body.gameId);
   if (!Number.isInteger(gameId) || gameId < 1 || gameId > 10) {
@@ -449,23 +469,41 @@ app.post("/api/game-reward", requireLogin, async (req, res) => {
   }
 
   try {
-    const reward = Math.max(0, Math.min(150, Number(req.body.reward) || 0));
-    const cost = Math.max(0, Math.min(100, Number(req.body.cost) || 0));
-    const net = reward - cost;
+    const FIVE_MINUTES = 5 * 60 * 1000;
+    const fiveMinutesAgo = new Date(Date.now() - FIVE_MINUTES);
 
-    // Atomic update user coins with net change
-    const updatedUser = await User.findOneAndUpdate(
-      { _id: req.session.userId, ...(net < 0 ? { virtualCoins: { $gte: Math.abs(net) } } : {}) },
-      { $inc: { virtualCoins: net } },
+    // Check if user already claimed a game reward in the last 5 minutes
+    const recentClaim = await GameClaim.findOne({
+      userId: req.session.userId,
+      claimedAt: { $gt: fiveMinutesAgo }
+    }).sort({ claimedAt: -1 });
+
+    if (recentClaim) {
+      const elapsed = Date.now() - recentClaim.claimedAt.getTime();
+      const remainingSeconds = Math.max(1, Math.ceil((FIVE_MINUTES - elapsed) / 1000));
+      const mins = Math.floor(remainingSeconds / 60);
+      const secs = remainingSeconds % 60;
+      const user = await User.findById(req.session.userId);
+      return res.status(429).json({
+        error: `5-minute duration active. Next 50 coins available in ${mins}m ${secs}s.`,
+        cooldownActive: true,
+        remainingSeconds,
+        virtualCoins: user ? user.virtualCoins : 0
+      });
+    }
+
+    // Strictly cap at 50 coins per match depending on performance
+    const reward = Math.min(50, Math.max(0, Number(req.body.reward) || 50));
+
+    // Update user coins in database
+    const updatedUser = await User.findByIdAndUpdate(
+      req.session.userId,
+      { $inc: { virtualCoins: reward } },
       { new: true }
     );
 
     if (!updatedUser) {
-      const u = await User.findById(req.session.userId);
-      return res.status(400).json({
-        error: "Insufficient coins or user not found.",
-        virtualCoins: u ? u.virtualCoins : 0
-      });
+      return res.status(404).json({ error: "User not found." });
     }
 
     // Record game claim
@@ -476,20 +514,20 @@ app.post("/api/game-reward", requireLogin, async (req, res) => {
     });
 
     // Record transaction
-    if (net !== 0) {
+    if (reward > 0) {
       await Transaction.create({
         userId: req.session.userId,
-        amount: Math.abs(net),
-        transactionType: net > 0 ? "game_reward" : "spend",
-        description: `Game #${gameId} outcome (Stake: ${cost}, Won: ${reward})`
+        amount: reward,
+        transactionType: "game_reward",
+        description: `Game #${gameId} match reward (+${reward} coins)`
       });
     }
 
     return res.json({
       virtualCoins: updatedUser.virtualCoins,
       reward,
-      cost,
-      net
+      cooldownSeconds: 300,
+      message: `Earned +${reward} coins! Next match reward available in 5 minutes.`
     });
   } catch (error) {
     console.error("Reward Error:", error.message);
