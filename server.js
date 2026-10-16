@@ -142,7 +142,10 @@ const withdrawalSchema = new mongoose.Schema(
       type: String,
       default: "Processing",
       enum: ["Processing", "Completed", "Failed", "Under Review"]
-    }
+    },
+    utrNumber: { type: String, trim: true, default: "" },
+    adminNotes: { type: String, trim: true, default: "" },
+    processedAt: { type: Date }
   },
   {
     timestamps: true
@@ -229,6 +232,30 @@ app.get("/login", (req, res) => {
 
 app.get("/login.html", (req, res) => {
   res.sendFile(path.join(__dirname, "login.html"));
+});
+
+app.get("/admin", (req, res) => {
+  res.sendFile(path.join(__dirname, "admin.html"));
+});
+
+app.get("/admin.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "admin.html"));
+});
+
+app.get("/privacy", (req, res) => {
+  res.sendFile(path.join(__dirname, "privacy.html"));
+});
+
+app.get("/privacy.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "privacy.html"));
+});
+
+app.get("/terms", (req, res) => {
+  res.sendFile(path.join(__dirname, "terms.html"));
+});
+
+app.get("/terms.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "terms.html"));
 });
 
 // Rate limiter for authentication routes
@@ -492,8 +519,14 @@ app.post("/api/game-reward", requireLogin, async (req, res) => {
       });
     }
 
-    // Strictly cap at 50 coins per match depending on performance
-    const reward = Math.min(50, Math.max(0, Number(req.body.reward) || 50));
+    // Read play time period and requested reward
+    const playedSeconds = Math.max(0, Number(req.body.playedSeconds) || 0);
+    let reward = Math.min(50, Math.max(0, Number(req.body.reward) || 10));
+
+    // If played duration > 5 minutes (300s), ensure reward is above 30 coins (up to 50 coins)
+    if (playedSeconds >= 300 && reward <= 30) {
+      reward = 35;
+    }
 
     // Update user coins in database
     const updatedUser = await User.findByIdAndUpdate(
@@ -515,11 +548,12 @@ app.post("/api/game-reward", requireLogin, async (req, res) => {
 
     // Record transaction
     if (reward > 0) {
+      const durLabel = playedSeconds > 0 ? ` (${Math.floor(playedSeconds/60)}m ${playedSeconds%60}s played)` : "";
       await Transaction.create({
         userId: req.session.userId,
         amount: reward,
         transactionType: "game_reward",
-        description: `Game #${gameId} match reward (+${reward} coins)`
+        description: `Game #${gameId} reward: +${reward} coins${durLabel}`
       });
     }
 
@@ -527,6 +561,7 @@ app.post("/api/game-reward", requireLogin, async (req, res) => {
       virtualCoins: updatedUser.virtualCoins,
       reward,
       cooldownSeconds: 300,
+      playedSeconds,
       message: `Earned +${reward} coins! Next match reward available in 5 minutes.`
     });
   } catch (error) {
@@ -686,12 +721,21 @@ app.post("/api/withdraw", requireLogin, withdrawLimiter, async (req, res) => {
     }).catch(err => console.error("Withdrawal transaction log error:", err.message));
 
     return res.status(201).json({
+      success: true,
       message: `Withdrawal request for ₹${amountINR} (${coins} coins) submitted successfully!`,
       referenceId,
       amountINR,
       coinsDeducted: coins,
       newBalance: updatedUser.virtualCoins,
+      remainingCoins: updatedUser.virtualCoins,
       status: withdrawal.status,
+      withdrawal: {
+        referenceId,
+        amountINR,
+        coinsDeducted: coins,
+        status: withdrawal.status,
+        createdAt: withdrawal.createdAt
+      },
       createdAt: withdrawal.createdAt
     });
 
@@ -708,23 +752,169 @@ app.get("/api/withdraw/history", requireLogin, async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(50);
 
+    const formatted = list.map(w => ({
+      id: w._id.toString(),
+      referenceId: w.referenceId,
+      coinsDeducted: w.coinsDeducted,
+      amountINR: w.amountINR,
+      payoutMethod: w.payoutMethod,
+      target: w.payoutMethod === "upi"
+        ? w.payoutDetails?.upiId
+        : `A/C ending in ...${String(w.payoutDetails?.accountNumber || "").slice(-4)} (${w.payoutDetails?.ifscCode || ""})`,
+      upiId: w.payoutDetails?.upiId || null,
+      status: w.status,
+      utrNumber: w.utrNumber || "",
+      adminNotes: w.adminNotes || "",
+      createdAt: w.createdAt
+    }));
+
     return res.json({
-      history: list.map(w => ({
-        id: w._id.toString(),
-        referenceId: w.referenceId,
-        coinsDeducted: w.coinsDeducted,
-        amountINR: w.amountINR,
-        payoutMethod: w.payoutMethod,
-        target: w.payoutMethod === "upi"
-          ? w.payoutDetails?.upiId
-          : `A/C ending in ...${String(w.payoutDetails?.accountNumber || "").slice(-4)} (${w.payoutDetails?.ifscCode || ""})`,
-        status: w.status,
-        createdAt: w.createdAt
-      }))
+      history: formatted,
+      withdrawals: formatted
     });
   } catch (error) {
     console.error("History Error:", error.message);
     return res.status(500).json({ error: "Could not load withdrawal history." });
+  }
+});
+
+// ========================================================
+// 11. HOST ADMIN DASHBOARD & PAYOUT PROCESSING
+// ========================================================
+const ADMIN_SECRET = process.env.ADMIN_SECRET || "coinrush_admin_2026";
+
+function requireAdmin(req, res, next) {
+  const key = req.headers["x-admin-key"] || req.query.adminKey || req.body.adminKey;
+  if (!key || key !== ADMIN_SECRET) {
+    return res.status(403).json({ error: "Unauthorized: Invalid Host Admin Key." });
+  }
+  next();
+}
+
+// GET all withdrawals and stats for Host Dashboard
+app.get("/api/admin/withdrawals", requireAdmin, async (req, res) => {
+  try {
+    const withdrawals = await Withdrawal.find({})
+      .populate("userId", "name email virtualCoins")
+      .sort({ createdAt: -1 });
+
+    const totalUsers = await User.countDocuments();
+    const pendingList = withdrawals.filter(w => w.status === "Processing" || w.status === "Under Review");
+    const completedList = withdrawals.filter(w => w.status === "Completed");
+    const failedList = withdrawals.filter(w => w.status === "Failed");
+
+    const totalPendingINR = pendingList.reduce((acc, w) => acc + (w.amountINR || 0), 0);
+    const totalCompletedINR = completedList.reduce((acc, w) => acc + (w.amountINR || 0), 0);
+
+    return res.json({
+      stats: {
+        totalPlayers: totalUsers,
+        pendingCount: pendingList.length,
+        pendingINR: Number(totalPendingINR.toFixed(2)),
+        completedCount: completedList.length,
+        completedINR: Number(totalCompletedINR.toFixed(2)),
+        failedCount: failedList.length
+      },
+      withdrawals: withdrawals.map(w => ({
+        id: w._id.toString(),
+        referenceId: w.referenceId,
+        userName: w.userId ? w.userId.name : "Unknown Player",
+        userEmail: w.userId ? w.userId.email : "Unknown Email",
+        userCoins: w.userId ? w.userId.virtualCoins : 0,
+        amountINR: w.amountINR,
+        coinsDeducted: w.coinsDeducted,
+        payoutMethod: w.payoutMethod,
+        payoutDetails: w.payoutDetails,
+        status: w.status,
+        utrNumber: w.utrNumber || "",
+        adminNotes: w.adminNotes || "",
+        createdAt: w.createdAt,
+        processedAt: w.processedAt || null
+      }))
+    });
+  } catch (error) {
+    console.error("Admin Withdrawals Error:", error.message);
+    return res.status(500).json({ error: "Failed to load admin withdrawals: " + error.message });
+  }
+});
+
+// MARK WITHDRAWAL AS COMPLETED (Host sends money via PhonePe / GPay and marks completed)
+app.post("/api/admin/withdrawals/:id/complete", requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const utrNumber = String(req.body.utrNumber || "").trim();
+    const notes = String(req.body.notes || "").trim();
+
+    const withdrawal = await Withdrawal.findById(id);
+    if (!withdrawal) {
+      return res.status(404).json({ error: "Withdrawal record not found." });
+    }
+
+    withdrawal.status = "Completed";
+    withdrawal.utrNumber = utrNumber || "HOST_UPI_TRANSFER";
+    withdrawal.adminNotes = notes || "Payment sent by host via PhonePe / Google Pay";
+    withdrawal.processedAt = new Date();
+    await withdrawal.save();
+
+    return res.json({
+      success: true,
+      message: `Withdrawal ${withdrawal.referenceId} marked as Completed! User will see status updated.`,
+      withdrawal
+    });
+  } catch (error) {
+    console.error("Admin Complete Error:", error.message);
+    return res.status(500).json({ error: "Could not complete withdrawal: " + error.message });
+  }
+});
+
+// REJECT WITHDRAWAL & REFUND COINS (If player entered invalid UPI or cheated)
+app.post("/api/admin/withdrawals/:id/reject", requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const reason = String(req.body.reason || "Invalid UPI / Bank details or rejected by host").trim();
+
+    const withdrawal = await Withdrawal.findById(id);
+    if (!withdrawal) {
+      return res.status(404).json({ error: "Withdrawal record not found." });
+    }
+
+    if (withdrawal.status === "Completed") {
+      return res.status(400).json({ error: "Cannot reject a withdrawal that has already been marked Completed." });
+    }
+
+    if (withdrawal.status === "Failed") {
+      return res.status(400).json({ error: "Withdrawal is already marked Failed / Refunded." });
+    }
+
+    // Refund coins back to player
+    const refundedUser = await User.findByIdAndUpdate(
+      withdrawal.userId,
+      { $inc: { virtualCoins: withdrawal.coinsDeducted } },
+      { new: true }
+    );
+
+    withdrawal.status = "Failed";
+    withdrawal.adminNotes = reason;
+    withdrawal.processedAt = new Date();
+    await withdrawal.save();
+
+    // Log refund transaction
+    await Transaction.create({
+      userId: withdrawal.userId,
+      amount: withdrawal.coinsDeducted,
+      transactionType: "refund",
+      description: `Refund +${withdrawal.coinsDeducted} coins for rejected payout ${withdrawal.referenceId}: ${reason}`
+    }).catch(e => console.error("Refund transaction log error:", e.message));
+
+    return res.json({
+      success: true,
+      message: `Withdrawal ${withdrawal.referenceId} rejected and ${withdrawal.coinsDeducted} coins refunded to player!`,
+      refundedUserBalance: refundedUser ? refundedUser.virtualCoins : null,
+      withdrawal
+    });
+  } catch (error) {
+    console.error("Admin Reject Error:", error.message);
+    return res.status(500).json({ error: "Could not reject withdrawal: " + error.message });
   }
 });
 
