@@ -1,21 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5301014611783028"
-     crossorigin="anonymous"></script>
-<!-- web ads -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5301014611783028"
-     data-ad-slot="5749938475"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5301014611783028"
-     crossorigin="anonymous"></script>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CoinRush - Play Games</title>
 
@@ -657,6 +643,84 @@ body.sidebar-pinned .sidebar-pin-btn{background:rgba(99,102,241,0.35);color:#818
 #gameResult h2{font-size:26px;font-family:var(--font-head);font-weight:900}
 [hidden]{display:none!important}
 
+/* ARROW ESCAPE: TAP AWAY 3D PUZZLE STYLES */
+.arrow-box-arena {
+ width: 100%;
+ max-width: 340px;
+ min-height: 330px;
+ margin: 0 auto;
+ position: relative;
+ background: radial-gradient(circle at center, #1e1b4b 0%, #0c0a20 60%, #060913 100%);
+ border-radius: 20px;
+ border: 2px solid #8b5cf6;
+ box-shadow: 0 15px 40px rgba(139, 92, 246, 0.35), inset 0 0 30px rgba(139, 92, 246, 0.2);
+ overflow: hidden;
+ user-select: none;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ padding: 14px;
+}
+.arrow-grid-board {
+ display: grid;
+ gap: 8px;
+ position: relative;
+ transition: transform 0.3s ease;
+}
+.arrow-tile {
+ width: 56px;
+ height: 56px;
+ border-radius: 14px;
+ background: linear-gradient(145deg, #2e1065, #1e1b4b);
+ border: 2px solid #818cf8;
+ color: #ffffff;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ cursor: pointer;
+ font-size: 24px;
+ font-weight: 900;
+ box-shadow: 0 6px 15px rgba(0, 0, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.25);
+ transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, opacity 0.25s ease, border-color 0.2s ease;
+ user-select: none;
+ touch-action: manipulation;
+ position: relative;
+}
+.arrow-tile:hover {
+ transform: translateY(-2px) scale(1.06);
+ border-color: #c084fc;
+ box-shadow: 0 8px 22px rgba(168, 85, 247, 0.5);
+}
+.arrow-tile:active {
+ transform: scale(0.92);
+}
+.arrow-tile.hinted {
+ border-color: #facc15 !important;
+ box-shadow: 0 0 25px rgba(250, 204, 21, 0.8) !important;
+ animation: arrowPulseHint 0.7s infinite alternate ease-in-out;
+}
+@keyframes arrowPulseHint {
+ from { transform: scale(1); }
+ to { transform: scale(1.12); }
+}
+.arrow-tile.blocked-bump {
+ animation: arrowTileBump 0.32s ease;
+ border-color: #ef4444 !important;
+ background: linear-gradient(145deg, #7f1d1d, #450a0a) !important;
+}
+@keyframes arrowTileBump {
+ 0% { transform: scale(1); }
+ 35% { transform: scale(1.1) translate(var(--bump-x, 0), var(--bump-y, 0)); }
+ 70% { transform: scale(0.94); }
+ 100% { transform: scale(1); }
+}
+.arrow-tile.flying-out {
+ transform: translate(var(--fly-x, 0), var(--fly-y, 0)) scale(0.5) rotate(15deg) !important;
+ opacity: 0 !important;
+ pointer-events: none;
+}
+
 /* WALLET & PROFILE */
 .wallet-card{padding:32px;margin-top:25px;border-radius:22px;background:linear-gradient(135deg,#eab308,#f97316);box-shadow:0 15px 40px rgba(234,179,8,0.3)}
 .wallet-card h2{font-size:50px;margin-top:8px;font-family:var(--font-head);font-weight:900}
@@ -836,7 +900,7 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
     <button class="sidebar-nav-btn" id="navBtn-games" onclick="navigateToPage('games')">
      <span class="nav-icon">🎮</span>
      <span class="nav-label">Games</span>
-     <span class="nav-badge purple">6 3D</span>
+     <span class="nav-badge purple">8 3D</span>
     </button>
     <button class="sidebar-nav-btn" id="navBtn-wallet" onclick="navigateToPage('wallet')">
      <span class="nav-icon">💰</span>
@@ -931,18 +995,18 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
       <p style="color:#94a3b8;font-size:13px;margin-top:2px">Click any tag above or explore the platform highlights below</p>
      </div>
      <button class="primary-btn" onclick="showPage('games')" style="padding:10px 18px;font-size:13.5px;display:inline-flex;align-items:center;gap:8px">
-      🎮 Go to Games Lobby (6 Games) ➜
+      🎮 Go to Games Lobby (8 Games) ➜
      </button>
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:18px;margin-bottom:25px">
-     <!-- Card 1: 6 Realistic Games -->
+     <!-- Card 1: 8 Realistic Games -->
      <div style="background:var(--card-bg);backdrop-filter:blur(16px);border:1px solid var(--card-border);border-radius:20px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 8px 30px rgba(0,0,0,0.3)">
       <div>
        <div style="font-size:38px;margin-bottom:12px">🎮</div>
-       <h3 style="font-size:18px;font-weight:800;color:#ffffff;margin-bottom:8px">6 Realistic 3D Games</h3>
+       <h3 style="font-size:18px;font-weight:800;color:#ffffff;margin-bottom:8px">8 Realistic &amp; Arcade Games</h3>
        <p style="color:#94a3b8;font-size:13px;line-height:1.5;margin-bottom:16px">
-        Race with bots in Turbo Highway 3D, dogfight in Sky Fighter Jet, test aim in Range Sniper, and master 3 other arcade titles!
+        Weave through highway traffic in Moto Traffic Rider 3D, dismantle directional arrow boxes in Arrow Escape, dogfight in Sky Jet Ace, and conquer 5 other titles!
        </p>
       </div>
       <button onclick="showPage('games')" style="background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.45);color:#c7d2fe;padding:10px 16px;border-radius:12px;font-weight:700;font-size:13px;transition:all .2s ease;display:flex;align-items:center;justify-content:center;gap:6px">
@@ -1012,14 +1076,6 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
 
 <!-- DEMO AD SCREEN -->
 <section id="ad" class="page">
- <amp-ad width="100vw" height="320"
-     type="adsense"
-     data-ad-client="ca-pub-5301014611783028"
-     data-ad-slot="5749938475"
-     data-auto-format="rspv"
-     data-full-width="">
-  <div overflow=""></div>
-</amp-ad>
  <div class="container">
   <div class="ad-container">
    <div id="selectedIcon" class="big-game-icon"></div>
@@ -1149,6 +1205,49 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
      </div>
      <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">Heavy armored assault! Destroy barricades &amp; enemy gunships with 120mm cannon!</p>
      <button id="tankStartBtn" class="play-btn" onclick="startTankGame()">🛡️ Deploy Battle Tank</button>
+    </div>
+
+    <!-- 7. MOTO TRAFFIC RIDER 3D -->
+    <div id="motoGame" class="mini-game" hidden>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12.5px;flex-wrap:wrap;gap:6px;background:rgba(0,0,0,0.3);padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
+      <span>🛣️ Distance: <strong id="motoDistanceText" style="color:#38bdf8">0m</strong></span>
+      <span>⚡ Speed: <strong id="motoSpeedText" style="color:#facc15">160 km/h</strong></span>
+      <span>💨 Nitro: <strong id="motoNitroText" style="color:#a855f7">100%</strong></span>
+      <span>🪙 Score: <strong id="motoScoreText" style="color:#4ade80">0</strong></span>
+     </div>
+     <div style="position:relative;width:100%;max-width:340px;margin:0 auto">
+      <canvas id="motoCanvas" width="340" height="390" style="width:100%;max-width:340px;background:#05070e;border-radius:16px;border:2px solid #8b5cf6;display:block;margin:0 auto;box-shadow:0 10px 30px rgba(139,92,246,0.35)"></canvas>
+      <div id="motoOvertakeNotice" style="position:absolute;top:25px;left:50%;transform:translateX(-50%);background:rgba(15,23,42,0.92);backdrop-filter:blur(8px);border:1px solid #a855f7;color:#e9d5ff;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:900;display:none;pointer-events:none;z-index:10;box-shadow:0 4px 25px rgba(168,85,247,0.5);letter-spacing:0.5px">⚡ CLOSE OVERTAKE! +100 PTS</div>
+     </div>
+     <div class="controls-bar" style="margin-top:10px">
+      <button type="button" class="control-btn" id="motoBtnLeft" style="flex:1">⬅️ Lean Left (A)</button>
+      <button type="button" class="control-btn" id="motoBtnBrake" style="flex:1;background:rgba(239,68,68,0.25);border-color:rgba(239,68,68,0.5)">🛑 Brake (S)</button>
+      <button type="button" class="control-btn" id="motoBtnNitro" style="flex:1;background:linear-gradient(135deg,#7c3aed,#a855f7);border-color:#c084fc">🚀 Nitro (W)</button>
+      <button type="button" class="control-btn" id="motoBtnRight" style="flex:1">Lean Right ➡️ (D)</button>
+     </div>
+     <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">First-person cockpit superbike! Weave through highway traffic &amp; trigger close overtakes. Survive 5+ min for 30-50 Coins!</p>
+     <button id="motoStartBtn" class="play-btn" onclick="startMotoGame()" style="background:linear-gradient(135deg,#7c3aed,#9333ea)">🏍️ Ride Superbike</button>
+    </div>
+
+    <!-- 8. ARROW ESCAPE: TAP AWAY 3D PUZZLE -->
+    <div id="arrowGame" class="mini-game" hidden>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12.5px;flex-wrap:wrap;gap:6px;background:rgba(0,0,0,0.3);padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
+      <span>🧩 <strong id="arrowLevelText" style="color:#c084fc">Stage 1</strong></span>
+      <span>🏹 Remaining: <strong id="arrowRemainingText" style="color:#facc15">16</strong></span>
+      <span>🎯 Score: <strong id="arrowScoreText" style="color:#4ade80">0</strong></span>
+      <span>⏱️ Time: <strong id="arrowTimeText" style="color:#38bdf8">0:00</strong></span>
+     </div>
+     <div class="arrow-box-arena" id="arrowArena">
+      <div class="arrow-grid-board" id="arrowGridBoard">
+       <!-- Dynamic arrow tiles inserted here -->
+      </div>
+     </div>
+     <div class="controls-bar" style="margin-top:12px">
+      <button type="button" class="control-btn" id="arrowBtnHint" onclick="giveArrowHint()" style="background:rgba(234,179,8,0.2);border-color:rgba(234,179,8,0.5);color:#fde047">💡 Hint (H)</button>
+      <button type="button" class="control-btn" id="arrowBtnReset" onclick="restartArrowLevel()" style="background:rgba(100,116,139,0.3);border-color:rgba(148,163,184,0.4)">🔄 Restart (R)</button>
+     </div>
+     <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">Tap arrows to fly out of the box! Arrows blocked by another tile cannot escape. Clear the box to advance stages!</p>
+     <button id="arrowStartBtn" class="play-btn" onclick="startArrowGame()" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">🏹 Start Arrow Puzzle</button>
     </div>
 
     <!-- RESULTS & CASHOUT -->
@@ -1502,7 +1601,9 @@ const games=[
  {id:3, name:"Gun Strike Ops", icon:"🔫", description:"Tactical military sniper range! Laser reticle, recoil kickback, shoot armed hostiles & avoid civilians.", color:"red", cost:0, maxWin:50, badge:"TACTICAL 💀"},
  {id:4, name:"Blade Master 3D", icon:"🗡️", description:"Precision steel dagger challenge! Embedded blades, flying wood splinters & spinning tree trunk.", color:"amber", cost:0, maxWin:50, badge:"EXPERT 🗡️"},
  {id:5, name:"Target Hunter Cyber", icon:"🎯", description:"Futuristic holographic radar hunt with laser sights, combo fireworks & particle bursts.", color:"purple", cost:0, maxWin:50, badge:"CYBER ⭐"},
- {id:6, name:"Tank Iron Siege 3D", icon:"🛡️", description:"Heavy desert armored assault! 120mm smoothbore cannon, caterpillar tread tracks, tank shells & bunker strikes.", color:"orange", cost:0, maxWin:50, badge:"ARMORED TANK 💥"}
+ {id:6, name:"Tank Iron Siege 3D", icon:"🛡️", description:"Heavy desert armored assault! 120mm smoothbore cannon, caterpillar tread tracks, tank shells & bunker strikes.", color:"orange", cost:0, maxWin:50, badge:"ARMORED TANK 💥"},
+ {id:7, name:"Moto Traffic Rider 3D", icon:"🏍️", description:"Realistic first-person cockpit superbike racing! Weave through highway traffic at 240+ km/h, tilt handlebars, dodge cars/trucks & trigger close overtakes!", color:"purple", cost:0, maxWin:50, badge:"TRAFFIC RIDER ⚡"},
+ {id:8, name:"Arrow Escape: Tap Away", icon:"🏹", description:"3D directional arrow puzzle box! Tap arrows pointing away to clear them from the cube. Think strategically to unblock paths and dismantle the box!", color:"indigo", cost:0, maxWin:50, badge:"3D PUZZLE 🧩"}
 ];
 
 let coins=100;
@@ -1743,6 +1844,8 @@ function stopTimers(){
  if (typeof gunActive !== 'undefined') gunActive = false;
  if (typeof knifeActive !== 'undefined') knifeActive = false;
  if (typeof tankActive !== 'undefined') tankActive = false;
+ if (typeof motoActive !== 'undefined') motoActive = false;
+ if (typeof arrowActive !== 'undefined') arrowActive = false;
 }
 
 function openGame(id){
@@ -1875,6 +1978,12 @@ function playGame(){
  }else if(selectedGame.id===6){
   document.getElementById("tankGame").hidden=false;
   initTankGame();
+ }else if(selectedGame.id===7){
+  document.getElementById("motoGame").hidden=false;
+  initMotoGame();
+ }else if(selectedGame.id===8){
+  document.getElementById("arrowGame").hidden=false;
+  initArrowGame();
  }
 }
 
@@ -4299,6 +4408,958 @@ function endTankGame(destroyed) {
  finishGame(score, msg);
 }
 
+/* ============================================================
+   GAME 7: MOTO TRAFFIC RIDER 3D (REALISTIC TRAFFIC RIDER)
+   ============================================================ */
+let motoCanvas = null;
+let motoCtx = null;
+let motoActive = false;
+let motoAnimFrame = null;
+let motoDistance = 0;
+let motoScore = 0;
+let motoSpeed = 160; // km/h
+let motoTargetSpeed = 160;
+let motoNitro = 100; // %
+let motoIsNitro = false;
+let motoIsBraking = false;
+let motoPlayerX = 0; // -1.0 (left) to 1.0 (right)
+let motoTargetX = 0;
+let motoLean = 0; // Lean angle in radians
+let motoTargetLean = 0;
+let motoTraffic = [];
+let motoSparks = [];
+let motoTime = 0;
+let motoOvertakes = 0;
+let motoOvertakeTimer = null;
+
+// Audio Synthesizer for Games
+function playSynthSound(type) {
+ try {
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if (!AudioCtx) return;
+  if (!window._coinrushAudioCtx) window._coinrushAudioCtx = new AudioCtx();
+  const ctx = window._coinrushAudioCtx;
+  if (ctx.state === 'suspended') ctx.resume();
+
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  const now = ctx.currentTime;
+
+  if (type === 'rev') {
+   osc.type = 'sawtooth';
+   osc.frequency.setValueAtTime(140, now);
+   osc.frequency.exponentialRampToValueAtTime(320, now + 0.15);
+   gain.gain.setValueAtTime(0.08, now);
+   gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+   osc.start(now);
+   osc.stop(now + 0.15);
+  } else if (type === 'overtake') {
+   osc.type = 'triangle';
+   osc.frequency.setValueAtTime(440, now);
+   osc.frequency.exponentialRampToValueAtTime(880, now + 0.2);
+   gain.gain.setValueAtTime(0.15, now);
+   gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+   osc.start(now);
+   osc.stop(now + 0.25);
+  } else if (type === 'crash') {
+   osc.type = 'square';
+   osc.frequency.setValueAtTime(120, now);
+   osc.frequency.exponentialRampToValueAtTime(40, now + 0.4);
+   gain.gain.setValueAtTime(0.25, now);
+   gain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
+   osc.start(now);
+   osc.stop(now + 0.45);
+  } else if (type === 'arrow_fly') {
+   osc.type = 'sine';
+   osc.frequency.setValueAtTime(523.25, now); // C5
+   osc.frequency.exponentialRampToValueAtTime(1046.5, now + 0.18); // C6
+   gain.gain.setValueAtTime(0.18, now);
+   gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+   osc.start(now);
+   osc.stop(now + 0.2);
+  } else if (type === 'arrow_bump') {
+   osc.type = 'square';
+   osc.frequency.setValueAtTime(150, now);
+   osc.frequency.exponentialRampToValueAtTime(75, now + 0.12);
+   gain.gain.setValueAtTime(0.12, now);
+   gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+   osc.start(now);
+   osc.stop(now + 0.12);
+  } else if (type === 'arrow_win') {
+   [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g);
+    g.connect(ctx.destination);
+    o.type = 'triangle';
+    o.frequency.setValueAtTime(freq, now + i * 0.08);
+    g.gain.setValueAtTime(0.15, now + i * 0.08);
+    g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.25);
+    o.start(now + i * 0.08);
+    o.stop(now + i * 0.08 + 0.25);
+   });
+  }
+ } catch(e){}
+}
+
+function initMotoGame() {
+ motoCanvas = document.getElementById("motoCanvas");
+ if (!motoCanvas) return;
+ motoCtx = motoCanvas.getContext("2d");
+ motoDistance = 0;
+ motoScore = 0;
+ motoSpeed = 160;
+ motoTargetSpeed = 160;
+ motoNitro = 100;
+ motoIsNitro = false;
+ motoIsBraking = false;
+ motoPlayerX = 0;
+ motoTargetX = 0;
+ motoLean = 0;
+ motoTargetLean = 0;
+ motoTraffic = [];
+ motoSparks = [];
+ motoTime = 0;
+ motoOvertakes = 0;
+
+ updateMotoHUD();
+ drawMotoScene();
+
+ // Touch & Click control bindings
+ const bindTouch = (id, onDown, onUp) => {
+  const btn = document.getElementById(id);
+  if (!btn) return;
+  btn.onmousedown = (e) => { e.preventDefault(); onDown(); };
+  btn.onmouseup = (e) => { e.preventDefault(); if (onUp) onUp(); };
+  btn.ontouchstart = (e) => { e.preventDefault(); onDown(); };
+  btn.ontouchend = (e) => { e.preventDefault(); if (onUp) onUp(); };
+ };
+
+ bindTouch("motoBtnLeft", () => motoMoveLeft(), () => motoReleaseSteer());
+ bindTouch("motoBtnRight", () => motoMoveRight(), () => motoReleaseSteer());
+ bindTouch("motoBtnBrake", () => motoTriggerBrake(), () => motoReleaseBrake());
+ bindTouch("motoBtnNitro", () => motoTriggerNitro(), () => motoReleaseNitro());
+}
+
+function updateMotoHUD() {
+ const distElem = document.getElementById("motoDistanceText");
+ const speedElem = document.getElementById("motoSpeedText");
+ const nitroElem = document.getElementById("motoNitroText");
+ const scoreElem = document.getElementById("motoScoreText");
+ if (distElem) distElem.textContent = `${Math.floor(motoDistance)}m`;
+ if (speedElem) speedElem.textContent = `${Math.round(motoSpeed)} km/h`;
+ if (nitroElem) nitroElem.textContent = `${Math.round(motoNitro)}%`;
+ if (scoreElem) scoreElem.textContent = motoScore;
+}
+
+function motoMoveLeft() {
+ motoTargetX = Math.max(-0.85, motoTargetX - 0.28);
+ motoTargetLean = -0.22;
+ playSynthSound('rev');
+}
+
+function motoMoveRight() {
+ motoTargetX = Math.min(0.85, motoTargetX + 0.28);
+ motoTargetLean = 0.22;
+ playSynthSound('rev');
+}
+
+function motoReleaseSteer() {
+ motoTargetLean = 0;
+}
+
+function motoTriggerBrake() {
+ motoIsBraking = true;
+ motoTargetSpeed = 80;
+}
+
+function motoReleaseBrake() {
+ motoIsBraking = false;
+ motoTargetSpeed = motoIsNitro ? 260 : 160;
+}
+
+function motoTriggerNitro() {
+ if (motoNitro > 5) {
+  motoIsNitro = true;
+  motoTargetSpeed = 260;
+ }
+}
+
+function motoReleaseNitro() {
+ motoIsNitro = false;
+ if (!motoIsBraking) motoTargetSpeed = 160;
+}
+
+function showMotoOvertakeBanner() {
+ const el = document.getElementById("motoOvertakeNotice");
+ if (!el) return;
+ el.style.display = "block";
+ el.style.animation = "none";
+ void el.offsetWidth;
+ el.style.animation = "carOvertakePop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+ clearTimeout(motoOvertakeTimer);
+ motoOvertakeTimer = setTimeout(() => {
+  el.style.display = "none";
+ }, 900);
+}
+
+function spawnMotoTraffic() {
+ if (motoTraffic.length >= 6) return;
+ const lanes = [-0.62, 0.0, 0.62];
+ const lane = lanes[Math.floor(Math.random() * lanes.length)];
+
+ // Ensure no immediate overlap at horizon
+ const tooClose = motoTraffic.some(t => Math.abs(t.x - lane) < 0.25 && t.z > 0.8);
+ if (tooClose) return;
+
+ const types = [
+  { type: 'sedan', color: '#38bdf8', w: 38, h: 22, name: 'Sedan' },
+  { type: 'truck', color: '#fb923c', w: 46, h: 42, name: 'Semi-Truck' },
+  { type: 'suv', color: '#4ade80', w: 40, h: 26, name: 'SUV' },
+  { type: 'sports', color: '#f43f5e', w: 36, h: 20, name: 'Sports' }
+ ];
+ const chosen = types[Math.floor(Math.random() * types.length)];
+
+ motoTraffic.push({
+  x: lane,
+  z: 1.0, // 1.0 = horizon, 0.0 = player
+  speed: 0.35 + Math.random() * 0.15,
+  type: chosen.type,
+  color: chosen.color,
+  w: chosen.w,
+  h: chosen.h,
+  overtaken: false
+ });
+}
+
+function startMotoGame() {
+ stopTimers();
+ initMotoGame();
+ motoActive = true;
+ gameRunning = true;
+ const btn = document.getElementById("motoStartBtn");
+ if (btn) {
+  btn.disabled = true;
+  btn.textContent = "🏍️ Racing at High Speed...";
+ }
+
+ function loop() {
+  if (!motoActive) return;
+  updateMotoGame();
+  drawMotoScene();
+  motoAnimFrame = requestAnimationFrame(loop);
+ }
+ motoAnimFrame = requestAnimationFrame(loop);
+}
+
+function updateMotoGame() {
+ motoTime += 0.02;
+
+ // Handle Nitro depletion & regeneration
+ if (motoIsNitro && motoNitro > 0) {
+  motoNitro = Math.max(0, motoNitro - 0.45);
+  if (motoNitro <= 0) motoReleaseNitro();
+ } else if (!motoIsNitro && motoNitro < 100) {
+  motoNitro = Math.min(100, motoNitro + 0.12);
+ }
+
+ // Smooth acceleration and braking
+ motoSpeed += (motoTargetSpeed - motoSpeed) * 0.08;
+ motoDistance += (motoSpeed / 3.6) * 0.025; // meters
+ motoScore += Math.floor(motoSpeed * 0.015);
+
+ // Smooth steering and cockpit lean
+ motoPlayerX += (motoTargetX - motoPlayerX) * 0.12;
+ motoLean += (motoTargetLean - motoLean) * 0.15;
+ if (!motoIsBraking && !motoIsNitro) {
+  motoTargetLean *= 0.85; // auto-straighten
+ }
+
+ // Spawn traffic vehicles
+ if (Math.random() < 0.04) {
+  spawnMotoTraffic();
+ }
+
+ // Update traffic
+ const playerSpeedFactor = motoSpeed / 120;
+ for (let i = motoTraffic.length - 1; i >= 0; i--) {
+  const t = motoTraffic[i];
+  // Approaches player based on relative speed
+  t.z -= 0.008 * (playerSpeedFactor - t.speed);
+
+  // Check Close Overtake
+  if (!t.overtaken && t.z < 0.25 && t.z > 0.05) {
+   const dx = Math.abs(motoPlayerX - t.x);
+   if (dx < 0.32) {
+    t.overtaken = true;
+    motoOvertakes++;
+    motoScore += 100;
+    showMotoOvertakeBanner();
+    playSynthSound('overtake');
+
+    // Create overtake sparks
+    for (let s = 0; s < 8; s++) {
+     motoSparks.push({
+      x: 170 + motoPlayerX * 110,
+      y: 280,
+      vx: (Math.random() - 0.5) * 6,
+      vy: (Math.random() - 0.5) * 6 - 2,
+      life: 1.0,
+      color: '#c084fc'
+     });
+    }
+   }
+  }
+
+  // Check Collision
+  if (t.z < 0.18 && t.z > -0.05) {
+   const dx = Math.abs(motoPlayerX - t.x);
+   const hitWidth = (t.type === 'truck') ? 0.22 : 0.16;
+   if (dx < hitWidth) {
+    // CRASH!
+    playSynthSound('crash');
+    endMotoGame(true);
+    return;
+   }
+  }
+
+  // Remove vehicle once behind player
+  if (t.z < -0.2) {
+   motoTraffic.splice(i, 1);
+  }
+ }
+
+ // Update sparks
+ for (let i = motoSparks.length - 1; i >= 0; i--) {
+  const p = motoSparks[i];
+  p.x += p.vx;
+  p.y += p.vy;
+  p.life -= 0.04;
+  if (p.life <= 0) motoSparks.splice(i, 1);
+ }
+
+ updateMotoHUD();
+}
+
+function drawMotoScene() {
+ if (!motoCtx || !motoCanvas) return;
+ const ctx = motoCtx;
+ const w = motoCanvas.width;
+ const h = motoCanvas.height;
+ const horizonY = 115;
+
+ // 1. Sky & Twilight Horizon
+ const skyGrad = ctx.createLinearGradient(0, 0, 0, horizonY);
+ skyGrad.addColorStop(0, "#030712");
+ skyGrad.addColorStop(0.5, "#1e1b4b");
+ skyGrad.addColorStop(0.85, "#4c1d95");
+ skyGrad.addColorStop(1, "#c026d3");
+ ctx.fillStyle = skyGrad;
+ ctx.fillRect(0, 0, w, horizonY);
+
+ // Distant neon city skyline & mountains
+ ctx.fillStyle = "#0c0a1a";
+ ctx.beginPath();
+ ctx.moveTo(0, horizonY);
+ ctx.lineTo(25, horizonY - 18);
+ ctx.lineTo(60, horizonY - 10);
+ ctx.lineTo(95, horizonY - 26);
+ ctx.lineTo(130, horizonY - 12);
+ ctx.lineTo(170, horizonY - 32);
+ ctx.lineTo(210, horizonY - 14);
+ ctx.lineTo(250, horizonY - 28);
+ ctx.lineTo(290, horizonY - 10);
+ ctx.lineTo(320, horizonY - 20);
+ ctx.lineTo(w, horizonY - 8);
+ ctx.lineTo(w, horizonY);
+ ctx.closePath();
+ ctx.fill();
+
+ // 2. Highway Ground & Road Perspective
+ const groundGrad = ctx.createLinearGradient(0, horizonY, 0, h);
+ groundGrad.addColorStop(0, "#090d16");
+ groundGrad.addColorStop(1, "#020617");
+ ctx.fillStyle = groundGrad;
+ ctx.fillRect(0, horizonY, w, h - horizonY);
+
+ // Road Polygon (tapers from 70px at horizon to 310px at bottom)
+ const roadTopW = 70;
+ const roadBotW = 310;
+ const roadTopX = w / 2 - roadTopW / 2;
+ const roadBotX = w / 2 - roadBotW / 2;
+
+ ctx.fillStyle = "#1e293b";
+ ctx.beginPath();
+ ctx.moveTo(roadTopX, horizonY);
+ ctx.lineTo(roadTopX + roadTopW, horizonY);
+ ctx.lineTo(roadBotX + roadBotW, h);
+ ctx.lineTo(roadBotX, h);
+ ctx.closePath();
+ ctx.fill();
+
+ // Red & White Rumble Curbs
+ const curbW = 10;
+ const segCount = 14;
+ const speedOffset = (motoDistance * 0.3) % 1;
+ for (let i = 0; i < segCount; i++) {
+  const p1 = (i + speedOffset) / segCount;
+  const p2 = (i + 1 + speedOffset) / segCount;
+  if (p1 > 1) continue;
+
+  const y1 = horizonY + (h - horizonY) * Math.pow(p1, 2);
+  const y2 = horizonY + (h - horizonY) * Math.pow(Math.min(1, p2), 2);
+  const rw1 = roadTopW + (roadBotW - roadTopW) * p1;
+  const rw2 = roadTopW + (roadBotW - roadTopW) * Math.min(1, p2);
+  const rx1 = w / 2 - rw1 / 2;
+  const rx2 = w / 2 - rw2 / 2;
+
+  ctx.fillStyle = (i % 2 === 0) ? "#ef4444" : "#ffffff";
+  // Left curb
+  ctx.beginPath();
+  ctx.moveTo(rx1 - curbW * p1, y1);
+  ctx.lineTo(rx1, y1);
+  ctx.lineTo(rx2, y2);
+  ctx.lineTo(rx2 - curbW * p2, y2);
+  ctx.closePath();
+  ctx.fill();
+
+  // Right curb
+  ctx.beginPath();
+  ctx.moveTo(rx1 + rw1, y1);
+  ctx.lineTo(rx1 + rw1 + curbW * p1, y1);
+  ctx.lineTo(rx2 + rw2 + curbW * p2, y2);
+  ctx.lineTo(rx2 + rw2, y2);
+  ctx.closePath();
+  ctx.fill();
+ }
+
+ // Dashed Lane Markers (3 Lanes = 2 dividing lines)
+ [-0.33, 0.33].forEach(laneFrac => {
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.75)";
+  for (let i = 0; i < segCount; i++) {
+   const p1 = (i + speedOffset) / segCount;
+   const p2 = (i + 0.5 + speedOffset) / segCount;
+   if (p1 > 1) continue;
+
+   const y1 = horizonY + (h - horizonY) * Math.pow(p1, 2);
+   const y2 = horizonY + (h - horizonY) * Math.pow(Math.min(1, p2), 2);
+   const rw1 = roadTopW + (roadBotW - roadTopW) * p1;
+   const rw2 = roadTopW + (roadBotW - roadTopW) * Math.min(1, p2);
+
+   const x1 = w / 2 + (rw1 / 2) * laneFrac;
+   const x2 = w / 2 + (rw2 / 2) * laneFrac;
+
+   ctx.lineWidth = Math.max(1, 3.5 * p1);
+   ctx.beginPath();
+   ctx.moveTo(x1, y1);
+   ctx.lineTo(x2, y2);
+   ctx.stroke();
+  }
+ });
+
+ // 3. Highway Traffic (Sorted by Z for depth rendering)
+ const sortedTraffic = [...motoTraffic].sort((a, b) => b.z - a.z);
+ sortedTraffic.forEach(veh => {
+  drawTrafficVehicle(ctx, veh, w, h, horizonY, roadTopW, roadBotW);
+ });
+
+ // 4. Nitro High-Speed Warp Streaks
+ if (motoIsNitro) {
+  ctx.strokeStyle = "rgba(192, 132, 252, 0.4)";
+  ctx.lineWidth = 2;
+  for (let k = 0; k < 6; k++) {
+   const sx = Math.random() * w;
+   const sy = horizonY + Math.random() * (h - horizonY - 100);
+   const len = 30 + Math.random() * 50;
+   ctx.beginPath();
+   ctx.moveTo(sx, sy);
+   ctx.lineTo(sx + (sx - w / 2) * 0.2, sy + len);
+   ctx.stroke();
+  }
+ }
+
+ // 5. Sparks / Overtake Particles
+ motoSparks.forEach(p => {
+  ctx.fillStyle = p.color;
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, Math.max(1, 3 * p.life), 0, Math.PI * 2);
+  ctx.fill();
+ });
+
+ // 6. First-Person Cockpit & Superbike Handlebars
+ drawSuperbikeCockpit(ctx, w, h);
+}
+
+function drawTrafficVehicle(ctx, veh, w, h, horizonY, roadTopW, roadBotW) {
+ const p = Math.max(0, Math.min(1, 1 - veh.z));
+ const y = horizonY + (h - horizonY) * Math.pow(p, 1.8);
+ const rw = roadTopW + (roadBotW - roadTopW) * p;
+ const x = w / 2 + (rw / 2) * (veh.x * 0.7);
+
+ const scale = 0.25 + 0.95 * p;
+ const vw = veh.w * scale;
+ const vh = veh.h * scale;
+
+ ctx.save();
+ ctx.translate(x, y);
+
+ // Ground Shadow
+ ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+ ctx.beginPath();
+ ctx.ellipse(0, vh / 2, vw * 0.6, vh * 0.2, 0, 0, Math.PI * 2);
+ ctx.fill();
+
+ if (veh.type === 'truck') {
+  // Heavy 18-Wheeler Trailer
+  ctx.fillStyle = "#334155";
+  ctx.fillRect(-vw / 2, -vh, vw, vh);
+
+  // Chrome Trailer back doors
+  ctx.fillStyle = veh.color;
+  ctx.fillRect(-vw / 2 + 2, -vh + 2, vw - 4, vh - 4);
+  ctx.strokeStyle = "#1e293b";
+  ctx.lineWidth = 1;
+  ctx.strokeRect(-vw / 2 + 2, -vh + 2, vw - 4, vh - 4);
+  ctx.beginPath();
+  ctx.moveTo(0, -vh + 2);
+  ctx.lineTo(0, 0);
+  ctx.stroke();
+
+  // Red Tail-lights
+  ctx.fillStyle = "#ef4444";
+  ctx.fillRect(-vw / 2 + 3, -6 * scale, 8 * scale, 4 * scale);
+  ctx.fillRect(vw / 2 - 11 * scale, -6 * scale, 8 * scale, 4 * scale);
+ } else {
+  // Sleek Passenger Car / SUV
+  const bodyGrad = ctx.createLinearGradient(0, -vh, 0, 0);
+  bodyGrad.addColorStop(0, veh.color);
+  bodyGrad.addColorStop(1, "#0f172a");
+  ctx.fillStyle = bodyGrad;
+  ctx.beginPath();
+  ctx.roundRect(-vw / 2, -vh, vw, vh, 4 * scale);
+  ctx.fill();
+
+  // Rear windshield
+  ctx.fillStyle = "#0f172a";
+  ctx.beginPath();
+  ctx.roundRect(-vw / 2 + 4 * scale, -vh + 3 * scale, vw - 8 * scale, vh * 0.45, 3 * scale);
+  ctx.fill();
+
+  // Glowing red tail-lights
+  ctx.fillStyle = "#ef4444";
+  ctx.shadowColor = "#f87171";
+  ctx.shadowBlur = 8 * scale;
+  ctx.fillRect(-vw / 2 + 2 * scale, -8 * scale, 7 * scale, 4 * scale);
+  ctx.fillRect(vw / 2 - 9 * scale, -8 * scale, 7 * scale, 4 * scale);
+  ctx.shadowBlur = 0;
+ }
+
+ ctx.restore();
+}
+
+function drawSuperbikeCockpit(ctx, w, h) {
+ ctx.save();
+ // Cockpit lean pivot at bottom-center
+ const pivotX = w / 2;
+ const pivotY = h + 20;
+ ctx.translate(pivotX, pivotY);
+ ctx.rotate(motoLean);
+ ctx.translate(-pivotX, -pivotY);
+
+ // 1. Aerodynamic Windscreen Bubble (Tinted purple/dark)
+ const screenW = 190;
+ const screenTopY = h - 170;
+ const glassGrad = ctx.createLinearGradient(0, screenTopY, 0, h);
+ glassGrad.addColorStop(0, "rgba(88, 28, 135, 0.35)");
+ glassGrad.addColorStop(0.6, "rgba(30, 27, 75, 0.65)");
+ glassGrad.addColorStop(1, "rgba(15, 23, 42, 0.95)");
+
+ ctx.fillStyle = glassGrad;
+ ctx.beginPath();
+ ctx.moveTo(w / 2 - 40, screenTopY);
+ ctx.bezierCurveTo(w / 2 - 80, screenTopY + 30, w / 2 - screenW / 2, screenTopY + 90, w / 2 - screenW / 2, h);
+ ctx.lineTo(w / 2 + screenW / 2, h);
+ ctx.bezierCurveTo(w / 2 + screenW / 2, screenTopY + 90, w / 2 + 80, screenTopY + 30, w / 2 + 40, screenTopY);
+ ctx.closePath();
+ ctx.fill();
+
+ // Windscreen edge highlight
+ ctx.strokeStyle = "rgba(192, 132, 252, 0.6)";
+ ctx.lineWidth = 2;
+ ctx.stroke();
+
+ // 2. Dual Aerodynamic Rearview Side Mirrors (Left & Right)
+ [-1, 1].forEach(dir => {
+  const mx = w / 2 + dir * 115;
+  const my = h - 130;
+
+  // Mirror Stem
+  ctx.fillStyle = "#1e293b";
+  ctx.beginPath();
+  ctx.moveTo(w / 2 + dir * 65, h - 85);
+  ctx.lineTo(mx, my);
+  ctx.lineTo(mx + dir * 6, my + 6);
+  ctx.lineTo(w / 2 + dir * 65, h - 75);
+  ctx.closePath();
+  ctx.fill();
+
+  // Mirror Casing & Glass
+  ctx.fillStyle = "#090d16";
+  ctx.beginPath();
+  ctx.ellipse(mx, my, 22, 14, dir * 0.3, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = "#8b5cf6";
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // Reflected highway
+  ctx.fillStyle = "#1e1b4b";
+  ctx.beginPath();
+  ctx.ellipse(mx, my, 18, 10, dir * 0.3, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Tiny mirror traffic light streak
+  ctx.fillStyle = "#38bdf8";
+  ctx.fillRect(mx - 3, my - 2, 6, 2);
+ });
+
+ // 3. Digital LED Dashboard Instrument Cluster
+ const dashX = w / 2 - 62;
+ const dashY = h - 98;
+ const dashW = 124;
+ const dashH = 48;
+
+ ctx.fillStyle = "#05070e";
+ ctx.beginPath();
+ ctx.roundRect(dashX, dashY, dashW, dashH, 8);
+ ctx.fill();
+ ctx.strokeStyle = "#6366f1";
+ ctx.lineWidth = 1.5;
+ ctx.stroke();
+
+ // Tachometer RPM Bar (Green -> Yellow -> Red)
+ const rpmFrac = Math.min(1, motoSpeed / 280);
+ const barW = dashW - 16;
+ ctx.fillStyle = "#1e293b";
+ ctx.fillRect(dashX + 8, dashY + 7, barW, 5);
+
+ const rpmGrad = ctx.createLinearGradient(dashX + 8, 0, dashX + 8 + barW, 0);
+ rpmGrad.addColorStop(0, "#22c55e");
+ rpmGrad.addColorStop(0.65, "#eab308");
+ rpmGrad.addColorStop(1, "#ef4444");
+ ctx.fillStyle = rpmGrad;
+ ctx.fillRect(dashX + 8, dashY + 7, barW * rpmFrac, 5);
+
+ // Digital Speedometer
+ ctx.fillStyle = "#38bdf8";
+ ctx.font = "bold 20px 'Chakra Petch', monospace, sans-serif";
+ ctx.textAlign = "center";
+ ctx.fillText(`${Math.round(motoSpeed)}`, w / 2 - 12, dashY + 34);
+
+ ctx.fillStyle = "#94a3b8";
+ ctx.font = "8px sans-serif";
+ ctx.fillText("KM/H", w / 2 - 12, dashY + 43);
+
+ // Gear Display (N, 1 - 6)
+ const gear = motoSpeed < 20 ? "N" : Math.min(6, Math.floor(motoSpeed / 45) + 1);
+ ctx.fillStyle = "#facc15";
+ ctx.font = "bold 16px monospace";
+ ctx.fillText(`${gear}`, w / 2 + 36, dashY + 30);
+ ctx.fillStyle = "#64748b";
+ ctx.font = "7px sans-serif";
+ ctx.fillText("GEAR", w / 2 + 36, dashY + 41);
+
+ // 4. Clip-on Handlebars & Textured Rubber Grips
+ [-1, 1].forEach(dir => {
+  const barStartX = w / 2 + dir * 30;
+  const barStartY = h - 50;
+  const gripX = w / 2 + dir * 110;
+  const gripY = h - 35;
+
+  // Aluminum Clip-on bar
+  ctx.strokeStyle = "#475569";
+  ctx.lineWidth = 10;
+  ctx.lineCap = "round";
+  ctx.beginPath();
+  ctx.moveTo(barStartX, barStartY);
+  ctx.lineTo(gripX, gripY);
+  ctx.stroke();
+
+  // Rubber Textured Grip
+  ctx.strokeStyle = "#090d16";
+  ctx.lineWidth = 16;
+  ctx.beginPath();
+  ctx.moveTo(gripX - dir * 18, gripY - 4);
+  ctx.lineTo(gripX + dir * 26, gripY + 4);
+  ctx.stroke();
+
+  // Chrome Bar-end weight
+  ctx.fillStyle = "#94a3b8";
+  ctx.beginPath();
+  ctx.arc(gripX + dir * 28, gripY + 4, 8, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Brake / Clutch Lever
+  ctx.strokeStyle = "#cbd5e1";
+  ctx.lineWidth = 3.5;
+  ctx.beginPath();
+  ctx.moveTo(gripX - dir * 10, gripY + 8);
+  ctx.lineTo(gripX + dir * 16, gripY + 12);
+  ctx.stroke();
+ });
+
+ ctx.restore();
+}
+
+function endMotoGame(crashed) {
+ stopTimers();
+ motoActive = false;
+ gameRunning = false;
+ const dist = Math.floor(motoDistance);
+ const score = motoScore;
+
+ const msg = (crashed ? "💥 HIGHWAY COLLISION! " : "🏁 EPIC HIGHWAY RUN! ") +
+  `Traveled ${dist}m, scored ${score} pts with ${motoOvertakes} close overtakes at top speed ${Math.round(motoSpeed)} km/h!`;
+ finishGame(score, msg);
+}
+
+
+/* ============================================================
+   GAME 8: ARROW ESCAPE: TAP AWAY 3D PUZZLE
+   ============================================================ */
+let arrowActive = false;
+let arrowStage = 1;
+let arrowScore = 0;
+let arrowGridSize = 4;
+let arrowTiles = [];
+let arrowRemaining = 0;
+let arrowTimerSec = 0;
+let arrowTimerInt = null;
+
+const ARROW_SYMBOLS = {
+ up: '⬆️',
+ down: '⬇️',
+ left: '⬅️',
+ right: '➡️'
+};
+
+const ARROW_DELTAS = {
+ up: { dr: -1, dc: 0, flyX: 0, flyY: -220, bumpX: 0, bumpY: -8 },
+ down: { dr: 1, dc: 0, flyX: 0, flyY: 220, bumpX: 0, bumpY: 8 },
+ left: { dr: 0, dc: -1, flyX: -220, flyY: 0, bumpX: -8, bumpY: 0 },
+ right: { dr: 0, dc: 1, flyX: 220, flyY: 0, bumpX: 8, bumpY: 0 }
+};
+
+function initArrowGame() {
+ arrowActive = false;
+ arrowStage = 1;
+ arrowScore = 0;
+ arrowTimerSec = 0;
+ clearInterval(arrowTimerInt);
+ setupArrowStage(1);
+ updateArrowHUD();
+}
+
+function setupArrowStage(stage) {
+ arrowStage = stage;
+ arrowGridSize = (stage === 1) ? 4 : 5;
+ const board = document.getElementById("arrowGridBoard");
+ if (!board) return;
+
+ board.innerHTML = "";
+ board.style.gridTemplateColumns = `repeat(${arrowGridSize}, 56px)`;
+
+ arrowTiles = [];
+ const totalCells = arrowGridSize * arrowGridSize;
+ const directions = ['up', 'down', 'left', 'right'];
+
+ // Generate grid with high solvability:
+ // Perimeter tiles point outward first, inner tiles point strategically
+ for (let r = 0; r < arrowGridSize; r++) {
+  for (let c = 0; c < arrowGridSize; c++) {
+   let dir;
+   // Boundary hints
+   if (r === 0 && Math.random() < 0.6) dir = 'up';
+   else if (r === arrowGridSize - 1 && Math.random() < 0.6) dir = 'down';
+   else if (c === 0 && Math.random() < 0.6) dir = 'left';
+   else if (c === arrowGridSize - 1 && Math.random() < 0.6) dir = 'right';
+   else dir = directions[Math.floor(Math.random() * directions.length)];
+
+   arrowTiles.push({
+    id: r * arrowGridSize + c,
+    r: r,
+    c: c,
+    dir: dir,
+    cleared: false
+   });
+  }
+ }
+
+ arrowRemaining = arrowTiles.length;
+
+ // Render DOM elements
+ arrowTiles.forEach(tile => {
+  const el = document.createElement("button");
+  el.type = "button";
+  el.className = "arrow-tile";
+  el.id = `arrowTile-${tile.r}-${tile.c}`;
+  el.textContent = ARROW_SYMBOLS[tile.dir];
+  el.setAttribute("aria-label", `Arrow pointing ${tile.dir}`);
+  el.onclick = () => handleArrowClick(tile.r, tile.c);
+  board.appendChild(el);
+ });
+
+ updateArrowHUD();
+}
+
+function startArrowGame() {
+ stopTimers();
+ initArrowGame();
+ arrowActive = true;
+ gameRunning = true;
+ const btn = document.getElementById("arrowStartBtn");
+ if (btn) {
+  btn.disabled = true;
+  btn.textContent = "🏹 Solving Arrow Box...";
+ }
+
+ clearInterval(arrowTimerInt);
+ arrowTimerInt = setInterval(() => {
+  if (!arrowActive) return;
+  arrowTimerSec++;
+  const m = Math.floor(arrowTimerSec / 60);
+  const s = arrowTimerSec % 60;
+  const timeEl = document.getElementById("arrowTimeText");
+  if (timeEl) timeEl.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+ }, 1000);
+}
+
+function handleArrowClick(r, c) {
+ if (!arrowActive) return;
+ const tile = arrowTiles.find(t => t.r === r && t.c === c);
+ if (!tile || tile.cleared) return;
+
+ const delta = ARROW_DELTAS[tile.dir];
+ let isBlocked = false;
+
+ // Raycast to boundary
+ let currR = r + delta.dr;
+ let currC = c + delta.dc;
+
+ while (currR >= 0 && currR < arrowGridSize && currC >= 0 && currC < arrowGridSize) {
+  const blocker = arrowTiles.find(t => t.r === currR && t.c === currC && !t.cleared);
+  if (blocker) {
+   isBlocked = true;
+   break;
+  }
+  currR += delta.dr;
+  currC += delta.dc;
+ }
+
+ const el = document.getElementById(`arrowTile-${r}-${c}`);
+ if (!el) return;
+
+ // Remove any hint
+ el.classList.remove("hinted");
+
+ if (isBlocked) {
+  // Blocked bump animation
+  playSynthSound('arrow_bump');
+  el.style.setProperty('--bump-x', `${delta.bumpX}px`);
+  el.style.setProperty('--bump-y', `${delta.bumpY}px`);
+  el.classList.add("blocked-bump");
+  setTimeout(() => {
+   if (el) el.classList.remove("blocked-bump");
+  }, 320);
+ } else {
+  // Free flight out!
+  playSynthSound('arrow_fly');
+  tile.cleared = true;
+  arrowRemaining--;
+  arrowScore += 25;
+  updateArrowHUD();
+
+  el.style.setProperty('--fly-x', `${delta.flyX}px`);
+  el.style.setProperty('--fly-y', `${delta.flyY}px`);
+  el.classList.add("flying-out");
+
+  setTimeout(() => {
+   if (el) el.style.visibility = "hidden";
+  }, 240);
+
+  // Check stage clear
+  if (arrowRemaining === 0) {
+   arrowScore += 100;
+   playSynthSound('arrow_win');
+   if (arrowStage < 3) {
+    setTimeout(() => {
+     alert(`🎉 Stage ${arrowStage} Dismantled! +100 Bonus! Advancing to Stage ${arrowStage + 1}...`);
+     setupArrowStage(arrowStage + 1);
+    }, 400);
+   } else {
+    setTimeout(() => {
+     endArrowGame(true);
+    }, 500);
+   }
+  }
+ }
+}
+
+function giveArrowHint() {
+ if (!arrowActive) return;
+ // Find any unblocked arrow
+ for (let tile of arrowTiles) {
+  if (tile.cleared) continue;
+  const delta = ARROW_DELTAS[tile.dir];
+  let currR = tile.r + delta.dr;
+  let currC = tile.c + delta.dc;
+  let blocked = false;
+  while (currR >= 0 && currR < arrowGridSize && currC >= 0 && currC < arrowGridSize) {
+   if (arrowTiles.some(t => t.r === currR && t.c === currC && !t.cleared)) {
+    blocked = true;
+    break;
+   }
+   currR += delta.dr;
+   currC += delta.dc;
+  }
+  if (!blocked) {
+   const el = document.getElementById(`arrowTile-${tile.r}-${tile.c}`);
+   if (el) {
+    el.classList.add("hinted");
+    setTimeout(() => { if (el) el.classList.remove("hinted"); }, 2000);
+   }
+   return;
+  }
+ }
+}
+
+function restartArrowLevel() {
+ if (!arrowActive) return;
+ setupArrowStage(arrowStage);
+}
+
+function updateArrowHUD() {
+ const lvlElem = document.getElementById("arrowLevelText");
+ const remElem = document.getElementById("arrowRemainingText");
+ const scrElem = document.getElementById("arrowScoreText");
+ if (lvlElem) lvlElem.textContent = `Stage ${arrowStage}`;
+ if (remElem) remElem.textContent = arrowRemaining;
+ if (scrElem) scrElem.textContent = arrowScore;
+}
+
+function endArrowGame(clearedAll) {
+ stopTimers();
+ clearInterval(arrowTimerInt);
+ arrowActive = false;
+ gameRunning = false;
+ const score = arrowScore;
+ const msg = (clearedAll ? "🏆 ALL ARROW BOXES DISMANTLED! " : "🏹 PUZZLE COMPLETE! ") +
+  `Cleared stages with ${score} points in ${arrowTimerSec}s!`;
+ finishGame(score, msg);
+}
+
 // Global Keyboard Controls
 window.addEventListener("keydown", (e) => {
  if (selectedGame?.id === 1 && gameRunning) {
@@ -4320,6 +5381,16 @@ window.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") tankMoveLeft();
   if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") tankMoveRight();
   if (e.key === " " || e.key === "ArrowUp" || e.key === "w" || e.key === "W") tankFire();
+ }
+ if (selectedGame?.id === 7 && gameRunning) {
+  if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") motoMoveLeft();
+  if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") motoMoveRight();
+  if (e.key === "ArrowUp" || e.key === "w" || e.key === "W") motoTriggerNitro();
+  if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") motoTriggerBrake();
+ }
+ if (selectedGame?.id === 8 && gameRunning) {
+  if (e.key === "h" || e.key === "H") giveArrowHint();
+  if (e.key === "r" || e.key === "R") restartArrowLevel();
  }
 });
 
