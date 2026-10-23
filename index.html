@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5301014611783028"
+  <!-- Google AdSense Verification -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5301014611783028"
      crossorigin="anonymous"></script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CoinRush - Play Games</title>
@@ -649,11 +651,10 @@ body.sidebar-pinned .sidebar-pin-btn{background:rgba(99,102,241,0.35);color:#818
 #gameResult h2{font-size:26px;font-family:var(--font-head);font-weight:900}
 [hidden]{display:none!important}
 
-/* ARROW ESCAPE: TAP AWAY 3D PUZZLE STYLES */
-.arrow-box-arena {
+/* GAME 7: CYBER CARD MATCH STYLES */
+.card-game-arena {
  width: 100%;
  max-width: 340px;
- min-height: 330px;
  margin: 0 auto;
  position: relative;
  background: radial-gradient(circle at center, #1e1b4b 0%, #0c0a20 60%, #060913 100%);
@@ -662,69 +663,247 @@ body.sidebar-pinned .sidebar-pin-btn{background:rgba(99,102,241,0.35);color:#818
  box-shadow: 0 15px 40px rgba(139, 92, 246, 0.35), inset 0 0 30px rgba(139, 92, 246, 0.2);
  overflow: hidden;
  user-select: none;
+ padding: 12px;
+}
+.card-grid {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ gap: 8px;
+ width: 100%;
+ max-width: 320px;
+ margin: 0 auto;
+ perspective: 1000px;
+}
+.card-item {
+ aspect-ratio: 1;
+ width: 100%;
+ position: relative;
+ transform-style: preserve-3d;
+ transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+ cursor: pointer;
+ user-select: none;
+ touch-action: manipulation;
+}
+.card-item.flipped {
+ transform: rotateY(180deg);
+}
+.card-face {
+ position: absolute;
+ inset: 0;
+ backface-visibility: hidden;
+ -webkit-backface-visibility: hidden;
+ border-radius: 12px;
  display: flex;
  align-items: center;
  justify-content: center;
- padding: 14px;
+ font-size: 24px;
+ box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
-.arrow-grid-board {
- display: grid;
- gap: 8px;
- position: relative;
- transition: transform 0.3s ease;
+.card-back {
+ background: linear-gradient(145deg, #1e1b4b, #0f172a);
+ border: 2px solid #6366f1;
+ color: #a5b4fc;
+ font-size: 20px;
+ transition: border-color 0.2s, box-shadow 0.2s;
 }
-.arrow-tile {
- width: 56px;
- height: 56px;
- border-radius: 14px;
+.card-item:hover .card-back {
+ border-color: #c084fc;
+ box-shadow: 0 0 16px rgba(168, 85, 247, 0.5);
+}
+.card-front {
+ transform: rotateY(180deg);
  background: linear-gradient(145deg, #2e1065, #1e1b4b);
- border: 2px solid #818cf8;
+ border: 2px solid #a855f7;
  color: #ffffff;
+}
+.card-item.matched .card-front {
+ border-color: #4ade80 !important;
+ background: linear-gradient(145deg, #064e3b, #047857) !important;
+ box-shadow: 0 0 20px rgba(74, 222, 128, 0.7);
+ animation: cardMatchGlow 0.5s ease;
+}
+.card-item.hinted .card-back {
+ border-color: #facc15 !important;
+ box-shadow: 0 0 20px rgba(250, 204, 21, 0.8) !important;
+ animation: cardPulse 0.5s infinite alternate ease-in-out;
+}
+@keyframes cardMatchGlow {
+ 0% { transform: rotateY(180deg) scale(0.9); }
+ 50% { transform: rotateY(180deg) scale(1.15); }
+ 100% { transform: rotateY(180deg) scale(1); }
+}
+@keyframes cardPulse {
+ from { transform: scale(1); }
+ to { transform: scale(1.08); }
+}
+
+/* GAME 9: QUICK TAP RUSH */
+.tap-arena {
+ width: 100%;
+ max-width: 340px;
+ margin: 0 auto;
+ background: radial-gradient(circle at center, #1e1b4b 0%, #0a0e1a 100%);
+ border: 2px solid #3b82f6;
+ border-radius: 20px;
+ padding: 24px 16px;
+ text-align: center;
+ box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+}
+.tap-reactor-btn {
+ width: 140px;
+ height: 140px;
+ border-radius: 50%;
+ border: none;
+ font-size: 26px;
+ font-weight: 900;
+ color: #ffffff;
+ background: radial-gradient(circle at 35% 25%, #60a5fa, #2563eb 60%, #1d4ed8 100%);
+ box-shadow: 0 0 35px rgba(37, 99, 235, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+ cursor: pointer;
+ transition: transform 0.08s ease, box-shadow 0.08s ease;
+ user-select: none;
+ touch-action: manipulation;
+ margin: 16px auto;
  display: flex;
- flex-direction: column;
+ align-items: center;
+ justify-content: center;
+}
+.tap-reactor-btn:active {
+ transform: scale(0.92);
+ box-shadow: 0 0 15px rgba(37, 99, 235, 0.8);
+}
+.tap-score-display {
+ font-size: 52px;
+ font-weight: 900;
+ font-family: var(--font-head);
+ color: #60a5fa;
+ text-shadow: 0 0 20px rgba(96, 165, 250, 0.6);
+}
+
+/* GAME 10: QUIZ RUSH */
+.quiz-arena {
+ width: 100%;
+ max-width: 340px;
+ margin: 0 auto;
+ background: radial-gradient(circle at center, #1e1b4b 0%, #0f172a 100%);
+ border: 2px solid #8b5cf6;
+ border-radius: 20px;
+ padding: 18px 14px;
+ box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+}
+.quiz-question-box {
+ background: rgba(15, 23, 42, 0.8);
+ border: 1px solid rgba(139, 92, 246, 0.3);
+ border-radius: 14px;
+ padding: 16px 12px;
+ margin-bottom: 14px;
+ text-align: center;
+ min-height: 80px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 15px;
+ font-weight: 700;
+ color: #ffffff;
+ line-height: 1.4;
+}
+.quiz-choices-grid {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 8px;
+ width: 100%;
+}
+.quiz-choice-btn {
+ background: linear-gradient(145deg, #1e293b, #0f172a);
+ border: 1.5px solid rgba(255, 255, 255, 0.12);
+ border-radius: 12px;
+ color: #e2e8f0;
+ padding: 12px 8px;
+ font-size: 13px;
+ font-weight: 700;
+ cursor: pointer;
+ transition: all 0.15s ease;
+ text-align: center;
+ user-select: none;
+ min-height: 48px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+.quiz-choice-btn:hover {
+ border-color: #a855f7;
+ background: rgba(168, 85, 247, 0.15);
+ transform: translateY(-1px);
+}
+.quiz-choice-btn.correct {
+ background: linear-gradient(145deg, #065f46, #047857) !important;
+ border-color: #34d399 !important;
+ color: #ffffff !important;
+ box-shadow: 0 0 16px rgba(52, 211, 153, 0.5);
+}
+.quiz-choice-btn.wrong {
+ background: linear-gradient(145deg, #7f1d1d, #991b1b) !important;
+ border-color: #f87171 !important;
+ color: #ffffff !important;
+}
+
+/* GAME 11: CYBER NUMBER PUZZLE */
+.number-puzzle-arena {
+ width: 100%;
+ max-width: 340px;
+ margin: 0 auto;
+ background: radial-gradient(circle at center, #1e1b4b 0%, #060913 100%);
+ border: 2px solid #f59e0b;
+ border-radius: 20px;
+ padding: 16px 14px;
+ box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+ text-align: center;
+}
+.puzzle-grid {
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 8px;
+ width: 240px;
+ height: 240px;
+ margin: 12px auto;
+}
+.puzzle-tile {
+ border-radius: 12px;
+ background: linear-gradient(145deg, #27272a, #18181b);
+ border: 2px solid #d97706;
+ color: #fde68a;
+ font-size: 26px;
+ font-weight: 900;
+ font-family: var(--font-head);
+ display: flex;
  align-items: center;
  justify-content: center;
  cursor: pointer;
- font-size: 24px;
- font-weight: 900;
- box-shadow: 0 6px 15px rgba(0, 0, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.25);
- transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, opacity 0.25s ease, border-color 0.2s ease;
+ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+ transition: transform 0.12s ease, background 0.12s ease;
  user-select: none;
  touch-action: manipulation;
- position: relative;
 }
-.arrow-tile:hover {
- transform: translateY(-2px) scale(1.06);
- border-color: #c084fc;
- box-shadow: 0 8px 22px rgba(168, 85, 247, 0.5);
+.puzzle-tile:hover:not(.empty) {
+ transform: scale(1.05);
+ border-color: #facc15;
+ background: linear-gradient(145deg, #3f3f46, #27272a);
 }
-.arrow-tile:active {
- transform: scale(0.92);
-}
-.arrow-tile.hinted {
- border-color: #facc15 !important;
- box-shadow: 0 0 25px rgba(250, 204, 21, 0.8) !important;
- animation: arrowPulseHint 0.7s infinite alternate ease-in-out;
-}
-@keyframes arrowPulseHint {
- from { transform: scale(1); }
- to { transform: scale(1.12); }
-}
-.arrow-tile.blocked-bump {
- animation: arrowTileBump 0.32s ease;
- border-color: #ef4444 !important;
- background: linear-gradient(145deg, #7f1d1d, #450a0a) !important;
-}
-@keyframes arrowTileBump {
- 0% { transform: scale(1); }
- 35% { transform: scale(1.1) translate(var(--bump-x, 0), var(--bump-y, 0)); }
- 70% { transform: scale(0.94); }
- 100% { transform: scale(1); }
-}
-.arrow-tile.flying-out {
- transform: translate(var(--fly-x, 0), var(--fly-y, 0)) scale(0.5) rotate(15deg) !important;
- opacity: 0 !important;
+.puzzle-tile.empty {
+ visibility: hidden;
  pointer-events: none;
+}
+.puzzle-tile.in-place {
+ border-color: #22c55e;
+ color: #86efac;
+ background: linear-gradient(145deg, #064e3b, #022c22);
+}
+
+/* GAME 8: BALLOON ARCHER STYLES */
+#balloonCanvas {
+ touch-action: none;
+ user-select: none;
+ -webkit-user-select: none;
 }
 
 /* WALLET & PROFILE */
@@ -1146,30 +1325,23 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
   border-radius: 8px !important;
   min-height: 42px !important;
  }
- #carCanvas, #jetCanvas, #knifeCanvas, #tankCanvas, #motoCanvas {
+ #carCanvas, #jetCanvas, #knifeCanvas, #tankCanvas, #balloonCanvas {
   max-width: 100% !important;
   height: auto !important;
   max-height: 50vh !important;
  }
- .arrow-box-arena {
-  max-width: 100% !important;
-  min-height: 260px !important;
-  padding: 6px !important;
-  border-radius: 14px !important;
- }
- .arrow-grid-board {
-  width: 100% !important;
-  max-width: 280px !important;
- }
- .arrow-tile {
-  width: 100% !important;
-  max-width: 52px !important;
-  aspect-ratio: 1 !important;
-  height: auto !important;
-  min-height: 40px !important;
-  font-size: 19px !important;
-  border-radius: 9px !important;
- }
+ .card-game-arena {
+   max-width: 100% !important;
+   padding: 8px !important;
+   border-radius: 14px !important;
+  }
+  .card-grid {
+   gap: 6px !important;
+  }
+  .card-face {
+   font-size: 20px !important;
+   border-radius: 9px !important;
+  }
 
  /* Wallet Page Compact */
  .wallet-card {
@@ -1342,6 +1514,164 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
   display: none !important;
  }
 }
+
+/* ========================================================
+   SCROLLING TICKER & BOUNCING DOWN ARROW STYLES
+   ======================================================== */
+.games-header-row {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ flex-wrap: wrap;
+ gap: 14px;
+ width: 100%;
+ margin-bottom: 8px;
+}
+
+.games-count-pill {
+ font-size: 12px;
+ background: rgba(99, 102, 241, 0.22);
+ color: #c7d2fe;
+ border: 1px solid rgba(139, 92, 246, 0.45);
+ padding: 3px 10px;
+ border-radius: 20px;
+ font-weight: 800;
+ vertical-align: middle;
+}
+
+.ticker-wrapper {
+ flex: 1;
+ min-width: 270px;
+ max-width: 620px;
+ background: rgba(15, 23, 42, 0.85);
+ border: 1px solid rgba(139, 92, 246, 0.4);
+ border-radius: 30px;
+ padding: 7px 14px;
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ overflow: hidden;
+ backdrop-filter: blur(10px);
+ box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.ticker-badge {
+ display: flex;
+ align-items: center;
+ gap: 6px;
+ background: linear-gradient(135deg, #ec4899, #8b5cf6);
+ color: white;
+ font-size: 11px;
+ font-weight: 900;
+ padding: 3px 9px;
+ border-radius: 20px;
+ white-space: nowrap;
+ letter-spacing: 0.5px;
+ flex-shrink: 0;
+}
+
+.ticker-pulse-dot {
+ display: inline-block;
+ width: 7px;
+ height: 7px;
+ border-radius: 50%;
+ background: #4ade80;
+ box-shadow: 0 0 8px #4ade80;
+ animation: pulseDot 1.2s infinite ease-in-out;
+}
+
+.ticker-scroll-container {
+ flex: 1;
+ overflow: hidden;
+ white-space: nowrap;
+ position: relative;
+ mask-image: linear-gradient(to right, transparent, black 15px, black calc(100% - 15px), transparent);
+ -webkit-mask-image: linear-gradient(to right, transparent, black 15px, black calc(100% - 15px), transparent);
+}
+
+.ticker-scroll-content {
+ display: inline-block;
+ white-space: nowrap;
+ animation: tickerSlide 25s linear infinite;
+ font-size: 13px;
+ font-weight: 700;
+ color: #e2e8f0;
+}
+
+.ticker-wrapper:hover .ticker-scroll-content {
+ animation-play-state: paused;
+}
+
+@keyframes tickerSlide {
+ 0% { transform: translateX(0); }
+ 100% { transform: translateX(-50%); }
+}
+
+@keyframes pulseDot {
+ 0%, 100% { opacity: 1; transform: scale(1); }
+ 50% { opacity: 0.35; transform: scale(0.8); }
+}
+
+/* Bouncing Down Arrow */
+.scroll-down-arrow-container {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ margin: 24px auto 8px;
+ cursor: pointer;
+ width: fit-content;
+ user-select: none;
+ transition: transform 0.2s ease;
+}
+
+.scroll-down-arrow-container:hover {
+ transform: translateY(2px);
+}
+
+.scroll-down-text {
+ font-size: 12px;
+ font-weight: 800;
+ color: #c084fc;
+ letter-spacing: 1.2px;
+ text-transform: uppercase;
+ margin-bottom: 6px;
+ display: flex;
+ align-items: center;
+ gap: 6px;
+ text-shadow: 0 0 12px rgba(192, 132, 252, 0.5);
+}
+
+.bouncing-arrow-circle {
+ width: 42px;
+ height: 42px;
+ border-radius: 50%;
+ background: rgba(139, 92, 246, 0.18);
+ border: 1.5px solid #8b5cf6;
+ color: #c084fc;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+ transition: all 0.25s ease;
+}
+
+.scroll-down-arrow-container:hover .bouncing-arrow-circle {
+ background: rgba(139, 92, 246, 0.4);
+ border-color: #c084fc;
+ box-shadow: 0 0 30px rgba(168, 85, 247, 0.75);
+ transform: scale(1.1);
+}
+
+.bouncing-down-icon {
+ animation: arrowBounceAnim 1.4s infinite ease-in-out;
+}
+
+@keyframes arrowBounceAnim {
+ 0%, 100% { transform: translateY(0); }
+ 50% { transform: translateY(6px); }
+}
+
 </style>
 </head>
 
@@ -1392,7 +1722,7 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
   </div>
  </div>
 
- <div class="welcome-footer">COINRUSH • 1,000 COINS = ₹10 INR CASHOUT</div>
+ <div class="welcome-footer">COINRUSH • 100 COINS = ₹1.00 INR FAST CASHOUT</div>
 </section>
 
 <!-- MAIN WEBSITE -->
@@ -1514,15 +1844,15 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
      <div>
       <div style="font-size:15px;font-weight:800;display:flex;align-items:center;gap:6px">
        <span>Match Reward:</span>
-       <span style="color:#facc15">Get 50 Coins Per Match</span>
+       <span style="color:#facc15">Earn Coins by Play Duration</span>
       </div>
       <div style="font-size:12px;color:#94a3b8;margin-top:2px">
-       Earn up to 50 coins per match. Gain another 50 coins after 5 minutes of playing!
+       Coins accumulate the longer you play! Play games to build your coin balance.
       </div>
      </div>
     </div>
     <div class="cooldown-pill ready reward-cooldown-badge-elem">
-     🟢 50 Coins Ready!
+     🟢 Match Rewards Ready!
     </div>
    </div>
 
@@ -1545,7 +1875,7 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
        <div style="font-size:38px;margin-bottom:12px">🎮</div>
        <h3 style="font-size:18px;font-weight:800;color:#ffffff;margin-bottom:8px">8 Realistic &amp; Arcade Games</h3>
        <p style="color:#94a3b8;font-size:13px;line-height:1.5;margin-bottom:16px">
-        Weave through highway traffic in Moto Traffic Rider 3D, dismantle directional arrow boxes in Arrow Escape, dogfight in Sky Jet Ace, and conquer 5 other titles!
+        Find matching crypto pairs in Cyber Card Match, pop floating balloons with arrows in Balloon Archer, dogfight in Sky Jet Ace, and conquer 5 other titles!
        </p>
       </div>
       <button onclick="showPage('games')" style="background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.45);color:#c7d2fe;padding:10px 16px;border-radius:12px;font-weight:700;font-size:13px;transition:all .2s ease;display:flex;align-items:center;justify-content:center;gap:6px">
@@ -1582,14 +1912,80 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
      </div>
     </div>
    </div>
+   <!-- AVAILABLE GAMES ON MAIN PAGE -->
+   <div id="availableGamesSection" style="margin-top:35px">
+    <div class="games-header-row">
+     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <div>
+       <h2 style="font-size:26px;font-weight:900;font-family:var(--font-head);letter-spacing:-0.5px;margin:0;display:flex;align-items:center;gap:10px">
+        🎮 Available Games
+        <span class="games-count-pill">11 Games</span>
+       </h2>
+       <p style="color:#94a3b8;font-size:13px;margin:3px 0 0">Choose your favourite game, play &amp; earn real coins!</p>
+      </div>
+     </div>
+
+     <!-- SCROLLING TICKER BESIDE "AVAILABLE GAMES" -->
+     <div class="ticker-wrapper">
+      <div class="ticker-badge">
+       <span class="ticker-pulse-dot"></span>
+       LIVE
+      </div>
+      <div class="ticker-scroll-container">
+       <div class="ticker-scroll-content">
+        <span>⚡ PLAY &amp; EARN: 🎈 Balloon Archer (+5 Coins/pop) • 🃏 Cyber Card Match (+80 Coins) • ⚡ Quick Tap Rush (10s Speed Test) • 🧠 Quiz Rush Trivia • 🔢 Cyber Number Puzzle • 🏎️ Apex Grand Prix • 🚀 Sky Strike Ace • 💰 Convert Coins to ₹ INR! • ⚡ PLAY &amp; EARN: 🎈 Balloon Archer (+5 Coins/pop) • 🃏 Cyber Card Match (+80 Coins) • ⚡ Quick Tap Rush • 🧠 Quiz Rush • 🔢 Number Puzzle • 💰 Cashout Anytime! •&nbsp;</span>
+       </div>
+      </div>
+     </div>
+    </div>
+
+    <!-- Down arrow indicator pointing into the game cards -->
+    <div style="display:flex;align-items:center;gap:8px;margin:8px 0 16px;color:#c084fc;font-size:12.5px;font-weight:700">
+     <span>Pick a game below</span>
+     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="bouncing-down-icon">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <polyline points="19 12 12 19 5 12"></polyline>
+     </svg>
+    </div>
+
+    <div class="game-grid" id="homeGames" style="margin-top:10px"></div>
+   </div>
   </div>
  </section>
 
  <!-- ALL GAMES -->
  <section id="games" class="page">
   <div class="container">
-   <h1 class="page-title">Available Games</h1>
-   <p class="page-subtitle">Choose your favourite game!</p>
+   <div class="games-header-row">
+    <div>
+     <h1 class="page-title" style="margin-bottom:4px;display:flex;align-items:center;gap:12px">
+      Available Games
+      <span class="games-count-pill">11 Games</span>
+     </h1>
+     <p class="page-subtitle" style="margin-top:2px">Choose your favourite game and start earning!</p>
+    </div>
+
+    <!-- SCROLLING TICKER BESIDE "AVAILABLE GAMES" -->
+    <div class="ticker-wrapper">
+     <div class="ticker-badge">
+      <span class="ticker-pulse-dot"></span>
+      LIVE
+     </div>
+     <div class="ticker-scroll-container">
+      <div class="ticker-scroll-content">
+       <span>⚡ LIVE ARCADE: 🎈 Balloon Archer (+5 Coins/pop) • 🃏 Cyber Card Match (+80 Coins) • ⚡ Quick Tap Rush (10s Speed Test) • 🧠 Quiz Rush Trivia • 🔢 Cyber Number Puzzle • 🏎️ Apex Grand Prix • 🚀 Sky Strike Ace • 💰 Convert Coins to ₹ INR! • ⚡ LIVE ARCADE: 🎈 Balloon Archer (+5 Coins/pop) • 🃏 Cyber Card Match (+80 Coins) • ⚡ Quick Tap Rush • 🧠 Quiz Rush • 🔢 Number Puzzle • 💰 Cashout Anytime! •&nbsp;</span>
+      </div>
+     </div>
+    </div>
+   </div>
+
+   <div style="display:flex;align-items:center;gap:8px;margin:4px 0 14px;color:#c084fc;font-size:12.5px;font-weight:700">
+    <span>Scroll down to choose and play</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="bouncing-down-icon">
+     <line x1="12" y1="5" x2="12" y2="19"></line>
+     <polyline points="19 12 12 19 5 12"></polyline>
+    </svg>
+   </div>
 
    <div class="cooldown-tracker-banner">
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
@@ -1597,15 +1993,15 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
      <div>
       <div style="font-size:15px;font-weight:800;display:flex;align-items:center;gap:6px">
        <span>Match Reward:</span>
-       <span style="color:#facc15">50 Coins Per Match</span>
+       <span style="color:#facc15">Play Duration Rewards</span>
       </div>
       <div style="font-size:12px;color:#94a3b8;margin-top:2px">
-       Duration rule: Play to earn 50 coins. Gain another 50 coins after 5 minutes!
+       Duration rule: The longer you survive and play, the more coins you accumulate!
       </div>
      </div>
     </div>
     <div class="cooldown-pill ready reward-cooldown-badge-elem">
-     🟢 50 Coins Ready!
+     🟢 Match Rewards Ready!
     </div>
    </div>
 
@@ -1637,7 +2033,7 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
    <!-- Live Play Duration & Reward Tier Info Bar -->
    <div id="gameStakeBar" style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);padding:10px 16px;border-radius:12px;margin:12px 0 16px;font-size:12.5px;flex-wrap:wrap;gap:8px">
     <div>⏱️ Play Duration: <strong id="activeGamePlayTime" style="color:#38bdf8">00:00</strong></div>
-    <div>🔥 Reward Tier: <strong id="activeGameRewardTier" style="color:#facc15">Reach 5:00+ for 30 to 50 Coins!</strong></div>
+    <div>🔥 Reward Tier: <strong id="activeGameRewardTier" style="color:#facc15">1 Coin per 10s played + Skill bonus</strong></div>
     <div>🎮 Status: <strong id="gameCooldownStatus" style="color:#4ade80">🟢 Ready to Earn</strong></div>
    </div>
 
@@ -1650,6 +2046,7 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
       <span>🏆 Rank: <strong id="carRankText" style="color:#22c55e;font-size:13.5px">1st / 5</strong></span>
       <span>⚡ Speed: <strong id="carSpeedText" style="color:#38bdf8">120 km/h</strong></span>
       <span>🪙 Coins: <strong id="carCoinsCollected" style="color:#4ade80">0</strong></span>
+      <span>🛡️ Shield: <strong id="carShieldText" style="color:#4ade80">5 / 5</strong></span>
      </div>
      <div style="position:relative;width:100%;max-width:340px;margin:0 auto">
       <canvas id="carCanvas" width="340" height="380" style="width:100%;max-width:340px;background:#0d111a;border-radius:16px;border:2px solid #4f46e5;display:block;margin:0 auto;box-shadow:0 10px 30px rgba(79,70,229,0.35)"></canvas>
@@ -1659,7 +2056,7 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
       <button type="button" class="control-btn" id="carBtnLeft">⬅️ Steer Left</button>
       <button type="button" class="control-btn" id="carBtnRight">Steer Right ➡️</button>
      </div>
-     <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">Race against 4 AI Bot Rivals! Survive 5+ minutes to unlock &gt;30 to 50 Coins!</p>
+     <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">Race against 4 AI Bot Rivals! The longer you race, the more coins you accumulate!</p>
      <button id="carStartBtn" class="play-btn" onclick="startCarGame()">🏁 Start Grand Prix Race</button>
     </div>
 
@@ -1670,6 +2067,7 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
       <span>💥 Bogeys: <strong id="jetScore" style="color:#facc15">0</strong></span>
       <span>⚡ Thrust: <strong id="jetSpeedText" style="color:#f97316">Mach 1.9</strong></span>
       <span>🧭 Flight: <strong id="jetDistanceText" style="color:#4ade80">0 km</strong></span>
+      <span>🛡️ Hull Shield: <strong id="jetShieldText" style="color:#4ade80">5 / 5</strong></span>
      </div>
      <div style="position:relative;width:100%;max-width:340px;margin:0 auto">
       <canvas id="jetCanvas" width="340" height="380" style="width:100%;max-width:340px;background:#050d1a;border-radius:16px;border:2px solid #0284c7;display:block;margin:0 auto;box-shadow:0 10px 30px rgba(2,132,199,0.35)"></canvas>
@@ -1680,7 +2078,7 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
       <button type="button" class="control-btn" id="jetBtnFire" style="background:linear-gradient(135deg,#dc2626,#f97316)">💥 FIRE VULCAN (Space)</button>
       <button type="button" class="control-btn" id="jetBtnRight">Bank Right ➡️</button>
      </div>
-     <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">Supersonic stealth fighter jet dogfight! Survive 5+ minutes for 30+ to 50 Coins!</p>
+     <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">Supersonic stealth fighter jet dogfight! Survive longer to accumulate more coins!</p>
      <button id="jetStartBtn" class="play-btn" onclick="startJetGame()">✈️ Launch Supersonic Sortie</button>
     </div>
 
@@ -1746,47 +2144,111 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
      <button id="tankStartBtn" class="play-btn" onclick="startTankGame()">🛡️ Deploy Battle Tank</button>
     </div>
 
-    <!-- 7. MOTO TRAFFIC RIDER 3D -->
-    <div id="motoGame" class="mini-game" hidden>
+    <!-- 7. CYBER CARD MATCH (FIND THE CARDS) -->
+    <div id="cardGame" class="mini-game" hidden>
      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12.5px;flex-wrap:wrap;gap:6px;background:rgba(0,0,0,0.3);padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
-      <span>🛣️ Distance: <strong id="motoDistanceText" style="color:#38bdf8">0m</strong></span>
-      <span>⚡ Speed: <strong id="motoSpeedText" style="color:#facc15">160 km/h</strong></span>
-      <span>💨 Nitro: <strong id="motoNitroText" style="color:#a855f7">100%</strong></span>
-      <span>🪙 Score: <strong id="motoScoreText" style="color:#4ade80">0</strong></span>
+      <span>🃏 Matches: <strong id="cardMatchesText" style="color:#c084fc">0 / 6 Pairs</strong></span>
+      <span>🪙 Coins Earned: <strong id="cardCoinsText" style="color:#4ade80">+0 🪙</strong></span>
+      <span>🔄 Moves: <strong id="cardMovesText" style="color:#facc15">0</strong></span>
+      <span>⏱️ Time: <strong id="cardTimeText" style="color:#38bdf8">0:00</strong></span>
      </div>
-     <div style="position:relative;width:100%;max-width:340px;margin:0 auto">
-      <canvas id="motoCanvas" width="340" height="390" style="width:100%;max-width:340px;background:#05070e;border-radius:16px;border:2px solid #8b5cf6;display:block;margin:0 auto;box-shadow:0 10px 30px rgba(139,92,246,0.35)"></canvas>
-      <div id="motoOvertakeNotice" style="position:absolute;top:25px;left:50%;transform:translateX(-50%);background:rgba(15,23,42,0.92);backdrop-filter:blur(8px);border:1px solid #a855f7;color:#e9d5ff;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:900;display:none;pointer-events:none;z-index:10;box-shadow:0 4px 25px rgba(168,85,247,0.5);letter-spacing:0.5px">⚡ CLOSE OVERTAKE! +100 PTS</div>
-     </div>
-     <div class="controls-bar" style="margin-top:10px">
-      <button type="button" class="control-btn" id="motoBtnLeft" style="flex:1">⬅️ Lean Left (A)</button>
-      <button type="button" class="control-btn" id="motoBtnBrake" style="flex:1;background:rgba(239,68,68,0.25);border-color:rgba(239,68,68,0.5)">🛑 Brake (S)</button>
-      <button type="button" class="control-btn" id="motoBtnNitro" style="flex:1;background:linear-gradient(135deg,#7c3aed,#a855f7);border-color:#c084fc">🚀 Nitro (W)</button>
-      <button type="button" class="control-btn" id="motoBtnRight" style="flex:1">Lean Right ➡️ (D)</button>
-     </div>
-     <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">First-person cockpit superbike! Weave through highway traffic &amp; trigger close overtakes. Survive 5+ min for 30-50 Coins!</p>
-     <button id="motoStartBtn" class="play-btn" onclick="startMotoGame()" style="background:linear-gradient(135deg,#7c3aed,#9333ea)">🏍️ Ride Superbike</button>
-    </div>
-
-    <!-- 8. ARROW ESCAPE: TAP AWAY 3D PUZZLE -->
-    <div id="arrowGame" class="mini-game" hidden>
-     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12.5px;flex-wrap:wrap;gap:6px;background:rgba(0,0,0,0.3);padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
-      <span>🧩 <strong id="arrowLevelText" style="color:#c084fc">Stage 1</strong></span>
-      <span>🏹 Remaining: <strong id="arrowRemainingText" style="color:#facc15">16</strong></span>
-      <span>🎯 Score: <strong id="arrowScoreText" style="color:#4ade80">0</strong></span>
-      <span>⏱️ Time: <strong id="arrowTimeText" style="color:#38bdf8">0:00</strong></span>
-     </div>
-     <div class="arrow-box-arena" id="arrowArena">
-      <div class="arrow-grid-board" id="arrowGridBoard">
-       <!-- Dynamic arrow tiles inserted here -->
+     <div class="card-game-arena" id="cardArena">
+      <div class="card-grid" id="cardGrid">
+       <!-- 12 cards generated by JS -->
       </div>
      </div>
-     <div class="controls-bar" style="margin-top:12px">
-      <button type="button" class="control-btn" id="arrowBtnHint" onclick="giveArrowHint()" style="background:rgba(234,179,8,0.2);border-color:rgba(234,179,8,0.5);color:#fde047">💡 Hint (H)</button>
-      <button type="button" class="control-btn" id="arrowBtnReset" onclick="restartArrowLevel()" style="background:rgba(100,116,139,0.3);border-color:rgba(148,163,184,0.4)">🔄 Restart (R)</button>
+     <div class="controls-bar" style="margin-top:10px">
+      <button type="button" class="control-btn" id="cardBtnHint" onclick="peekCardHint()" style="background:rgba(234,179,8,0.2);border-color:rgba(234,179,8,0.5);color:#fde047">💡 Peek Hint (H)</button>
+      <button type="button" class="control-btn" id="cardBtnShuffle" onclick="restartCardGame()" style="background:rgba(100,116,139,0.3);border-color:rgba(148,163,184,0.4)">🔄 New Deal (R)</button>
+      <button type="button" class="control-btn" id="cardBtnFinish" onclick="endCardGame(false)" style="background:linear-gradient(135deg,#7c3aed,#9333ea)">🏁 Collect &amp; Finish</button>
      </div>
-     <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">Tap arrows to fly out of the box! Arrows blocked by another tile cannot escape. Clear the box to advance stages!</p>
-     <button id="arrowStartBtn" class="play-btn" onclick="startArrowGame()" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">🏹 Start Arrow Puzzle</button>
+     <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">Tap cards to find matching crypto pairs! Each pair match gives <strong>+10 Coins</strong>, plus a <strong>+20 Coin</strong> completion bonus!</p>
+     <button id="cardStartBtn" class="play-btn" onclick="startCardGame()" style="background:linear-gradient(135deg,#7c3aed,#9333ea)">🃏 Play Card Match</button>
+    </div>
+
+    <!-- 8. BALLOON ARCHER: SHOOT & EARN -->
+    <div id="balloonGame" class="mini-game" hidden>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12.5px;flex-wrap:wrap;gap:6px;background:rgba(0,0,0,0.3);padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
+      <span>🎈 Popped: <strong id="balloonPoppedText" style="color:#c084fc">0</strong></span>
+      <span>🪙 Coins Won: <strong id="balloonCoinsText" style="color:#4ade80">+0 🪙</strong></span>
+      <span>🎯 Accuracy: <strong id="balloonAccuracyText" style="color:#facc15">100%</strong></span>
+      <span>⏱️ Time: <strong id="balloonTimeText" style="color:#38bdf8">45s</strong></span>
+     </div>
+     <div style="position:relative;width:100%;max-width:340px;margin:0 auto">
+      <canvas id="balloonCanvas" width="340" height="400" style="width:100%;max-width:340px;background:radial-gradient(ellipse at bottom,#0f172a 0%,#030712 100%);border-radius:16px;border:2px solid #8b5cf6;display:block;margin:0 auto;box-shadow:0 10px 30px rgba(139,92,246,0.35);cursor:crosshair;touch-action:none"></canvas>
+      <div id="balloonPopNotice" style="position:absolute;top:20px;left:50%;transform:translateX(-50%);background:rgba(15,23,42,0.92);backdrop-filter:blur(8px);border:1px solid #4ade80;color:#86efac;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:900;display:none;pointer-events:none;z-index:10;box-shadow:0 4px 20px rgba(74,222,128,0.5)">+5 COINS! 🪙</div>
+     </div>
+     <div class="controls-bar" style="margin-top:10px">
+      <button type="button" class="control-btn" id="balloonBtnShoot" onclick="balloonShootCenter()" style="flex:2;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-color:#a5b4fc">🏹 Shoot Arrow (Tap / Space)</button>
+      <button type="button" class="control-btn" id="balloonBtnCollect" onclick="endBalloonGame(false)" style="flex:1;background:rgba(34,197,94,0.2);border-color:rgba(74,222,128,0.5);color:#86efac">🏁 Cashout</button>
+     </div>
+     <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">Tap anywhere on the arena to shoot arrows at balloons! Each balloon popped awards <strong>+5 Coins</strong>. Shoot rare Golden Balloons for <strong>+10 Coins</strong>!</p>
+     <button id="balloonStartBtn" class="play-btn" onclick="startBalloonGame()" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">🏹 Start Balloon Archer</button>
+    </div>
+
+    <!-- 9. QUICK TAP RUSH -->
+    <div id="tapGame" class="mini-game" hidden>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12.5px;flex-wrap:wrap;gap:6px;background:rgba(0,0,0,0.3);padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
+      <span>⚡ Total Taps: <strong id="tapCountText" style="color:#60a5fa">0</strong></span>
+      <span>🪙 Coins Won: <strong id="tapCoinsText" style="color:#4ade80">+0 🪙</strong></span>
+      <span>⏱️ Time: <strong id="tapTimeText" style="color:#facc15">10s</strong></span>
+     </div>
+     <div class="tap-arena">
+      <div class="tap-score-display" id="tapScoreDisplay">0</div>
+      <p style="font-size:13px;color:#94a3b8;margin:4px 0 10px">Tap the reactor as fast as you can!</p>
+      <button type="button" class="tap-reactor-btn" id="tapReactorBtn" onclick="onReactorTap()">TAP! ⚡</button>
+      <p style="font-size:11.5px;color:#cbd5e1;margin-top:8px">Earn <strong>+1 Coin</strong> for every 2 taps!</p>
+     </div>
+     <div class="controls-bar" style="margin-top:10px">
+      <button type="button" class="control-btn" id="tapBtnRestart" onclick="startTapGame()" style="background:rgba(100,116,139,0.3);border-color:rgba(148,163,184,0.4)">🔄 Restart (R)</button>
+      <button type="button" class="control-btn" id="tapBtnFinish" onclick="endTapGame(false)" style="background:linear-gradient(135deg,#2563eb,#3b82f6)">🏁 Cashout</button>
+     </div>
+     <button id="tapStartBtn" class="play-btn" onclick="startTapGame()" style="background:linear-gradient(135deg,#2563eb,#3b82f6);margin-top:10px">⚡ Start 10s Tap Challenge</button>
+    </div>
+
+    <!-- 10. QUIZ RUSH TRIVIA -->
+    <div id="quizGame" class="mini-game" hidden>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12.5px;flex-wrap:wrap;gap:6px;background:rgba(0,0,0,0.3);padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
+      <span>❓ Question: <strong id="quizProgressText" style="color:#c084fc">1 of 5</strong></span>
+      <span>🎯 Score: <strong id="quizScoreText" style="color:#facc15">0 / 5</strong></span>
+      <span>🪙 Coins: <strong id="quizCoinsText" style="color:#4ade80">+0 🪙</strong></span>
+      <span>⏱️ Time: <strong id="quizTimeText" style="color:#38bdf8">45s</strong></span>
+     </div>
+     <div class="quiz-arena">
+      <div class="quiz-question-box" id="quizQuestionBox">Loading question...</div>
+      <div class="quiz-choices-grid" id="quizChoicesGrid">
+       <!-- 4 choices injected here -->
+      </div>
+      <div id="quizFeedbackBox" style="margin-top:10px;font-size:12px;font-weight:700;min-height:18px;color:#a5f3fc"></div>
+     </div>
+     <div class="controls-bar" style="margin-top:10px">
+      <button type="button" class="control-btn" onclick="startQuizGame()" style="background:rgba(100,116,139,0.3);border-color:rgba(148,163,184,0.4)">🔄 New Quiz</button>
+      <button type="button" class="control-btn" onclick="endQuizGame()" style="background:linear-gradient(135deg,#7c3aed,#9333ea)">🏁 Finish</button>
+     </div>
+     <p style="font-size:11.5px;color:#9ca3af;margin-top:6px">Answer 5 trivia questions! Each correct answer gives <strong>+10 Coins</strong>!</p>
+     <button id="quizStartBtn" class="play-btn" onclick="startQuizGame()" style="background:linear-gradient(135deg,#7c3aed,#9333ea)">🧠 Start Quiz Rush</button>
+    </div>
+
+    <!-- 11. CYBER NUMBER PUZZLE -->
+    <div id="numberGame" class="mini-game" hidden>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12.5px;flex-wrap:wrap;gap:6px;background:rgba(0,0,0,0.3);padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
+      <span>🔄 Moves: <strong id="numberMovesText" style="color:#facc15">0</strong></span>
+      <span>🧩 Status: <strong id="numberStatusText" style="color:#fb923c">Unsolved</strong></span>
+      <span>🪙 Prize: <strong style="color:#4ade80">+50 🪙</strong></span>
+      <span>⏱️ Time: <strong id="numberTimeText" style="color:#38bdf8">60s</strong></span>
+     </div>
+     <div class="number-puzzle-arena">
+      <p style="font-size:12px;color:#94a3b8;margin:0 0 6px">Slide numbered tiles into order from 1 to 8!</p>
+      <div class="puzzle-grid" id="numberPuzzleGrid">
+       <!-- 3x3 tiles injected here -->
+      </div>
+      <p style="font-size:11px;color:#64748b;margin-top:6px">Tap any tile adjacent to the empty slot to slide it.</p>
+     </div>
+     <div class="controls-bar" style="margin-top:10px">
+      <button type="button" class="control-btn" onclick="shuffleNumberPuzzle()" style="background:rgba(234,179,8,0.2);border-color:rgba(234,179,8,0.5);color:#fde047">🔄 Shuffle</button>
+      <button type="button" class="control-btn" onclick="endNumberGame(false)" style="background:linear-gradient(135deg,#ea580c,#f97316)">🏁 Cashout</button>
+     </div>
+     <button id="numberStartBtn" class="play-btn" onclick="startNumberGame()" style="background:linear-gradient(135deg,#ea580c,#f97316);margin-top:10px">🔢 Start Number Puzzle</button>
     </div>
 
     <!-- RESULTS & CASHOUT -->
@@ -1873,7 +2335,7 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
    </div>
    <div style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.4);color:#86efac;padding:8px 16px;border-radius:20px;font-size:13px;font-weight:bold;display:flex;align-items:center;gap:6px">
     <span>🔒 Verified Gateway</span>
-    <span>• 1,000 Coins = ₹10 INR</span>
+    <span>• 100 Coins = ₹1.00 INR (Fast Withdrawal from 100 Coins)</span>
    </div>
   </div>
 
@@ -1908,13 +2370,13 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
    <!-- Live conversion calculator bar -->
    <div class="conversion-pill" style="margin-top:16px">
     <span>🪙 Coins to Withdraw:</span>
-    <span style="font-size:15px">💸 Cash Payout: <strong id="calcPayoutINR" style="color:#ffffff;font-size:18px">₹10.00</strong> INR</span>
+    <span style="font-size:15px">💸 Cash Payout: <strong id="calcPayoutINR" style="color:#ffffff;font-size:18px">₹1.00</strong> INR</span>
    </div>
 
    <!-- Amount input & quick selection chips -->
    <div class="form-input-group">
-    <label for="withdrawCoinsInput">Enter Coins to Withdraw (Minimum 1,000 Coins = ₹10)</label>
-    <input type="number" id="withdrawCoinsInput" class="gateway-input" placeholder="e.g. 1000" min="1000" step="100" value="1000" oninput="updateWithdrawCalc()">
+    <label for="withdrawCoinsInput">Enter Coins to Withdraw (Minimum 100 Coins = ₹1.00)</label>
+    <input type="number" id="withdrawCoinsInput" class="gateway-input" placeholder="e.g. 1000" min="100" step="50" value="100" oninput="updateWithdrawCalc()">
     <div class="chips-container">
      <button type="button" class="chip-btn" onclick="setWithdrawAmount(1000)">1,000 Coins (₹10)</button>
      <button type="button" class="chip-btn" onclick="setWithdrawAmount(2000)">2,000 Coins (₹20)</button>
@@ -1979,7 +2441,7 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
    </div>
 
    <button type="button" id="withdrawSubmitBtn" class="withdraw-submit-btn" onclick="submitWithdrawal(event)">
-    🔒 Confirm &amp; Withdraw ₹10.00
+    🔒 Confirm &amp; Withdraw ₹1.00
    </button>
 
    <div class="security-note">
@@ -2065,7 +2527,7 @@ footer{text-align:center;color:#64748b;padding:32px 16px;font-size:12.5px;border
      <div class="reward-progress-fill" id="rewardProgressBar" style="width:10%"></div>
     </div>
     <div id="rewardRemainingText" style="font-size:12px;color:#94a3b8;margin-top:6px">
-     Play games to earn coins. Reach 5+ min duration in any match to gain above 30 to 50 coins!
+     Play games to earn coins. The longer you play each match, the more coins you accumulate!
     </div>
    </div>
 
@@ -2141,8 +2603,11 @@ const games=[
  {id:4, name:"Blade Master 3D", icon:"🗡️", description:"Precision steel dagger challenge! Embedded blades, flying wood splinters & spinning tree trunk.", color:"amber", cost:0, maxWin:50, badge:"EXPERT 🗡️"},
  {id:5, name:"Target Hunter Cyber", icon:"🎯", description:"Futuristic holographic radar hunt with laser sights, combo fireworks & particle bursts.", color:"purple", cost:0, maxWin:50, badge:"CYBER ⭐"},
  {id:6, name:"Tank Iron Siege 3D", icon:"🛡️", description:"Heavy desert armored assault! 120mm smoothbore cannon, caterpillar tread tracks, tank shells & bunker strikes.", color:"orange", cost:0, maxWin:50, badge:"ARMORED TANK 💥"},
- {id:7, name:"Moto Traffic Rider 3D", icon:"🏍️", description:"Realistic first-person cockpit superbike racing! Weave through highway traffic at 240+ km/h, tilt handlebars, dodge cars/trucks & trigger close overtakes!", color:"purple", cost:0, maxWin:50, badge:"TRAFFIC RIDER ⚡"},
- {id:8, name:"Arrow Escape: Tap Away", icon:"🏹", description:"3D directional arrow puzzle box! Tap arrows pointing away to clear them from the cube. Think strategically to unblock paths and dismantle the box!", color:"indigo", cost:0, maxWin:50, badge:"3D PUZZLE 🧩"}
+ {id:7, name:"Cyber Card Match", icon:"🃏", description:"Find and match pairs of crypto cards! Flip cards, remember positions & match all pairs to earn instant coin rewards.", color:"purple", cost:0, maxWin:80, badge:"CARD MATCH ⚡"},
+ {id:8, name:"Balloon Archer", icon:"🎈", description:"Shoot floating balloons with arrows! Every balloon popped instantly awards +5 coins. Pop gold balloons for +10 coins!", color:"indigo", cost:0, maxWin:150, badge:"SHOOT & EARN 🏹"},
+ {id:9, name:"Quick Tap Rush", icon:"⚡", description:"Tap the reactor as fast as you can in 10 seconds! Fast reflex test rewarding 1 coin for every 2 taps.", color:"blue", cost:0, maxWin:60, badge:"SPEED TEST ⚡"},
+ {id:10, name:"Quiz Rush Trivia", icon:"🧠", description:"Answer five rapid-fire general knowledge questions! Earn +10 coins for every correct answer.", color:"purple", cost:0, maxWin:50, badge:"BRAIN POWER 💡"},
+ {id:11, name:"Cyber Number Puzzle", icon:"🔢", description:"Classic 3×3 sliding tile brain teaser! Slide numbered tiles into 1 to 8 order to earn instant coin prizes.", color:"amber", cost:0, maxWin:60, badge:"PUZZLE 🧩"}
 ];
 
 let coins=100;
@@ -2196,11 +2661,11 @@ function updateRewardCooldownUI() {
  } else {
   badges.forEach(b => {
    b.className = "cooldown-pill ready reward-cooldown-badge-elem";
-   b.innerHTML = `🟢 50 Coins Ready!`;
+   b.innerHTML = `🟢 Match Rewards Ready!`;
   });
   if (gameStatusEl) {
    gameStatusEl.style.color = "#4ade80";
-   gameStatusEl.innerHTML = `🟢 Ready to Earn 50 Coins`;
+   gameStatusEl.innerHTML = `🟢 Ready to Earn Coins`;
   }
  }
 }
@@ -2339,12 +2804,21 @@ function createGameCard(g){
    <h3>${g.name}</h3>
    <p>${g.description}</p>
    <div class="game-stake-info">
-    <span class="stake-win">🪙 Reward: Up to 50 Coins</span>
-    <span class="stake-cost" style="color:#a5b4fc">⏱️ Play &gt;5m for 30+ Coins</span>
+    <span class="stake-win">🪙 Reward: Scaled to Duration</span>
+    <span class="stake-cost" style="color:#a5b4fc">⏱️ Earn every 10s played</span>
    </div>
    <button class="play-btn" onclick="openGame(${g.id})">🎮 Play Now (${statusBadge})</button>
   </div>
  </div>`;
+}
+
+function scrollToGamesSection() {
+ const el = document.getElementById("availableGamesSection") || document.getElementById("homeGames") || document.getElementById("allGames");
+ if (el) {
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+ } else {
+  showPage('games');
+ }
 }
 
 function loadGames(){
@@ -2383,8 +2857,24 @@ function stopTimers(){
  if (typeof gunActive !== 'undefined') gunActive = false;
  if (typeof knifeActive !== 'undefined') knifeActive = false;
  if (typeof tankActive !== 'undefined') tankActive = false;
- if (typeof motoActive !== 'undefined') motoActive = false;
- if (typeof arrowActive !== 'undefined') arrowActive = false;
+ if (typeof cardActive !== 'undefined') cardActive = false;
+ if (typeof cardTimerInt !== 'undefined' && cardTimerInt) {
+  clearInterval(cardTimerInt);
+  cardTimerInt = null;
+ }
+ if (typeof balloonActive !== 'undefined') balloonActive = false;
+ if (typeof balloonAnimFrame !== 'undefined' && balloonAnimFrame) {
+  cancelAnimationFrame(balloonAnimFrame);
+  balloonAnimFrame = null;
+ }
+ if (typeof balloonTimerInt !== 'undefined' && balloonTimerInt) {
+  clearInterval(balloonTimerInt);
+  balloonTimerInt = null;
+ }
+ if (typeof balloonSpawnerInt !== 'undefined' && balloonSpawnerInt) {
+  clearInterval(balloonSpawnerInt);
+  balloonSpawnerInt = null;
+ }
 }
 
 function openGame(id){
@@ -2410,11 +2900,11 @@ function openGame(id){
   <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.1);padding:12px;border-radius:12px;margin:14px 0;font-size:13px">
    <div style="display:flex;justify-content:space-between;margin-bottom:6px">
     <span>🪙 Reward Scaling:</span>
-    <strong style="color:#facc15">Above 30 Coins for &gt;5 Mins!</strong>
+    <strong style="color:#facc15">Scaled to Play Duration</strong>
    </div>
    <div style="display:flex;justify-content:space-between;margin-bottom:6px">
     <span>⏱️ Play Duration Rule:</span>
-    <strong style="color:#38bdf8">Survive 5:00+ for 30-50 Coins</strong>
+    <strong style="color:#38bdf8">1 Coin per 10s + Skill bonus</strong>
    </div>
    <div style="display:flex;justify-content:space-between">
     <span>⚡ Reward Status:</span>
@@ -2458,20 +2948,15 @@ function startAd(){
 }
 
 function updateLivePlayDurationHUD(elapsedSec) {
- const timeEl = document.getElementById("activeGamePlayTime");
- const tierEl = document.getElementById("activeGameRewardTier");
- if (timeEl) timeEl.textContent = formatRemainingTime(elapsedSec);
- if (tierEl) {
-  if (elapsedSec >= 300) {
-   tierEl.innerHTML = `🔥 5-MIN TIER ACTIVE! (30 to 50 Coins Unlocked)`;
+  const timeEl = document.getElementById("activeGamePlayTime");
+  const tierEl = document.getElementById("activeGameRewardTier");
+  if (timeEl) timeEl.textContent = formatRemainingTime(elapsedSec);
+  if (tierEl) {
+   const estimatedCoins = Math.max(10, Math.floor(elapsedSec / 2));
+   tierEl.innerHTML = `🪙 +${estimatedCoins} Coins (Rapid Earn: 1 Coin / 2s!)`;
    tierEl.style.color = "#4ade80";
-  } else {
-   const minsRemaining = Math.max(0, Math.ceil((300 - elapsedSec) / 60));
-   tierEl.innerHTML = `⏱️ Current: ${Math.floor(elapsedSec/60)}m (Reach 5:00 for 30+ Coins)`;
-   tierEl.style.color = "#facc15";
   }
  }
-}
 
 function playGame(){
  if(!selectedGame)return;
@@ -2518,15 +3003,24 @@ function playGame(){
   document.getElementById("tankGame").hidden=false;
   initTankGame();
  }else if(selectedGame.id===7){
-  document.getElementById("motoGame").hidden=false;
-  initMotoGame();
+  document.getElementById("cardGame").hidden=false;
+  initCardGame();
  }else if(selectedGame.id===8){
-  document.getElementById("arrowGame").hidden=false;
-  initArrowGame();
+  document.getElementById("balloonGame").hidden=false;
+  initBalloonGame();
+ }else if(selectedGame.id===9){
+  document.getElementById("tapGame").hidden=false;
+  initTapGame();
+ }else if(selectedGame.id===10){
+  document.getElementById("quizGame").hidden=false;
+  initQuizGame();
+ }else if(selectedGame.id===11){
+  document.getElementById("numberGame").hidden=false;
+  initNumberGame();
  }
 }
 
-function finishGame(score,message,customWonCoins){
+function finishGame(score,message,customWonCoins,alreadyCredited){
  if(gameRewarded)return;
  stopTimers();
  gameRewarded=true;
@@ -2542,35 +3036,25 @@ function finishGame(score,message,customWonCoins){
  const durFormatted = `${durMins}m ${durSecs}s`;
  const isOver5Minutes = (durationSec >= 300);
 
- if (canClaimReward) {
-  if (isOver5Minutes) {
-   // PLAY DURATION > 5 MINUTES: ALWAYS PROVIDE ABOVE 30 COINS (35 to 50 Coins!)
-   const baseAbove30 = 35;
-   const enduranceBonus = Math.floor((durationSec - 300) / 20) * 2;
-   const scoreBonus = Math.min(10, Math.floor(score / 15));
-   reward = Math.min(50, baseAbove30 + enduranceBonus + scoreBonus);
-  } else {
-   // PLAY DURATION < 5 MINUTES: SCALED UNDER 30 COINS BASED ON TIME PLAYED
-   if (durationSec >= 240) { // 4 to 5 mins
-    reward = Math.min(30, 25 + Math.floor(score / 30));
-   } else if (durationSec >= 180) { // 3 to 4 mins
-    reward = Math.min(24, 20 + Math.floor(score / 35));
-   } else if (durationSec >= 120) { // 2 to 3 mins
-    reward = Math.min(19, 15 + Math.floor(score / 45));
-   } else if (durationSec >= 60) { // 1 to 2 mins
-    reward = Math.min(14, 10 + Math.floor(score / 60));
-   } else { // under 1 min
-    reward = Math.min(9, 5 + Math.floor(score / 80));
-   }
-  }
+ if (customWonCoins !== undefined && customWonCoins !== null && customWonCoins > 0) {
+  reward = customWonCoins;
+ } else if (canClaimReward) {
+  // Rapid coin accumulation: 1 coin every 2s of active play (30 Coins per minute!)
+  const durationCoins = Math.max(10, Math.floor(durationSec / 2));
+  // Generous skill score bonus
+  const skillBonus = Math.min(30, Math.floor(score / 15) + 5);
+  reward = durationCoins + skillBonus;
  } else {
   reward = 0;
  }
 
- if(reward > 0){
+ if(reward > 0 && !alreadyCredited){
   coins += reward;
   localStorage.setItem("coinrush_last_game_claim", Date.now().toString());
   syncWalletUI();
+  updateRewardCooldownUI();
+ } else if (reward > 0 && alreadyCredited) {
+  localStorage.setItem("coinrush_last_game_claim", Date.now().toString());
   updateRewardCooldownUI();
  }
 
@@ -2630,14 +3114,9 @@ function finishGame(score,message,customWonCoins){
  if (resScore) resScore.textContent = message;
  if (durTextEl) durTextEl.textContent = durFormatted;
  if (durBadgeEl) {
-  if (isOver5Minutes) {
    durBadgeEl.style.color = "#4ade80";
-   durBadgeEl.innerHTML = `🏆 5+ Min Tier Master: +${reward} Coins Earned (Above 30 Coins)!`;
-  } else {
-   durBadgeEl.style.color = "#facc15";
-   durBadgeEl.innerHTML = `⏱️ Played ${durFormatted} (+${reward} Coins). Play &gt;5:00 for 30+ to 50 Coins!`;
+   durBadgeEl.innerHTML = `⏱️ Played ${durFormatted}: +${reward} Coins Earned based on duration!`;
   }
- }
 
  if (stakeEl) stakeEl.textContent = "FREE (0 🪙)";
  if (wonEl) wonEl.textContent = `+${reward} 🪙`;
@@ -2647,19 +3126,14 @@ function finishGame(score,message,customWonCoins){
  }
 
  if (canClaimReward) {
-  if (reward > 0) {
-   if (isOver5Minutes) {
-    if (resTitle) resTitle.textContent = `🔥 5-Minute Master Tier: +${reward} Coins!`;
-    if (rewardEl) rewardEl.textContent = `🌟 Outstanding! You played for ${durFormatted} (more than 5 minutes) and earned above 30 Coins (+${reward} Coins)!`;
-   } else {
+   if (reward > 0) {
     if (resTitle) resTitle.textContent = `🎉 Match Reward: +${reward} Coins!`;
-    if (rewardEl) rewardEl.textContent = `⏱️ You played for ${durFormatted} and gained ${reward} Coins. Play for more than 5 minutes in a run to unlock over 30 Coins (up to 50)!`;
+    if (rewardEl) rewardEl.textContent = `⏱️ You played for ${durFormatted} and earned +${reward} Coins directly scaled to your play duration!`;
+   } else {
+    if (resTitle) resTitle.textContent = "💥 Match Ended!";
+    if (rewardEl) rewardEl.textContent = "Survive and play longer to accumulate more coins! Try again!";
    }
   } else {
-   if (resTitle) resTitle.textContent = "💥 Match Ended!";
-   if (rewardEl) rewardEl.textContent = "Survive longer and aim for 5+ minutes of play time to unlock 30 to 50 Coins! Try again!";
-  }
- } else {
   if (resTitle) resTitle.textContent = "⏳ Practice Match Finished!";
   const remFormatted = formatRemainingTime(remaining);
   if (rewardEl) rewardEl.textContent = `⏱️ Cooldown active: Next coin payout available in ${remFormatted}. Keep practicing!`;
@@ -2818,6 +3292,7 @@ function updateCarGame() {
  }
 
  carRoadOffset = (carRoadOffset + carSpeed) % 40;
+ if (typeof carInvulnerable !== "undefined" && carInvulnerable > 0) carInvulnerable--;
  carPlayer.x += (carPlayer.targetX - carPlayer.x) * 0.22;
  carPlayer.tilt += (0 - carPlayer.tilt) * 0.15;
 
@@ -2866,7 +3341,7 @@ function updateCarGame() {
 
   const dx = Math.abs(carPlayer.x - c.x);
   const dy = Math.abs(carPlayer.y - c.y);
-  if (dx < 26 && dy < 36) {
+  if (dx < 75 && dy < 85) {
    carCoinsCount++;
    carDistance += 12;
    document.getElementById("carCoinsCollected").textContent = carCoinsCount;
@@ -3273,7 +3748,7 @@ function endCarGame(crashed) {
  const dist = Math.floor(carDistance);
  let won = 0;
 
- // Reward scaled to distance & finishing rank (max 50 coins!)
+ // Reward scaled to distance & finishing rank
  if (carPlayerRank === 1 && dist >= 120) {
   won = 50;
  } else if (carPlayerRank <= 2 && dist >= 80) {
@@ -3322,6 +3797,10 @@ function initJetGame() {
  jetSpeed = 6.5;
  jetDistance = 0;
  jetScoreCount = 0;
+ jetShields = 5;
+ jetInvulnerable = 0;
+ const jst = document.getElementById("jetShieldText");
+ if (jst) jst.textContent = "5 / 5";
  jetAltitudeFt = 18000;
  jetActive = false;
  jetLasers = [];
@@ -3427,6 +3906,7 @@ function updateJetGame() {
  document.getElementById("jetScore").textContent = jetScoreCount;
 
  // Smooth steering & banking interpolation
+ if (typeof jetInvulnerable !== "undefined" && jetInvulnerable > 0) jetInvulnerable--;
  jetX += (jetTargetX - jetX) * 0.22;
  jetLean += (0 - jetLean) * 0.12;
 
@@ -3549,7 +4029,7 @@ function updateJetGame() {
     y: -70,
     width: isJet ? 38 : 30,
     height: isJet ? 52 : 36,
-    speed: isJet ? 3.5 : 4.5,
+    speed: isJet ? 1.8 : 2.4,
     isJet,
     color: isJet ? "#ef4444" : "#f97316"
    });
@@ -3578,7 +4058,7 @@ function updateJetGame() {
   let destroyed = false;
   for (let li = jetLasers.length - 1; li >= 0; li--) {
    const l = jetLasers[li];
-   if (Math.abs(l.x - e.x) < e.width * 0.55 && Math.abs(l.y - e.y) < e.height * 0.55) {
+   if (Math.abs(l.x - e.x) < e.width * 0.85 && Math.abs(l.y - e.y) < e.height * 0.85) {
     destroyed = true;
     jetLasers.splice(li, 1);
     break;
@@ -3610,6 +4090,22 @@ function updateJetGame() {
   const dx = Math.abs(jetX - e.x);
   const dy = Math.abs(jetY - e.y);
   if (dx < (34 + e.width) * 0.44 && dy < (48 + e.height) * 0.44) {
+   if (typeof jetInvulnerable !== 'undefined' && jetInvulnerable > 0) return;
+   if (typeof jetShields !== 'undefined' && jetShields > 1) {
+    jetShields--;
+    jetInvulnerable = 75;
+    const jst = document.getElementById("jetShieldText");
+    if (jst) jst.textContent = `${jetShields} / 3`;
+    for (let s = 0; s < 15; s++) {
+     jetParticles.push({
+      x: e.x, y: e.y,
+      vx: (Math.random() - 0.5) * 8, vy: (Math.random() - 0.5) * 8,
+      size: 3 + Math.random() * 4, alpha: 1, color: "rgba(56,189,248,"
+     });
+    }
+    jetEnemies.splice(i, 1);
+    continue;
+   }
    jetShakeX = (Math.random() - 0.5) * 18;
    jetShakeY = (Math.random() - 0.5) * 18;
    for (let s = 0; s < 30; s++) {
@@ -3879,9 +4375,9 @@ function endJetGame(crashed) {
 /* ========================================================
    3. GUN GAME: GUN STRIKE OPS (TACTICAL MILITARY SHOOTER)
    ======================================================== */
-let gunTime = 20;
+let gunTime = 90;
 let gunScore = 0;
-let gunAmmo = 6;
+let gunAmmo = 20;
 let gunReloading = false;
 let gunSpawner = null;
 let gunActive = false;
@@ -3893,9 +4389,9 @@ function initGunGame() {
  gunAmmo = 6;
  gunReloading = false;
  gunActive = false;
- document.getElementById("gunTimerText").textContent = "20s";
+ document.getElementById("gunTimerText").textContent = "90s";
  document.getElementById("gunScoreText").textContent = "0";
- document.getElementById("gunAmmoText").textContent = "6 / 6";
+ document.getElementById("gunAmmoText").textContent = "20 / 20";
  document.getElementById("gunStartBtn").disabled = false;
  document.getElementById("gunStartBtn").textContent = "🎯 Start Tactical Mission";
 
@@ -3992,10 +4488,10 @@ function spawnGunTarget() {
  if (!area) return;
 
  const types = [
-  { icon: "🥷", label: "HOSTILE", points: 15, isEnemy: true, bg: "rgba(220,38,38,0.2)", border: "#ef4444", duration: 1150 },
-  { icon: "🎯", label: "BULLSEYE", points: 20, isEnemy: true, bg: "rgba(234,179,8,0.2)", border: "#facc15", duration: 950 },
-  { icon: "💣", label: "EXPLOSIVE", points: -25, isEnemy: false, bg: "rgba(234,88,12,0.25)", border: "#f97316", duration: 1350 },
-  { icon: "🧍", label: "CIVILIAN", points: -30, isEnemy: false, bg: "rgba(59,130,246,0.2)", border: "#3b82f6", duration: 1250 }
+  { icon: "🥷", label: "HOSTILE", points: 15, isEnemy: true, bg: "rgba(220,38,38,0.2)", border: "#ef4444", duration: 2500 },
+  { icon: "🎯", label: "BULLSEYE", points: 20, isEnemy: true, bg: "rgba(234,179,8,0.2)", border: "#facc15", duration: 2500 },
+  { icon: "💣", label: "EXPLOSIVE", points: -5, isEnemy: false, bg: "rgba(234,88,12,0.25)", border: "#f97316", duration: 2500 },
+  { icon: "🧍", label: "CIVILIAN", points: -5, isEnemy: false, bg: "rgba(59,130,246,0.2)", border: "#3b82f6", duration: 2500 }
  ];
 
  const r = Math.random();
@@ -4051,7 +4547,7 @@ function gunShoot(item, targetEl, mouseEvent) {
  }
 
  gunAmmo--;
- document.getElementById("gunAmmoText").textContent = `${gunAmmo} / 6`;
+ document.getElementById("gunAmmoText").textContent = `${gunAmmo} / 20`;
 
  const arena = document.getElementById("gunRangeArena");
 
@@ -4143,7 +4639,7 @@ function endGunGame() {
    ======================================================== */
 let knifeCanvas, knifeCtx;
 let knifeAngle = 0;
-let knifeSpeed = 0.04;
+let knifeSpeed = 0.022;
 let knifeStuck = []; // { ang, wiggle }
 let flyingKnife = null;
 let remainingKnives = 8;
@@ -4232,7 +4728,7 @@ function checkKnifeHit() {
  const collision = knifeStuck.some(k => {
   let diff = Math.abs(k.ang - normalizedHit);
   if (diff > Math.PI) diff = Math.PI * 2 - diff;
-  return diff < 0.28;
+  return diff < 0.08;
  });
 
  if (collision) {
@@ -4442,7 +4938,7 @@ function endKnifeGame(perfect) {
 let targetComboCount = 1;
 
 function resetTarget(){
- document.getElementById("targetTime").textContent="15";
+ document.getElementById("targetTime").textContent="90";
  document.getElementById("targetScore").textContent="0";
  const comboEl = document.getElementById("targetCombo");
  if (comboEl) comboEl.textContent = "⚡ x1";
@@ -4465,7 +4961,7 @@ function startTarget(){
  stopTimers();
  gameScore = 0;
  targetComboCount = 1;
- let time = 15;
+ let time = 90;
  gameRunning = true;
  document.getElementById("targetScore").textContent = "0";
  document.getElementById("targetTime").textContent = time;
@@ -4480,7 +4976,7 @@ function startTarget(){
  target.style.transition = "transform 0.1s ease";
 
  moveTarget();
- targetMover = setInterval(moveTarget, 620);
+ targetMover = setInterval(moveTarget, 1500);
 
  gameTimer = setInterval(() => {
   time--;
@@ -4526,7 +5022,7 @@ let tankCanvas, tankCtx;
 let tankX = 170, tankY = 295;
 let tankTargetX = 170;
 let tankTreadOffset = 0;
-let tankArmor = 100;
+let tankArmor = 200;
 let tankScoreCount = 0;
 let tankDistance = 0;
 let tankActive = false;
@@ -4556,7 +5052,7 @@ function initTankGame() {
  tankShakeY = 0;
 
  document.getElementById("tankScore").textContent = "0";
- document.getElementById("tankArmorText").textContent = "100%";
+ document.getElementById("tankArmorText").textContent = "200%";
  document.getElementById("tankDistanceText").textContent = "0m";
 
  document.getElementById("tankStartBtn").disabled = false;
@@ -4700,7 +5196,7 @@ function updateTankGame() {
   let hitByShell = false;
   for (let si = tankShells.length - 1; si >= 0; si--) {
    const s = tankShells[si];
-   if (Math.abs(s.x - o.x) < o.width * 0.6 && Math.abs(s.y - o.y) < o.height * 0.6) {
+   if (Math.abs(s.x - o.x) < o.width * 1.5 && Math.abs(s.y - o.y) < o.height * 1.5) {
     hitByShell = true;
     tankShells.splice(si, 1);
     break;
@@ -4732,7 +5228,7 @@ function updateTankGame() {
   const dx = Math.abs(tankX - o.x);
   const dy = Math.abs(tankY - o.y);
   if (dx < (36 + o.width) * 0.44 && dy < (48 + o.height) * 0.44) {
-   tankArmor = Math.max(0, tankArmor - 50);
+   tankArmor = Math.max(0, tankArmor - 5);
    document.getElementById("tankArmorText").textContent = tankArmor + "%";
 
    tankShakeX = (Math.random() - 0.5) * 18;
@@ -4948,28 +5444,209 @@ function endTankGame(destroyed) {
 }
 
 /* ============================================================
-   GAME 7: MOTO TRAFFIC RIDER 3D (REALISTIC TRAFFIC RIDER)
+   GAME 7: CYBER CARD MATCH (FIND THE CARDS)
    ============================================================ */
-let motoCanvas = null;
-let motoCtx = null;
-let motoActive = false;
-let motoAnimFrame = null;
-let motoDistance = 0;
-let motoScore = 0;
-let motoSpeed = 160; // km/h
-let motoTargetSpeed = 160;
-let motoNitro = 100; // %
-let motoIsNitro = false;
-let motoIsBraking = false;
-let motoPlayerX = 0; // -1.0 (left) to 1.0 (right)
-let motoTargetX = 0;
-let motoLean = 0; // Lean angle in radians
-let motoTargetLean = 0;
-let motoTraffic = [];
-let motoSparks = [];
-let motoTime = 0;
-let motoOvertakes = 0;
-let motoOvertakeTimer = null;
+let cardActive = false;
+let cardItems = [];
+let cardFlippedIndices = [];
+let cardMatches = 0;
+let cardMoves = 0;
+let cardCoinsEarned = 0;
+let cardTimerSec = 0;
+let cardTimerInt = null;
+let cardCanClick = true;
+
+const CARD_ICONS = ["🪙", "💎", "🚀", "⚡", "👑", "🎯"];
+
+function initCardGame() {
+ cardActive = false;
+ cardMatches = 0;
+ cardMoves = 0;
+ cardCoinsEarned = 0;
+ cardTimerSec = 0;
+ cardFlippedIndices = [];
+ cardCanClick = true;
+ clearInterval(cardTimerInt);
+
+ const pairs = [...CARD_ICONS, ...CARD_ICONS];
+ // Fisher-Yates shuffle
+ for (let i = pairs.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+ }
+
+ cardItems = pairs.map((icon, idx) => ({
+  id: idx,
+  icon: icon,
+  flipped: false,
+  matched: false
+ }));
+
+ renderCardBoard();
+ updateCardHUD();
+
+ const btn = document.getElementById("cardStartBtn");
+ if (btn) {
+  btn.disabled = false;
+  btn.textContent = "🃏 Play Card Match";
+ }
+}
+
+function renderCardBoard() {
+ const grid = document.getElementById("cardGrid");
+ if (!grid) return;
+ grid.innerHTML = cardItems.map((c, i) => `
+  <div class="card-item ${c.flipped ? 'flipped' : ''} ${c.matched ? 'matched' : ''}" onclick="onCardClick(${i})" id="cardElem_${i}">
+   <div class="card-face card-back">💎</div>
+   <div class="card-face card-front">${c.icon}</div>
+  </div>
+ `).join("");
+}
+
+function onCardClick(idx) {
+ if (!cardActive || !cardCanClick) return;
+ const card = cardItems[idx];
+ if (!card || card.flipped || card.matched) return;
+
+ card.flipped = true;
+ cardFlippedIndices.push(idx);
+ playSynthSound('card_flip');
+ renderCardBoard();
+
+ if (cardFlippedIndices.length === 2) {
+  cardMoves++;
+  updateCardHUD();
+  const [firstIdx, secondIdx] = cardFlippedIndices;
+  const first = cardItems[firstIdx];
+  const second = cardItems[secondIdx];
+
+  if (first.icon === second.icon) {
+   // Matched pair!
+   first.matched = true;
+   second.matched = true;
+   cardMatches++;
+   cardCoinsEarned += 10;
+   coins += 10;
+   syncWalletUI();
+   playSynthSound('card_match');
+   cardFlippedIndices = [];
+   updateCardHUD();
+   renderCardBoard();
+
+   if (cardMatches === 6) {
+    // All 6 pairs matched! Bonus +20 coins
+    cardCoinsEarned += 20;
+    coins += 20;
+    syncWalletUI();
+    playSynthSound('win');
+    updateCardHUD();
+    setTimeout(() => {
+     endCardGame(true);
+    }, 750);
+   }
+  } else {
+   cardCanClick = false;
+   setTimeout(() => {
+    first.flipped = false;
+    second.flipped = false;
+    cardFlippedIndices = [];
+    cardCanClick = true;
+    renderCardBoard();
+   }, 800);
+  }
+ }
+}
+
+function peekCardHint() {
+ if (!cardActive || !cardCanClick) return;
+ playSynthSound('card_hint');
+ cardCanClick = false;
+ const unflipped = cardItems.filter(c => !c.matched && !c.flipped);
+ unflipped.forEach(c => c.flipped = true);
+ renderCardBoard();
+ setTimeout(() => {
+  unflipped.forEach(c => c.flipped = false);
+  renderCardBoard();
+  cardCanClick = true;
+ }, 1100);
+}
+
+function restartCardGame() {
+ stopTimers();
+ initCardGame();
+ startCardGame();
+}
+
+function startCardGame() {
+ stopTimers();
+ initCardGame();
+ cardActive = true;
+ gameRunning = true;
+ const btn = document.getElementById("cardStartBtn");
+ if (btn) {
+  btn.disabled = true;
+  btn.textContent = "🃏 Matching in Progress...";
+ }
+ clearInterval(cardTimerInt);
+ cardTimerInt = setInterval(() => {
+  if (!cardActive) return;
+  cardTimerSec++;
+  const m = Math.floor(cardTimerSec / 60);
+  const s = cardTimerSec % 60;
+  const el = document.getElementById("cardTimeText");
+  if (el) el.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+ }, 1000);
+}
+
+function updateCardHUD() {
+ const elMatches = document.getElementById("cardMatchesText");
+ const elCoins = document.getElementById("cardCoinsText");
+ const elMoves = document.getElementById("cardMovesText");
+ if (elMatches) elMatches.textContent = `${cardMatches} / 6 Pairs`;
+ if (elCoins) elCoins.textContent = `+${cardCoinsEarned} 🪙`;
+ if (elMoves) elMoves.textContent = cardMoves;
+}
+
+function endCardGame(clearedAll) {
+ stopTimers();
+ clearInterval(cardTimerInt);
+ cardActive = false;
+ gameRunning = false;
+ const score = cardMatches * 100 + Math.max(0, 300 - cardMoves * 10 - cardTimerSec * 2);
+ const msg = (clearedAll ? "🎉 ALL CARDS MATCHED! " : "🏁 ROUND FINISHED! ") +
+  `Found ${cardMatches}/6 pairs in ${cardMoves} moves (${cardTimerSec}s). Earned +${cardCoinsEarned} Coins!`;
+ finishGame(score, msg, cardCoinsEarned, true);
+}
+
+
+/* ============================================================
+   GAME 8: BALLOON ARCHER (ARROW SHOOT BALLOON)
+   ============================================================ */
+let balloonCanvas = null;
+let balloonCtx = null;
+let balloonActive = false;
+let balloonAnimFrame = null;
+let balloonTimerInt = null;
+let balloonSpawnerInt = null;
+let balloonTimeLeft = 45;
+let balloonPoppedCount = 0;
+let balloonArrowsFired = 0;
+let balloonCoinsEarned = 0;
+
+let balloons = [];
+let arrows = [];
+let balloonParticles = [];
+let floatingCoinTexts = [];
+
+const BOW = { x: 170, y: 375, angle: -Math.PI / 2 };
+
+const BALLOON_TYPES = [
+ { color: "#ef4444", highlight: "#fca5a5", coins: 5, score: 50, radius: 20, isGold: false },
+ { color: "#38bdf8", highlight: "#bae6fd", coins: 5, score: 50, radius: 20, isGold: false },
+ { color: "#a855f7", highlight: "#e9d5ff", coins: 5, score: 50, radius: 20, isGold: false },
+ { color: "#22c55e", highlight: "#bbf7d0", coins: 5, score: 50, radius: 20, isGold: false },
+ { color: "#eab308", highlight: "#fef08a", coins: 10, score: 120, radius: 22, isGold: true }
+];
 
 // Audio Synthesizer for Games
 function playSynthSound(type) {
@@ -4994,39 +5671,64 @@ function playSynthSound(type) {
    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
    osc.start(now);
    osc.stop(now + 0.15);
-  } else if (type === 'overtake') {
-   osc.type = 'triangle';
-   osc.frequency.setValueAtTime(440, now);
-   osc.frequency.exponentialRampToValueAtTime(880, now + 0.2);
-   gain.gain.setValueAtTime(0.15, now);
-   gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
-   osc.start(now);
-   osc.stop(now + 0.25);
-  } else if (type === 'crash') {
-   osc.type = 'square';
-   osc.frequency.setValueAtTime(120, now);
-   osc.frequency.exponentialRampToValueAtTime(40, now + 0.4);
-   gain.gain.setValueAtTime(0.25, now);
-   gain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
-   osc.start(now);
-   osc.stop(now + 0.45);
-  } else if (type === 'arrow_fly') {
+  } else if (type === 'card_flip') {
    osc.type = 'sine';
-   osc.frequency.setValueAtTime(523.25, now); // C5
-   osc.frequency.exponentialRampToValueAtTime(1046.5, now + 0.18); // C6
-   gain.gain.setValueAtTime(0.18, now);
-   gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-   osc.start(now);
-   osc.stop(now + 0.2);
-  } else if (type === 'arrow_bump') {
-   osc.type = 'square';
-   osc.frequency.setValueAtTime(150, now);
-   osc.frequency.exponentialRampToValueAtTime(75, now + 0.12);
+   osc.frequency.setValueAtTime(520, now);
+   osc.frequency.exponentialRampToValueAtTime(780, now + 0.05);
    gain.gain.setValueAtTime(0.12, now);
-   gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+   gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+   osc.start(now);
+   osc.stop(now + 0.05);
+  } else if (type === 'card_match') {
+   [523.25, 659.25, 783.99].forEach((freq, i) => {
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g);
+    g.connect(ctx.destination);
+    o.type = 'triangle';
+    o.frequency.setValueAtTime(freq, now + i * 0.08);
+    g.gain.setValueAtTime(0.15, now + i * 0.08);
+    g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.2);
+    o.start(now + i * 0.08);
+    o.stop(now + i * 0.08 + 0.2);
+   });
+  } else if (type === 'card_hint') {
+   osc.type = 'sine';
+   osc.frequency.setValueAtTime(440, now);
+   osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+   gain.gain.setValueAtTime(0.09, now);
+   gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
    osc.start(now);
    osc.stop(now + 0.12);
-  } else if (type === 'arrow_win') {
+  } else if (type === 'arrow_shoot') {
+   osc.type = 'triangle';
+   osc.frequency.setValueAtTime(700, now);
+   osc.frequency.exponentialRampToValueAtTime(220, now + 0.09);
+   gain.gain.setValueAtTime(0.12, now);
+   gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+   osc.start(now);
+   osc.stop(now + 0.09);
+  } else if (type === 'balloon_pop') {
+   osc.type = 'sawtooth';
+   osc.frequency.setValueAtTime(320, now);
+   osc.frequency.exponentialRampToValueAtTime(60, now + 0.06);
+   gain.gain.setValueAtTime(0.18, now);
+   gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+   osc.start(now);
+   osc.stop(now + 0.06);
+
+   const bell = ctx.createOscillator();
+   const bellGain = ctx.createGain();
+   bell.connect(bellGain);
+   bellGain.connect(ctx.destination);
+   bell.type = 'sine';
+   bell.frequency.setValueAtTime(987.77, now + 0.02);
+   bell.frequency.setValueAtTime(1318.51, now + 0.07);
+   bellGain.gain.setValueAtTime(0.15, now + 0.02);
+   bellGain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+   bell.start(now + 0.02);
+   bell.stop(now + 0.25);
+  } else if (type === 'win') {
    [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
     const o = ctx.createOscillator();
     const g = ctx.createGain();
@@ -5043,862 +5745,399 @@ function playSynthSound(type) {
  } catch(e){}
 }
 
-function initMotoGame() {
- motoCanvas = document.getElementById("motoCanvas");
- if (!motoCanvas) return;
- motoCtx = motoCanvas.getContext("2d");
- motoDistance = 0;
- motoScore = 0;
- motoSpeed = 160;
- motoTargetSpeed = 160;
- motoNitro = 100;
- motoIsNitro = false;
- motoIsBraking = false;
- motoPlayerX = 0;
- motoTargetX = 0;
- motoLean = 0;
- motoTargetLean = 0;
- motoTraffic = [];
- motoSparks = [];
- motoTime = 0;
- motoOvertakes = 0;
+function initBalloonGame() {
+ balloonCanvas = document.getElementById("balloonCanvas");
+ if (!balloonCanvas) return;
+ balloonCtx = balloonCanvas.getContext("2d");
+ balloonActive = false;
+ balloonTimeLeft = 45;
+ balloonPoppedCount = 0;
+ balloonArrowsFired = 0;
+ balloonCoinsEarned = 0;
+ balloons = [];
+ arrows = [];
+ balloonParticles = [];
+ floatingCoinTexts = [];
+ BOW.angle = -Math.PI / 2;
 
- updateMotoHUD();
- drawMotoScene();
+ clearInterval(balloonTimerInt);
+ clearInterval(balloonSpawnerInt);
+ if (balloonAnimFrame) cancelAnimationFrame(balloonAnimFrame);
 
- // Touch & Click control bindings
- const bindTouch = (id, onDown, onUp) => {
-  const btn = document.getElementById(id);
-  if (!btn) return;
-  btn.onmousedown = (e) => { e.preventDefault(); onDown(); };
-  btn.onmouseup = (e) => { e.preventDefault(); if (onUp) onUp(); };
-  btn.ontouchstart = (e) => { e.preventDefault(); onDown(); };
-  btn.ontouchend = (e) => { e.preventDefault(); if (onUp) onUp(); };
+ updateBalloonHUD();
+
+ const btn = document.getElementById("balloonStartBtn");
+ if (btn) {
+  btn.disabled = false;
+  btn.textContent = "🏹 Start Balloon Archer";
+ }
+
+ balloonCanvas.onpointermove = (e) => {
+  if (!balloonActive) return;
+  const rect = balloonCanvas.getBoundingClientRect();
+  const scaleX = balloonCanvas.width / rect.width;
+  const scaleY = balloonCanvas.height / rect.height;
+  const targetX = (e.clientX - rect.left) * scaleX;
+  const targetY = (e.clientY - rect.top) * scaleY;
+  BOW.angle = Math.atan2(targetY - BOW.y, targetX - BOW.x);
  };
 
- bindTouch("motoBtnLeft", () => motoMoveLeft(), () => motoReleaseSteer());
- bindTouch("motoBtnRight", () => motoMoveRight(), () => motoReleaseSteer());
- bindTouch("motoBtnBrake", () => motoTriggerBrake(), () => motoReleaseBrake());
- bindTouch("motoBtnNitro", () => motoTriggerNitro(), () => motoReleaseNitro());
+ balloonCanvas.onpointerdown = (e) => {
+  if (!balloonActive) return;
+  e.preventDefault();
+  const rect = balloonCanvas.getBoundingClientRect();
+  const scaleX = balloonCanvas.width / rect.width;
+  const scaleY = balloonCanvas.height / rect.height;
+  const targetX = (e.clientX - rect.left) * scaleX;
+  const targetY = (e.clientY - rect.top) * scaleY;
+  BOW.angle = Math.atan2(targetY - BOW.y, targetX - BOW.x);
+  fireArrow(targetX, targetY);
+ };
+
+ drawBalloonScene();
 }
 
-function updateMotoHUD() {
- const distElem = document.getElementById("motoDistanceText");
- const speedElem = document.getElementById("motoSpeedText");
- const nitroElem = document.getElementById("motoNitroText");
- const scoreElem = document.getElementById("motoScoreText");
- if (distElem) distElem.textContent = `${Math.floor(motoDistance)}m`;
- if (speedElem) speedElem.textContent = `${Math.round(motoSpeed)} km/h`;
- if (nitroElem) nitroElem.textContent = `${Math.round(motoNitro)}%`;
- if (scoreElem) scoreElem.textContent = motoScore;
-}
-
-function motoMoveLeft() {
- motoTargetX = Math.max(-0.85, motoTargetX - 0.28);
- motoTargetLean = -0.22;
- playSynthSound('rev');
-}
-
-function motoMoveRight() {
- motoTargetX = Math.min(0.85, motoTargetX + 0.28);
- motoTargetLean = 0.22;
- playSynthSound('rev');
-}
-
-function motoReleaseSteer() {
- motoTargetLean = 0;
-}
-
-function motoTriggerBrake() {
- motoIsBraking = true;
- motoTargetSpeed = 80;
-}
-
-function motoReleaseBrake() {
- motoIsBraking = false;
- motoTargetSpeed = motoIsNitro ? 260 : 160;
-}
-
-function motoTriggerNitro() {
- if (motoNitro > 5) {
-  motoIsNitro = true;
-  motoTargetSpeed = 260;
- }
-}
-
-function motoReleaseNitro() {
- motoIsNitro = false;
- if (!motoIsBraking) motoTargetSpeed = 160;
-}
-
-function showMotoOvertakeBanner() {
- const el = document.getElementById("motoOvertakeNotice");
- if (!el) return;
- el.style.display = "block";
- el.style.animation = "none";
- void el.offsetWidth;
- el.style.animation = "carOvertakePop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
- clearTimeout(motoOvertakeTimer);
- motoOvertakeTimer = setTimeout(() => {
-  el.style.display = "none";
- }, 900);
-}
-
-function spawnMotoTraffic() {
- if (motoTraffic.length >= 6) return;
- const lanes = [-0.62, 0.0, 0.62];
- const lane = lanes[Math.floor(Math.random() * lanes.length)];
-
- // Ensure no immediate overlap at horizon
- const tooClose = motoTraffic.some(t => Math.abs(t.x - lane) < 0.25 && t.z > 0.8);
- if (tooClose) return;
-
- const types = [
-  { type: 'sedan', color: '#38bdf8', w: 38, h: 22, name: 'Sedan' },
-  { type: 'truck', color: '#fb923c', w: 46, h: 42, name: 'Semi-Truck' },
-  { type: 'suv', color: '#4ade80', w: 40, h: 26, name: 'SUV' },
-  { type: 'sports', color: '#f43f5e', w: 36, h: 20, name: 'Sports' }
- ];
- const chosen = types[Math.floor(Math.random() * types.length)];
-
- motoTraffic.push({
-  x: lane,
-  z: 1.0, // 1.0 = horizon, 0.0 = player
-  speed: 0.35 + Math.random() * 0.15,
-  type: chosen.type,
-  color: chosen.color,
-  w: chosen.w,
-  h: chosen.h,
-  overtaken: false
- });
-}
-
-function startMotoGame() {
+function startBalloonGame() {
  stopTimers();
- initMotoGame();
- motoActive = true;
+ initBalloonGame();
+ balloonActive = true;
  gameRunning = true;
- const btn = document.getElementById("motoStartBtn");
+
+ const btn = document.getElementById("balloonStartBtn");
  if (btn) {
   btn.disabled = true;
-  btn.textContent = "🏍️ Racing at High Speed...";
+  btn.textContent = "🏹 Aim & Pop Balloons...";
  }
+
+ for (let i = 0; i < 5; i++) {
+  spawnBalloon(Math.random() * 240 + 100);
+ }
+
+ balloonSpawnerInt = setInterval(() => {
+  if (!balloonActive) return;
+  if (balloons.length < 9) {
+   spawnBalloon(balloonCanvas.height + 25);
+  }
+ }, 750);
+
+ clearInterval(balloonTimerInt);
+ balloonTimerInt = setInterval(() => {
+  if (!balloonActive) return;
+  balloonTimeLeft--;
+  updateBalloonHUD();
+  if (balloonTimeLeft <= 0) {
+   endBalloonGame(true);
+  }
+ }, 1000);
 
  function loop() {
-  if (!motoActive) return;
-  updateMotoGame();
-  drawMotoScene();
-  motoAnimFrame = requestAnimationFrame(loop);
+  if (!balloonActive) return;
+  updateBalloonPhysics();
+  drawBalloonScene();
+  balloonAnimFrame = requestAnimationFrame(loop);
  }
- motoAnimFrame = requestAnimationFrame(loop);
+ balloonAnimFrame = requestAnimationFrame(loop);
 }
 
-function updateMotoGame() {
- motoTime += 0.02;
-
- // Handle Nitro depletion & regeneration
- if (motoIsNitro && motoNitro > 0) {
-  motoNitro = Math.max(0, motoNitro - 0.45);
-  if (motoNitro <= 0) motoReleaseNitro();
- } else if (!motoIsNitro && motoNitro < 100) {
-  motoNitro = Math.min(100, motoNitro + 0.12);
- }
-
- // Smooth acceleration and braking
- motoSpeed += (motoTargetSpeed - motoSpeed) * 0.08;
- motoDistance += (motoSpeed / 3.6) * 0.025; // meters
- motoScore += Math.floor(motoSpeed * 0.015);
-
- // Smooth steering and cockpit lean
- motoPlayerX += (motoTargetX - motoPlayerX) * 0.12;
- motoLean += (motoTargetLean - motoLean) * 0.15;
- if (!motoIsBraking && !motoIsNitro) {
-  motoTargetLean *= 0.85; // auto-straighten
- }
-
- // Spawn traffic vehicles
- if (Math.random() < 0.04) {
-  spawnMotoTraffic();
- }
-
- // Update traffic
- const playerSpeedFactor = motoSpeed / 120;
- for (let i = motoTraffic.length - 1; i >= 0; i--) {
-  const t = motoTraffic[i];
-  // Approaches player based on relative speed
-  t.z -= 0.008 * (playerSpeedFactor - t.speed);
-
-  // Check Close Overtake
-  if (!t.overtaken && t.z < 0.25 && t.z > 0.05) {
-   const dx = Math.abs(motoPlayerX - t.x);
-   if (dx < 0.32) {
-    t.overtaken = true;
-    motoOvertakes++;
-    motoScore += 100;
-    showMotoOvertakeBanner();
-    playSynthSound('overtake');
-
-    // Create overtake sparks
-    for (let s = 0; s < 8; s++) {
-     motoSparks.push({
-      x: 170 + motoPlayerX * 110,
-      y: 280,
-      vx: (Math.random() - 0.5) * 6,
-      vy: (Math.random() - 0.5) * 6 - 2,
-      life: 1.0,
-      color: '#c084fc'
-     });
-    }
-   }
-  }
-
-  // Check Collision
-  if (t.z < 0.18 && t.z > -0.05) {
-   const dx = Math.abs(motoPlayerX - t.x);
-   const hitWidth = (t.type === 'truck') ? 0.22 : 0.16;
-   if (dx < hitWidth) {
-    // CRASH!
-    playSynthSound('crash');
-    endMotoGame(true);
-    return;
-   }
-  }
-
-  // Remove vehicle once behind player
-  if (t.z < -0.2) {
-   motoTraffic.splice(i, 1);
-  }
- }
-
- // Update sparks
- for (let i = motoSparks.length - 1; i >= 0; i--) {
-  const p = motoSparks[i];
-  p.x += p.vx;
-  p.y += p.vy;
-  p.life -= 0.04;
-  if (p.life <= 0) motoSparks.splice(i, 1);
- }
-
- updateMotoHUD();
-}
-
-function drawMotoScene() {
- if (!motoCtx || !motoCanvas) return;
- const ctx = motoCtx;
- const w = motoCanvas.width;
- const h = motoCanvas.height;
- const horizonY = 115;
-
- // 1. Sky & Twilight Horizon
- const skyGrad = ctx.createLinearGradient(0, 0, 0, horizonY);
- skyGrad.addColorStop(0, "#030712");
- skyGrad.addColorStop(0.5, "#1e1b4b");
- skyGrad.addColorStop(0.85, "#4c1d95");
- skyGrad.addColorStop(1, "#c026d3");
- ctx.fillStyle = skyGrad;
- ctx.fillRect(0, 0, w, horizonY);
-
- // Distant neon city skyline & mountains
- ctx.fillStyle = "#0c0a1a";
- ctx.beginPath();
- ctx.moveTo(0, horizonY);
- ctx.lineTo(25, horizonY - 18);
- ctx.lineTo(60, horizonY - 10);
- ctx.lineTo(95, horizonY - 26);
- ctx.lineTo(130, horizonY - 12);
- ctx.lineTo(170, horizonY - 32);
- ctx.lineTo(210, horizonY - 14);
- ctx.lineTo(250, horizonY - 28);
- ctx.lineTo(290, horizonY - 10);
- ctx.lineTo(320, horizonY - 20);
- ctx.lineTo(w, horizonY - 8);
- ctx.lineTo(w, horizonY);
- ctx.closePath();
- ctx.fill();
-
- // 2. Highway Ground & Road Perspective
- const groundGrad = ctx.createLinearGradient(0, horizonY, 0, h);
- groundGrad.addColorStop(0, "#090d16");
- groundGrad.addColorStop(1, "#020617");
- ctx.fillStyle = groundGrad;
- ctx.fillRect(0, horizonY, w, h - horizonY);
-
- // Road Polygon (tapers from 70px at horizon to 310px at bottom)
- const roadTopW = 70;
- const roadBotW = 310;
- const roadTopX = w / 2 - roadTopW / 2;
- const roadBotX = w / 2 - roadBotW / 2;
-
- ctx.fillStyle = "#1e293b";
- ctx.beginPath();
- ctx.moveTo(roadTopX, horizonY);
- ctx.lineTo(roadTopX + roadTopW, horizonY);
- ctx.lineTo(roadBotX + roadBotW, h);
- ctx.lineTo(roadBotX, h);
- ctx.closePath();
- ctx.fill();
-
- // Red & White Rumble Curbs
- const curbW = 10;
- const segCount = 14;
- const speedOffset = (motoDistance * 0.3) % 1;
- for (let i = 0; i < segCount; i++) {
-  const p1 = (i + speedOffset) / segCount;
-  const p2 = (i + 1 + speedOffset) / segCount;
-  if (p1 > 1) continue;
-
-  const y1 = horizonY + (h - horizonY) * Math.pow(p1, 2);
-  const y2 = horizonY + (h - horizonY) * Math.pow(Math.min(1, p2), 2);
-  const rw1 = roadTopW + (roadBotW - roadTopW) * p1;
-  const rw2 = roadTopW + (roadBotW - roadTopW) * Math.min(1, p2);
-  const rx1 = w / 2 - rw1 / 2;
-  const rx2 = w / 2 - rw2 / 2;
-
-  ctx.fillStyle = (i % 2 === 0) ? "#ef4444" : "#ffffff";
-  // Left curb
-  ctx.beginPath();
-  ctx.moveTo(rx1 - curbW * p1, y1);
-  ctx.lineTo(rx1, y1);
-  ctx.lineTo(rx2, y2);
-  ctx.lineTo(rx2 - curbW * p2, y2);
-  ctx.closePath();
-  ctx.fill();
-
-  // Right curb
-  ctx.beginPath();
-  ctx.moveTo(rx1 + rw1, y1);
-  ctx.lineTo(rx1 + rw1 + curbW * p1, y1);
-  ctx.lineTo(rx2 + rw2 + curbW * p2, y2);
-  ctx.lineTo(rx2 + rw2, y2);
-  ctx.closePath();
-  ctx.fill();
- }
-
- // Dashed Lane Markers (3 Lanes = 2 dividing lines)
- [-0.33, 0.33].forEach(laneFrac => {
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.75)";
-  for (let i = 0; i < segCount; i++) {
-   const p1 = (i + speedOffset) / segCount;
-   const p2 = (i + 0.5 + speedOffset) / segCount;
-   if (p1 > 1) continue;
-
-   const y1 = horizonY + (h - horizonY) * Math.pow(p1, 2);
-   const y2 = horizonY + (h - horizonY) * Math.pow(Math.min(1, p2), 2);
-   const rw1 = roadTopW + (roadBotW - roadTopW) * p1;
-   const rw2 = roadTopW + (roadBotW - roadTopW) * Math.min(1, p2);
-
-   const x1 = w / 2 + (rw1 / 2) * laneFrac;
-   const x2 = w / 2 + (rw2 / 2) * laneFrac;
-
-   ctx.lineWidth = Math.max(1, 3.5 * p1);
-   ctx.beginPath();
-   ctx.moveTo(x1, y1);
-   ctx.lineTo(x2, y2);
-   ctx.stroke();
-  }
+function spawnBalloon(startY) {
+ if (!balloonCanvas) return;
+ const isGold = Math.random() < 0.18;
+ const type = isGold ? BALLOON_TYPES[4] : BALLOON_TYPES[Math.floor(Math.random() * 4)];
+ balloons.push({
+  x: Math.random() * (balloonCanvas.width - 70) + 35,
+  y: startY || (balloonCanvas.height + 25),
+  speed: Math.random() * 0.9 + 1.2,
+  swaySpeed: Math.random() * 0.04 + 0.02,
+  swayAmp: Math.random() * 20 + 15,
+  phase: Math.random() * Math.PI * 2,
+  baseX: 0,
+  type: type,
+  radius: type.radius,
+  coins: type.coins,
+  score: type.score
  });
+ balloons[balloons.length - 1].baseX = balloons[balloons.length - 1].x;
+}
 
- // 3. Highway Traffic (Sorted by Z for depth rendering)
- const sortedTraffic = [...motoTraffic].sort((a, b) => b.z - a.z);
- sortedTraffic.forEach(veh => {
-  drawTrafficVehicle(ctx, veh, w, h, horizonY, roadTopW, roadBotW);
+function fireArrow(targetX, targetY) {
+ if (!balloonActive) return;
+ balloonArrowsFired++;
+ playSynthSound('arrow_shoot');
+ const angle = BOW.angle;
+ const speed = 19;
+ arrows.push({
+  x: BOW.x,
+  y: BOW.y,
+  vx: Math.cos(angle) * speed,
+  vy: Math.sin(angle) * speed,
+  angle: angle,
+  life: 45
  });
-
- // 4. Nitro High-Speed Warp Streaks
- if (motoIsNitro) {
-  ctx.strokeStyle = "rgba(192, 132, 252, 0.4)";
-  ctx.lineWidth = 2;
-  for (let k = 0; k < 6; k++) {
-   const sx = Math.random() * w;
-   const sy = horizonY + Math.random() * (h - horizonY - 100);
-   const len = 30 + Math.random() * 50;
-   ctx.beginPath();
-   ctx.moveTo(sx, sy);
-   ctx.lineTo(sx + (sx - w / 2) * 0.2, sy + len);
-   ctx.stroke();
-  }
- }
-
- // 5. Sparks / Overtake Particles
- motoSparks.forEach(p => {
-  ctx.fillStyle = p.color;
-  ctx.beginPath();
-  ctx.arc(p.x, p.y, Math.max(1, 3 * p.life), 0, Math.PI * 2);
-  ctx.fill();
- });
-
- // 6. First-Person Cockpit & Superbike Handlebars
- drawSuperbikeCockpit(ctx, w, h);
+ updateBalloonHUD();
 }
 
-function drawTrafficVehicle(ctx, veh, w, h, horizonY, roadTopW, roadBotW) {
- const p = Math.max(0, Math.min(1, 1 - veh.z));
- const y = horizonY + (h - horizonY) * Math.pow(p, 1.8);
- const rw = roadTopW + (roadBotW - roadTopW) * p;
- const x = w / 2 + (rw / 2) * (veh.x * 0.7);
-
- const scale = 0.25 + 0.95 * p;
- const vw = veh.w * scale;
- const vh = veh.h * scale;
-
- ctx.save();
- ctx.translate(x, y);
-
- // Ground Shadow
- ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
- ctx.beginPath();
- ctx.ellipse(0, vh / 2, vw * 0.6, vh * 0.2, 0, 0, Math.PI * 2);
- ctx.fill();
-
- if (veh.type === 'truck') {
-  // Heavy 18-Wheeler Trailer
-  ctx.fillStyle = "#334155";
-  ctx.fillRect(-vw / 2, -vh, vw, vh);
-
-  // Chrome Trailer back doors
-  ctx.fillStyle = veh.color;
-  ctx.fillRect(-vw / 2 + 2, -vh + 2, vw - 4, vh - 4);
-  ctx.strokeStyle = "#1e293b";
-  ctx.lineWidth = 1;
-  ctx.strokeRect(-vw / 2 + 2, -vh + 2, vw - 4, vh - 4);
-  ctx.beginPath();
-  ctx.moveTo(0, -vh + 2);
-  ctx.lineTo(0, 0);
-  ctx.stroke();
-
-  // Red Tail-lights
-  ctx.fillStyle = "#ef4444";
-  ctx.fillRect(-vw / 2 + 3, -6 * scale, 8 * scale, 4 * scale);
-  ctx.fillRect(vw / 2 - 11 * scale, -6 * scale, 8 * scale, 4 * scale);
- } else {
-  // Sleek Passenger Car / SUV
-  const bodyGrad = ctx.createLinearGradient(0, -vh, 0, 0);
-  bodyGrad.addColorStop(0, veh.color);
-  bodyGrad.addColorStop(1, "#0f172a");
-  ctx.fillStyle = bodyGrad;
-  ctx.beginPath();
-  ctx.roundRect(-vw / 2, -vh, vw, vh, 4 * scale);
-  ctx.fill();
-
-  // Rear windshield
-  ctx.fillStyle = "#0f172a";
-  ctx.beginPath();
-  ctx.roundRect(-vw / 2 + 4 * scale, -vh + 3 * scale, vw - 8 * scale, vh * 0.45, 3 * scale);
-  ctx.fill();
-
-  // Glowing red tail-lights
-  ctx.fillStyle = "#ef4444";
-  ctx.shadowColor = "#f87171";
-  ctx.shadowBlur = 8 * scale;
-  ctx.fillRect(-vw / 2 + 2 * scale, -8 * scale, 7 * scale, 4 * scale);
-  ctx.fillRect(vw / 2 - 9 * scale, -8 * scale, 7 * scale, 4 * scale);
-  ctx.shadowBlur = 0;
- }
-
- ctx.restore();
+function balloonShootCenter() {
+ fireArrow();
 }
 
-function drawSuperbikeCockpit(ctx, w, h) {
- ctx.save();
- // Cockpit lean pivot at bottom-center
- const pivotX = w / 2;
- const pivotY = h + 20;
- ctx.translate(pivotX, pivotY);
- ctx.rotate(motoLean);
- ctx.translate(-pivotX, -pivotY);
+function updateBalloonPhysics() {
+ for (let i = arrows.length - 1; i >= 0; i--) {
+  const arr = arrows[i];
+  arr.x += arr.vx;
+  arr.y += arr.vy;
+  arr.life--;
 
- // 1. Aerodynamic Windscreen Bubble (Tinted purple/dark)
- const screenW = 190;
- const screenTopY = h - 170;
- const glassGrad = ctx.createLinearGradient(0, screenTopY, 0, h);
- glassGrad.addColorStop(0, "rgba(88, 28, 135, 0.35)");
- glassGrad.addColorStop(0.6, "rgba(30, 27, 75, 0.65)");
- glassGrad.addColorStop(1, "rgba(15, 23, 42, 0.95)");
-
- ctx.fillStyle = glassGrad;
- ctx.beginPath();
- ctx.moveTo(w / 2 - 40, screenTopY);
- ctx.bezierCurveTo(w / 2 - 80, screenTopY + 30, w / 2 - screenW / 2, screenTopY + 90, w / 2 - screenW / 2, h);
- ctx.lineTo(w / 2 + screenW / 2, h);
- ctx.bezierCurveTo(w / 2 + screenW / 2, screenTopY + 90, w / 2 + 80, screenTopY + 30, w / 2 + 40, screenTopY);
- ctx.closePath();
- ctx.fill();
-
- // Windscreen edge highlight
- ctx.strokeStyle = "rgba(192, 132, 252, 0.6)";
- ctx.lineWidth = 2;
- ctx.stroke();
-
- // 2. Dual Aerodynamic Rearview Side Mirrors (Left & Right)
- [-1, 1].forEach(dir => {
-  const mx = w / 2 + dir * 115;
-  const my = h - 130;
-
-  // Mirror Stem
-  ctx.fillStyle = "#1e293b";
-  ctx.beginPath();
-  ctx.moveTo(w / 2 + dir * 65, h - 85);
-  ctx.lineTo(mx, my);
-  ctx.lineTo(mx + dir * 6, my + 6);
-  ctx.lineTo(w / 2 + dir * 65, h - 75);
-  ctx.closePath();
-  ctx.fill();
-
-  // Mirror Casing & Glass
-  ctx.fillStyle = "#090d16";
-  ctx.beginPath();
-  ctx.ellipse(mx, my, 22, 14, dir * 0.3, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.strokeStyle = "#8b5cf6";
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
-
-  // Reflected highway
-  ctx.fillStyle = "#1e1b4b";
-  ctx.beginPath();
-  ctx.ellipse(mx, my, 18, 10, dir * 0.3, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Tiny mirror traffic light streak
-  ctx.fillStyle = "#38bdf8";
-  ctx.fillRect(mx - 3, my - 2, 6, 2);
- });
-
- // 3. Digital LED Dashboard Instrument Cluster
- const dashX = w / 2 - 62;
- const dashY = h - 98;
- const dashW = 124;
- const dashH = 48;
-
- ctx.fillStyle = "#05070e";
- ctx.beginPath();
- ctx.roundRect(dashX, dashY, dashW, dashH, 8);
- ctx.fill();
- ctx.strokeStyle = "#6366f1";
- ctx.lineWidth = 1.5;
- ctx.stroke();
-
- // Tachometer RPM Bar (Green -> Yellow -> Red)
- const rpmFrac = Math.min(1, motoSpeed / 280);
- const barW = dashW - 16;
- ctx.fillStyle = "#1e293b";
- ctx.fillRect(dashX + 8, dashY + 7, barW, 5);
-
- const rpmGrad = ctx.createLinearGradient(dashX + 8, 0, dashX + 8 + barW, 0);
- rpmGrad.addColorStop(0, "#22c55e");
- rpmGrad.addColorStop(0.65, "#eab308");
- rpmGrad.addColorStop(1, "#ef4444");
- ctx.fillStyle = rpmGrad;
- ctx.fillRect(dashX + 8, dashY + 7, barW * rpmFrac, 5);
-
- // Digital Speedometer
- ctx.fillStyle = "#38bdf8";
- ctx.font = "bold 20px 'Chakra Petch', monospace, sans-serif";
- ctx.textAlign = "center";
- ctx.fillText(`${Math.round(motoSpeed)}`, w / 2 - 12, dashY + 34);
-
- ctx.fillStyle = "#94a3b8";
- ctx.font = "8px sans-serif";
- ctx.fillText("KM/H", w / 2 - 12, dashY + 43);
-
- // Gear Display (N, 1 - 6)
- const gear = motoSpeed < 20 ? "N" : Math.min(6, Math.floor(motoSpeed / 45) + 1);
- ctx.fillStyle = "#facc15";
- ctx.font = "bold 16px monospace";
- ctx.fillText(`${gear}`, w / 2 + 36, dashY + 30);
- ctx.fillStyle = "#64748b";
- ctx.font = "7px sans-serif";
- ctx.fillText("GEAR", w / 2 + 36, dashY + 41);
-
- // 4. Clip-on Handlebars & Textured Rubber Grips
- [-1, 1].forEach(dir => {
-  const barStartX = w / 2 + dir * 30;
-  const barStartY = h - 50;
-  const gripX = w / 2 + dir * 110;
-  const gripY = h - 35;
-
-  // Aluminum Clip-on bar
-  ctx.strokeStyle = "#475569";
-  ctx.lineWidth = 10;
-  ctx.lineCap = "round";
-  ctx.beginPath();
-  ctx.moveTo(barStartX, barStartY);
-  ctx.lineTo(gripX, gripY);
-  ctx.stroke();
-
-  // Rubber Textured Grip
-  ctx.strokeStyle = "#090d16";
-  ctx.lineWidth = 16;
-  ctx.beginPath();
-  ctx.moveTo(gripX - dir * 18, gripY - 4);
-  ctx.lineTo(gripX + dir * 26, gripY + 4);
-  ctx.stroke();
-
-  // Chrome Bar-end weight
-  ctx.fillStyle = "#94a3b8";
-  ctx.beginPath();
-  ctx.arc(gripX + dir * 28, gripY + 4, 8, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Brake / Clutch Lever
-  ctx.strokeStyle = "#cbd5e1";
-  ctx.lineWidth = 3.5;
-  ctx.beginPath();
-  ctx.moveTo(gripX - dir * 10, gripY + 8);
-  ctx.lineTo(gripX + dir * 16, gripY + 12);
-  ctx.stroke();
- });
-
- ctx.restore();
-}
-
-function endMotoGame(crashed) {
- stopTimers();
- motoActive = false;
- gameRunning = false;
- const dist = Math.floor(motoDistance);
- const score = motoScore;
-
- const msg = (crashed ? "💥 HIGHWAY COLLISION! " : "🏁 EPIC HIGHWAY RUN! ") +
-  `Traveled ${dist}m, scored ${score} pts with ${motoOvertakes} close overtakes at top speed ${Math.round(motoSpeed)} km/h!`;
- finishGame(score, msg);
-}
-
-
-/* ============================================================
-   GAME 8: ARROW ESCAPE: TAP AWAY 3D PUZZLE
-   ============================================================ */
-let arrowActive = false;
-let arrowStage = 1;
-let arrowScore = 0;
-let arrowGridSize = 4;
-let arrowTiles = [];
-let arrowRemaining = 0;
-let arrowTimerSec = 0;
-let arrowTimerInt = null;
-
-const ARROW_SYMBOLS = {
- up: '⬆️',
- down: '⬇️',
- left: '⬅️',
- right: '➡️'
-};
-
-const ARROW_DELTAS = {
- up: { dr: -1, dc: 0, flyX: 0, flyY: -220, bumpX: 0, bumpY: -8 },
- down: { dr: 1, dc: 0, flyX: 0, flyY: 220, bumpX: 0, bumpY: 8 },
- left: { dr: 0, dc: -1, flyX: -220, flyY: 0, bumpX: -8, bumpY: 0 },
- right: { dr: 0, dc: 1, flyX: 220, flyY: 0, bumpX: 8, bumpY: 0 }
-};
-
-function initArrowGame() {
- arrowActive = false;
- arrowStage = 1;
- arrowScore = 0;
- arrowTimerSec = 0;
- clearInterval(arrowTimerInt);
- setupArrowStage(1);
- updateArrowHUD();
-}
-
-function setupArrowStage(stage) {
- arrowStage = stage;
- arrowGridSize = (stage === 1) ? 4 : 5;
- const board = document.getElementById("arrowGridBoard");
- if (!board) return;
-
- board.innerHTML = "";
- board.style.gridTemplateColumns = `repeat(${arrowGridSize}, 56px)`;
-
- arrowTiles = [];
- const totalCells = arrowGridSize * arrowGridSize;
- const directions = ['up', 'down', 'left', 'right'];
-
- // Generate grid with high solvability:
- // Perimeter tiles point outward first, inner tiles point strategically
- for (let r = 0; r < arrowGridSize; r++) {
-  for (let c = 0; c < arrowGridSize; c++) {
-   let dir;
-   // Boundary hints
-   if (r === 0 && Math.random() < 0.6) dir = 'up';
-   else if (r === arrowGridSize - 1 && Math.random() < 0.6) dir = 'down';
-   else if (c === 0 && Math.random() < 0.6) dir = 'left';
-   else if (c === arrowGridSize - 1 && Math.random() < 0.6) dir = 'right';
-   else dir = directions[Math.floor(Math.random() * directions.length)];
-
-   arrowTiles.push({
-    id: r * arrowGridSize + c,
-    r: r,
-    c: c,
-    dir: dir,
-    cleared: false
-   });
-  }
- }
-
- arrowRemaining = arrowTiles.length;
-
- // Render DOM elements
- arrowTiles.forEach(tile => {
-  const el = document.createElement("button");
-  el.type = "button";
-  el.className = "arrow-tile";
-  el.id = `arrowTile-${tile.r}-${tile.c}`;
-  el.textContent = ARROW_SYMBOLS[tile.dir];
-  el.setAttribute("aria-label", `Arrow pointing ${tile.dir}`);
-  el.onclick = () => handleArrowClick(tile.r, tile.c);
-  board.appendChild(el);
- });
-
- updateArrowHUD();
-}
-
-function startArrowGame() {
- stopTimers();
- initArrowGame();
- arrowActive = true;
- gameRunning = true;
- const btn = document.getElementById("arrowStartBtn");
- if (btn) {
-  btn.disabled = true;
-  btn.textContent = "🏹 Solving Arrow Box...";
- }
-
- clearInterval(arrowTimerInt);
- arrowTimerInt = setInterval(() => {
-  if (!arrowActive) return;
-  arrowTimerSec++;
-  const m = Math.floor(arrowTimerSec / 60);
-  const s = arrowTimerSec % 60;
-  const timeEl = document.getElementById("arrowTimeText");
-  if (timeEl) timeEl.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
- }, 1000);
-}
-
-function handleArrowClick(r, c) {
- if (!arrowActive) return;
- const tile = arrowTiles.find(t => t.r === r && t.c === c);
- if (!tile || tile.cleared) return;
-
- const delta = ARROW_DELTAS[tile.dir];
- let isBlocked = false;
-
- // Raycast to boundary
- let currR = r + delta.dr;
- let currC = c + delta.dc;
-
- while (currR >= 0 && currR < arrowGridSize && currC >= 0 && currC < arrowGridSize) {
-  const blocker = arrowTiles.find(t => t.r === currR && t.c === currC && !t.cleared);
-  if (blocker) {
-   isBlocked = true;
-   break;
-  }
-  currR += delta.dr;
-  currC += delta.dc;
- }
-
- const el = document.getElementById(`arrowTile-${r}-${c}`);
- if (!el) return;
-
- // Remove any hint
- el.classList.remove("hinted");
-
- if (isBlocked) {
-  // Blocked bump animation
-  playSynthSound('arrow_bump');
-  el.style.setProperty('--bump-x', `${delta.bumpX}px`);
-  el.style.setProperty('--bump-y', `${delta.bumpY}px`);
-  el.classList.add("blocked-bump");
-  setTimeout(() => {
-   if (el) el.classList.remove("blocked-bump");
-  }, 320);
- } else {
-  // Free flight out!
-  playSynthSound('arrow_fly');
-  tile.cleared = true;
-  arrowRemaining--;
-  arrowScore += 25;
-  updateArrowHUD();
-
-  el.style.setProperty('--fly-x', `${delta.flyX}px`);
-  el.style.setProperty('--fly-y', `${delta.flyY}px`);
-  el.classList.add("flying-out");
-
-  setTimeout(() => {
-   if (el) el.style.visibility = "hidden";
-  }, 240);
-
-  // Check stage clear
-  if (arrowRemaining === 0) {
-   arrowScore += 100;
-   playSynthSound('arrow_win');
-   if (arrowStage < 3) {
-    setTimeout(() => {
-     alert(`🎉 Stage ${arrowStage} Dismantled! +100 Bonus! Advancing to Stage ${arrowStage + 1}...`);
-     setupArrowStage(arrowStage + 1);
-    }, 400);
-   } else {
-    setTimeout(() => {
-     endArrowGame(true);
-    }, 500);
-   }
-  }
- }
-}
-
-function giveArrowHint() {
- if (!arrowActive) return;
- // Find any unblocked arrow
- for (let tile of arrowTiles) {
-  if (tile.cleared) continue;
-  const delta = ARROW_DELTAS[tile.dir];
-  let currR = tile.r + delta.dr;
-  let currC = tile.c + delta.dc;
-  let blocked = false;
-  while (currR >= 0 && currR < arrowGridSize && currC >= 0 && currC < arrowGridSize) {
-   if (arrowTiles.some(t => t.r === currR && t.c === currC && !t.cleared)) {
-    blocked = true;
+  let hit = false;
+  for (let j = balloons.length - 1; j >= 0; j--) {
+   const b = balloons[j];
+   const dx = arr.x - b.x;
+   const dy = arr.y - (b.y - 4);
+   const dist = Math.sqrt(dx * dx + dy * dy);
+   if (dist < b.radius + 6) {
+    popBalloon(b, j);
+    hit = true;
     break;
    }
-   currR += delta.dr;
-   currC += delta.dc;
   }
-  if (!blocked) {
-   const el = document.getElementById(`arrowTile-${tile.r}-${tile.c}`);
-   if (el) {
-    el.classList.add("hinted");
-    setTimeout(() => { if (el) el.classList.remove("hinted"); }, 2000);
-   }
-   return;
+
+  if (hit || arr.life <= 0 || arr.x < -20 || arr.x > balloonCanvas.width + 20 || arr.y < -20) {
+   arrows.splice(i, 1);
   }
+ }
+
+ for (let i = balloons.length - 1; i >= 0; i--) {
+  const b = balloons[i];
+  b.y -= b.speed;
+  b.phase += b.swaySpeed;
+  b.x = b.baseX + Math.sin(b.phase) * b.swayAmp;
+
+  if (b.y < -40) {
+   balloons.splice(i, 1);
+  }
+ }
+
+ for (let i = balloonParticles.length - 1; i >= 0; i--) {
+  const p = balloonParticles[i];
+  p.x += p.vx;
+  p.y += p.vy;
+  p.vy += 0.15;
+  p.alpha -= 0.025;
+  if (p.alpha <= 0) balloonParticles.splice(i, 1);
+ }
+
+ for (let i = floatingCoinTexts.length - 1; i >= 0; i--) {
+  const ft = floatingCoinTexts[i];
+  ft.y -= 1.2;
+  ft.alpha -= 0.02;
+  if (ft.alpha <= 0) floatingCoinTexts.splice(i, 1);
  }
 }
 
-function restartArrowLevel() {
- if (!arrowActive) return;
- setupArrowStage(arrowStage);
+function popBalloon(b, index) {
+ playSynthSound('balloon_pop');
+ balloons.splice(index, 1);
+ balloonPoppedCount++;
+ balloonCoinsEarned += b.coins;
+ coins += b.coins;
+ syncWalletUI();
+ updateBalloonHUD();
+
+ for (let i = 0; i < 14; i++) {
+  const angle = Math.random() * Math.PI * 2;
+  const spd = Math.random() * 4.5 + 1.5;
+  balloonParticles.push({
+   x: b.x,
+   y: b.y,
+   vx: Math.cos(angle) * spd,
+   vy: Math.sin(angle) * spd - 1,
+   color: b.type.color,
+   size: Math.random() * 4 + 2,
+   alpha: 1
+  });
+ }
+
+ floatingCoinTexts.push({
+  x: b.x,
+  y: b.y - 10,
+  text: `+${b.coins} 🪙`,
+  color: b.type.isGold ? "#facc15" : "#4ade80",
+  alpha: 1
+ });
+
+ const notice = document.getElementById("balloonPopNotice");
+ if (notice) {
+  notice.textContent = b.type.isGold ? "+10 GOLD COINS! 🪙" : "+5 COINS! 🪙";
+  notice.style.borderColor = b.type.isGold ? "#facc15" : "#4ade80";
+  notice.style.color = b.type.isGold ? "#fef08a" : "#86efac";
+  notice.style.display = "block";
+  clearTimeout(notice._timer);
+  notice._timer = setTimeout(() => { notice.style.display = "none"; }, 700);
+ }
 }
 
-function updateArrowHUD() {
- const lvlElem = document.getElementById("arrowLevelText");
- const remElem = document.getElementById("arrowRemainingText");
- const scrElem = document.getElementById("arrowScoreText");
- if (lvlElem) lvlElem.textContent = `Stage ${arrowStage}`;
- if (remElem) remElem.textContent = arrowRemaining;
- if (scrElem) scrElem.textContent = arrowScore;
+function drawBalloonScene() {
+ if (!balloonCtx || !balloonCanvas) return;
+ const ctx = balloonCtx;
+ const W = balloonCanvas.width;
+ const H = balloonCanvas.height;
+
+ ctx.clearRect(0, 0, W, H);
+
+ ctx.strokeStyle = "rgba(139, 92, 246, 0.08)";
+ ctx.lineWidth = 1;
+ for (let x = 0; x < W; x += 30) {
+  ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+ }
+ for (let y = 0; y < H; y += 30) {
+  ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+ }
+
+ for (const b of balloons) {
+  ctx.save();
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.45)";
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.moveTo(b.x, b.y + b.radius * 1.2);
+  ctx.quadraticCurveTo(b.x + Math.sin(b.phase) * 6, b.y + b.radius * 1.8, b.x - Math.sin(b.phase) * 4, b.y + b.radius * 2.4);
+  ctx.stroke();
+
+  ctx.translate(b.x, b.y);
+  ctx.beginPath();
+  ctx.ellipse(0, 0, b.radius, b.radius * 1.25, 0, 0, Math.PI * 2);
+  const grad = ctx.createRadialGradient(-b.radius * 0.3, -b.radius * 0.35, b.radius * 0.1, 0, 0, b.radius * 1.3);
+  grad.addColorStop(0, b.type.highlight);
+  grad.addColorStop(0.6, b.type.color);
+  grad.addColorStop(1, "#0f172a");
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(-4, b.radius * 1.22);
+  ctx.lineTo(4, b.radius * 1.22);
+  ctx.lineTo(0, b.radius * 1.35);
+  ctx.closePath();
+  ctx.fillStyle = b.type.color;
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.ellipse(-b.radius * 0.35, -b.radius * 0.45, b.radius * 0.22, b.radius * 0.4, -0.4, 0, Math.PI * 2);
+  ctx.fillStyle = "rgba(255, 255, 255, 0.45)";
+  ctx.fill();
+
+  if (b.type.isGold) {
+   ctx.fillStyle = "#ffffff";
+   ctx.font = "bold 11px sans-serif";
+   ctx.textAlign = "center";
+   ctx.fillText("🪙", 0, 4);
+  }
+  ctx.restore();
+ }
+
+ for (const arr of arrows) {
+  ctx.save();
+  ctx.translate(arr.x, arr.y);
+  ctx.rotate(arr.angle);
+
+  ctx.strokeStyle = "rgba(99, 102, 241, 0.4)";
+  ctx.lineWidth = 4;
+  ctx.beginPath(); ctx.moveTo(-22, 0); ctx.lineTo(0, 0); ctx.stroke();
+
+  ctx.strokeStyle = "#e2e8f0";
+  ctx.lineWidth = 2.5;
+  ctx.beginPath(); ctx.moveTo(-18, 0); ctx.lineTo(6, 0); ctx.stroke();
+
+  ctx.fillStyle = "#38bdf8";
+  ctx.beginPath();
+  ctx.moveTo(10, 0);
+  ctx.lineTo(4, -5);
+  ctx.lineTo(4, 5);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = "#ec4899";
+  ctx.beginPath();
+  ctx.moveTo(-18, -4); ctx.lineTo(-12, 0); ctx.lineTo(-18, 4);
+  ctx.stroke();
+
+  ctx.restore();
+ }
+
+ for (const p of balloonParticles) {
+  ctx.save();
+  ctx.globalAlpha = Math.max(0, p.alpha);
+  ctx.fillStyle = p.color;
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+ }
+
+ for (const ft of floatingCoinTexts) {
+  ctx.save();
+  ctx.globalAlpha = Math.max(0, ft.alpha);
+  ctx.fillStyle = ft.color;
+  ctx.font = "bold 15px 'Rajdhani', sans-serif";
+  ctx.textAlign = "center";
+  ctx.shadowColor = ft.color;
+  ctx.shadowBlur = 8;
+  ctx.fillText(ft.text, ft.x, ft.y);
+  ctx.restore();
+ }
+
+ ctx.save();
+ ctx.translate(BOW.x, BOW.y);
+ ctx.rotate(BOW.angle);
+
+ ctx.strokeStyle = "#818cf8";
+ ctx.lineWidth = 3.5;
+ ctx.beginPath();
+ ctx.arc(0, 0, 24, -Math.PI / 2.3, Math.PI / 2.3);
+ ctx.stroke();
+
+ ctx.strokeStyle = "rgba(255, 255, 255, 0.7)";
+ ctx.lineWidth = 1.2;
+ ctx.beginPath();
+ ctx.moveTo(Math.cos(-Math.PI / 2.3) * 24, Math.sin(-Math.PI / 2.3) * 24);
+ ctx.lineTo(-6, 0);
+ ctx.lineTo(Math.cos(Math.PI / 2.3) * 24, Math.sin(Math.PI / 2.3) * 24);
+ ctx.stroke();
+
+ ctx.strokeStyle = "#f8fafc";
+ ctx.lineWidth = 2;
+ ctx.beginPath(); ctx.moveTo(-6, 0); ctx.lineTo(20, 0); ctx.stroke();
+ ctx.fillStyle = "#38bdf8";
+ ctx.beginPath(); ctx.moveTo(25, 0); ctx.lineTo(19, -4); ctx.lineTo(19, 4); ctx.closePath(); ctx.fill();
+
+ ctx.restore();
 }
 
-function endArrowGame(clearedAll) {
+function updateBalloonHUD() {
+ const elPopped = document.getElementById("balloonPoppedText");
+ const elCoins = document.getElementById("balloonCoinsText");
+ const elAcc = document.getElementById("balloonAccuracyText");
+ const elTime = document.getElementById("balloonTimeText");
+ if (elPopped) elPopped.textContent = balloonPoppedCount;
+ if (elCoins) elCoins.textContent = `+${balloonCoinsEarned} 🪙`;
+ if (elTime) elTime.textContent = `${balloonTimeLeft}s`;
+ if (elAcc) {
+  const acc = balloonArrowsFired > 0 ? Math.min(100, Math.round((balloonPoppedCount / balloonArrowsFired) * 100)) : 100;
+  elAcc.textContent = `${acc}%`;
+ }
+}
+
+function endBalloonGame(timeout) {
  stopTimers();
- clearInterval(arrowTimerInt);
- arrowActive = false;
+ clearInterval(balloonTimerInt);
+ clearInterval(balloonSpawnerInt);
+ if (balloonAnimFrame) cancelAnimationFrame(balloonAnimFrame);
+ balloonActive = false;
  gameRunning = false;
- const score = arrowScore;
- const msg = (clearedAll ? "🏆 ALL ARROW BOXES DISMANTLED! " : "🏹 PUZZLE COMPLETE! ") +
-  `Cleared stages with ${score} points in ${arrowTimerSec}s!`;
- finishGame(score, msg);
-}
 
+ const score = balloonPoppedCount * 100 + balloonCoinsEarned * 10;
+ const msg = (timeout ? "⏱️ TIME'S UP! " : "🏁 CASHOUT! ") +
+  `Popped ${balloonPoppedCount} balloons with arrows and earned +${balloonCoinsEarned} Coins!`;
+ finishGame(score, msg, balloonCoinsEarned, true);
+}
 // Global Keyboard Controls
 window.addEventListener("keydown", (e) => {
  if (selectedGame?.id === 1 && gameRunning) {
@@ -5922,14 +6161,11 @@ window.addEventListener("keydown", (e) => {
   if (e.key === " " || e.key === "ArrowUp" || e.key === "w" || e.key === "W") tankFire();
  }
  if (selectedGame?.id === 7 && gameRunning) {
-  if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") motoMoveLeft();
-  if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") motoMoveRight();
-  if (e.key === "ArrowUp" || e.key === "w" || e.key === "W") motoTriggerNitro();
-  if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") motoTriggerBrake();
+  if (e.key === "h" || e.key === "H") peekCardHint();
+  if (e.key === "r" || e.key === "R") restartCardGame();
  }
  if (selectedGame?.id === 8 && gameRunning) {
-  if (e.key === "h" || e.key === "H") giveArrowHint();
-  if (e.key === "r" || e.key === "R") restartArrowLevel();
+  if (e.key === " " || e.key === "ArrowUp") balloonShootCenter();
  }
 });
 
@@ -6131,7 +6367,7 @@ function updateProfileRewardUI() {
    pill.style.border = "1px solid rgba(234,179,8,0.4)";
   }
   if (remText) {
-   remText.innerHTML = `Earn <strong style="color:#facc15">${remaining} more coins</strong> to reach the 1,000 Coins milestone and unlock custom profile avatars! Play matches for 5+ minutes to earn 30+ to 50 coins.`;
+   remText.innerHTML = `Earn <strong style="color:#facc15">${remaining} more coins</strong> to reach the 1,000 Coins milestone and unlock custom profile avatars! Play matches longer to accumulate more coins.`;
   }
   if (note) note.style.display = "none";
   if (customRow) customRow.style.display = "none";
@@ -6178,7 +6414,7 @@ function renderAvatarGrid(isUnlocked) {
 function alertAvatarLocked() {
  const highest = getHighestCoins();
  const needed = Math.max(0, 1000 - highest);
- alert(`🔒 Milestone Locked!\n\nYou currently have ${highest} / 1,000 Coins.\nReach 1,000 Coins (need ${needed} more) to unlock custom gamer avatars and profile pictures!\n\nTip: Play matches for 5+ minutes to earn 30+ to 50 coins.`);
+ alert(`🔒 Milestone Locked!\n\nYou currently have ${highest} / 1,000 Coins.\nReach 1,000 Coins (need ${needed} more) to unlock custom gamer avatars and profile pictures!\n\nTip: Play matches longer to accumulate more coins.`);
 }
 
 async function selectProfileAvatar(symbol, name) {
