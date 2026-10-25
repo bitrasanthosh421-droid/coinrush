@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google AdSense Verification -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5301014611783028"
+     crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact &amp; App Submissions • CoinRush Hub</title>
+  <meta name="description" content="Contact CoinRush Hub. Submit an app or website for review, propose a collaboration, or ask a question.">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --card-bg: #f8fafc;
+      --card-border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-sub: #334155;
+      --accent: #4f46e5;
+      --accent-hover: #4338ca;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.7;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .badge {
+      display: inline-block;
+      background: #eef2ff;
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    h1 { font-size: 28px; font-weight: 900; color: var(--text-main); margin-bottom: 8px; letter-spacing: -0.5px; }
+    .subtitle { font-size: 14.5px; color: var(--text-muted); margin-bottom: 24px; }
+    
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 13px; font-weight: 700; color: var(--text-sub); margin-bottom: 6px; }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text-main);
+      background: var(--card-bg);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      background: #ffffff;
+    }
+    textarea { resize: vertical; min-height: 110px; }
+
+    .btn-submit {
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      padding: 13px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover { background: var(--accent-hover); }
+
+    .alert-success {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .direct-info {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px;
+      margin: 24px 0;
+      font-size: 13.5px;
+    }
+
+    footer {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 13px;
+    }
+    footer a { color: var(--text-muted); text-decoration: none; font-weight: 600; }
+    footer a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">← Return to Links Directory</a>
+    <div class="badge">COLLABORATION &amp; INQUIRIES</div>
+    <h1>Contact &amp; App Submissions</h1>
+    <div class="subtitle">Suggest an app, propose a partnership, or get in touch with our team</div>
+
+    <div class="alert-success" id="contactSuccess">
+      ✅ Thank you! Your message has been received. We review app submissions within 24 to 48 hours.
+    </div>
+
+    <form id="contactForm" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label for="senderName">Your Name *</label>
+        <input type="text" id="senderName" required placeholder="e.g. Alex Hunter">
+      </div>
+      <div class="form-group">
+        <label for="senderEmail">Your Email *</label>
+        <input type="email" id="senderEmail" required placeholder="e.g. alex@example.com">
+      </div>
+      <div class="form-group">
+        <label for="subjectTopic">Topic / Category *</label>
+        <select id="subjectTopic" required>
+          <option value="App Submission">Submit an App / Website for Review</option>
+          <option value="Sponsorship">Instagram Sponsorship / Partnership</option>
+          <option value="Broken Link">Report a Broken or Outdated Link</option>
+          <option value="General">General Inquiry</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="appUrl">App or Website URL (If applicable)</label>
+        <input type="url" id="appUrl" placeholder="https://play.google.com/... or https://...">
+      </div>
+      <div class="form-group">
+        <label for="messageText">Message / Description *</label>
+        <textarea id="messageText" required placeholder="Tell us why our Instagram community would find this app or website valuable..."></textarea>
+      </div>
+      <button type="submit" class="btn-submit">🚀 Submit Inquiry</button>
+    </form>
+
+    <div class="direct-info">
+      <p style="margin:0 0 6px"><strong>📧 Direct Email:</strong> <a href="mailto:support@mycoinrush.online" style="color:var(--accent);text-decoration:none;font-weight:700">support@mycoinrush.online</a></p>
+      <p style="margin:0 0 6px"><strong>📷 Instagram Direct Message:</strong> DM us on our Instagram page for quick response.</p>
+      <p style="margin:0"><strong>⏱️ Response Window:</strong> Typical reply within 24 hours.</p>
+    </div>
+
+    <footer>
+      <a href="index.html">🏠 Home Links</a>
+      <a href="about.html">ℹ️ About Us</a>
+      <a href="privacy.html">🔒 Privacy Policy</a>
+      <a href="terms.html">📜 Terms of Service</a>
+      <a href="disclaimer.html">⚖️ Disclaimer</a>
+    </footer>
+  </div>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById("contactSuccess").style.display = "block";
+      document.getElementById("contactForm").reset();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
