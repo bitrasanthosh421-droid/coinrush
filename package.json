@@ -1,0 +1,22 @@
+{
+  "name": "techtelugu-bio-hub",
+  "version": "1.0.0",
+  "description": "Tech Telugu Bio Links & Tech Directory Hub",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "instagram-bio",
+    "links-hub",
+    "apps-directory"
+  ],
+  "author": "Tech Telugu",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "helmet": "^8.3.0"
+  }
+}

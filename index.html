@@ -163,17 +163,24 @@
     }
 
     .avatar-img {
-      width: 94px;
-      height: 94px;
+      width: 96px;
+      height: 96px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      background: #f1f5f9;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #ffffff;
-      font-size: 42px;
-      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
       border: 3px solid #ffffff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .avatar-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .verified-badge {
@@ -254,38 +261,229 @@
     }
 
     /* Search Bar */
-    .search-box {
-      position: relative;
+    .search-box-wrapper {
       margin-bottom: 16px;
     }
 
-    .search-input {
-      width: 100%;
-      padding: 14px 16px 14px 44px;
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: var(--radius-md);
-      font-size: 14.5px;
-      color: var(--text-main);
-      outline: none;
-      font-family: inherit;
       box-shadow: var(--shadow-sm);
       transition: all 0.2s;
     }
 
-    .search-input:focus {
+    .search-box:focus-within {
       border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
     }
 
     .search-icon {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
+      padding-left: 16px;
       font-size: 16px;
       color: var(--text-muted);
       pointer-events: none;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 13px 12px 13px 10px;
+      background: transparent;
+      border: none;
+      font-size: 14.5px;
+      color: var(--text-main);
+      outline: none;
+      font-family: inherit;
+      min-width: 0;
+    }
+
+    .search-clear-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 8px 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: color 0.15s;
+    }
+
+    .search-clear-btn:hover {
+      color: var(--text-main);
+    }
+
+    .search-submit-btn {
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      padding: 9px 16px;
+      margin-right: 6px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    .search-submit-btn:hover {
+      background: var(--accent-hover);
+    }
+
+    /* Search Feedback Banner */
+    .search-feedback-banner {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: var(--radius-sm);
+      padding: 11px 16px;
+      font-size: 13.5px;
+      color: #1e40af;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-clear-search {
+      background: #ffffff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-clear-search:hover {
+      background: #dbeafe;
+    }
+
+    /* Section Dividers */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 28px 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .section-divider:first-child {
+      margin-top: 8px;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .section-heading {
+      font-size: 16.5px;
+      font-weight: 900;
+      color: var(--text-main);
+      margin: 0;
+      letter-spacing: -0.3px;
+    }
+
+    .section-subheading {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      display: block;
+      margin-top: 1px;
+    }
+
+    .section-count-badge {
+      background: #f1f5f9;
+      color: var(--text-muted);
+      border: 1px solid var(--card-border);
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 12px;
+    }
+
+    /* Tag Pills for [APP], [WEBSITE], [LINK] */
+    .type-tag {
+      font-size: 11px;
+      font-weight: 900;
+      padding: 2px 7px;
+      border-radius: 5px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .type-app {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    .type-website {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+
+    .type-link {
+      background: #faf5ff;
+      color: #7e22ce;
+      border: 1px solid #e9d5ff;
+    }
+
+    .link-source-url {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .source-domain {
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+
+    .link-action-btn {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      cursor: pointer;
+      border: none;
+    }
+
+    .link-action-btn:hover {
+      background: var(--accent);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
     }
 
     /* Category Filter Pills */
@@ -720,7 +918,9 @@
     <!-- Profile Card -->
     <div class="profile-hero">
       <div class="avatar-wrapper">
-        <div class="avatar-img" id="creatorAvatar">⚡</div>
+        <div class="avatar-img">
+          <img src="profile.png" alt="Tech Telugu Creator" id="creatorAvatarImg">
+        </div>
         <div class="verified-badge" title="Verified Creator">✓</div>
       </div>
       <h1 class="profile-name">
@@ -734,32 +934,33 @@
       <!-- Social Media Quick Links -->
       <div class="social-row" id="socialRow">
         <a href="https://instagram.com" target="_blank" rel="noopener" class="social-pill">
-          <span>📷</span> Instagram
-        </a>
-        <a href="https://t.me" target="_blank" rel="noopener" class="social-pill">
-          <span>✈️</span> Telegram Channel
-        </a>
-        <a href="https://youtube.com" target="_blank" rel="noopener" class="social-pill">
-          <span>▶️</span> YouTube
+          <span>📸</span> Instagram
         </a>
         <a href="https://whatsapp.com" target="_blank" rel="noopener" class="social-pill">
           <span>💬</span> WhatsApp
         </a>
+        <a href="contact.html" class="social-pill">
+          <span>✉️</span> Contact
+        </a>
       </div>
     </div>
 
-    <!-- Search Input -->
-    <div class="search-box">
-      <span class="search-icon">🔍</span>
-      <input type="text" id="searchInput" class="search-input" placeholder="Search apps, web tools, or categories..." oninput="handleSearch(this.value)">
+    <!-- Search Input Bar with Clear & Search Buttons -->
+    <div class="search-box-wrapper">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search apps, websites, or resources (e.g. CapCut, Notion)..." autocomplete="off" oninput="handleSearch(this.value)" onkeydown="handleSearchKey(event)">
+        <button type="button" class="search-clear-btn" id="searchClearBtn" onclick="clearSearch()" title="Clear search" style="display:none">✕</button>
+        <button type="button" class="search-submit-btn" onclick="executeSearch()" title="Search sources">Search</button>
+      </div>
     </div>
 
     <!-- Category Filters -->
     <div class="filter-scroll" id="filterContainer">
-      <button class="filter-chip active" onclick="filterCategory('all', this)">All Links</button>
-      <button class="filter-chip" onclick="filterCategory('app', this)">📱 Top Apps</button>
-      <button class="filter-chip" onclick="filterCategory('website', this)">🌐 Useful Websites</button>
-      <button class="filter-chip" onclick="filterCategory('ai', this)">🤖 AI Tools</button>
+      <button class="filter-chip active" onclick="filterCategory('all', this)">All Sections</button>
+      <button class="filter-chip" onclick="filterCategory('app', this)">📱 [APP] Apps</button>
+      <button class="filter-chip" onclick="filterCategory('website', this)">🌐 [WEBSITE] Websites</button>
+      <button class="filter-chip" onclick="filterCategory('link', this)">🔗 [LINK] Quick Links</button>
       <button class="filter-chip" onclick="filterCategory('hot', this)">🔥 Trending</button>
     </div>
 
@@ -1012,12 +1213,11 @@
           <input type="url" id="linkUrl" class="form-input" required placeholder="https://...">
         </div>
         <div class="form-group">
-          <label for="linkCategory">Category *</label>
+          <label for="linkCategory">Section &amp; Tag *</label>
           <select id="linkCategory" class="form-input" required>
-            <option value="app">📱 Mobile App</option>
-            <option value="website">🌐 Useful Website</option>
-            <option value="ai">🤖 AI Tool</option>
-            <option value="hot">🔥 Trending / Viral</option>
+            <option value="app">📱 [APP] Mobile App</option>
+            <option value="website">🌐 [WEBSITE] Website / Online Tool</option>
+            <option value="link">🔗 [LINK] Quick Link / Guide</option>
           </select>
         </div>
         <div class="form-group">
@@ -1044,73 +1244,93 @@
   </div>
 
   <script>
-    // Initial Curated Apps & Websites Data
+    // Curated Apps, Websites & Links Data with tags [APP], [WEBSITE], [LINK]
     const DEFAULT_LINKS = [
+      // --- MOBILE APPS SECTION ([APP] TAG) ---
       {
-        id: "link-1",
-        title: "CapCut Video Editor",
+        id: "app-capcut",
+        title: "CapCut Video Editor (Mobile & PC Setup)",
         url: "download-capcut.html",
+        tag: "APP",
         category: "app",
-        badge: "SETUP .ZIP",
-        badgeType: "hot",
+        badge: "SETUP .ZIP & GUIDE",
         badgeType: "hot",
         icon: "🎬",
-        desc: "Download the complete 820MB CapCut PC setup archive + mobile apps. Full installation guide, system specs, and auto-caption tutorial."
+        desc: "Download the complete 820MB CapCut PC setup archive + mobile editing guides. Auto-captions, velocity curves, and 4K export."
       },
       {
-        id: "link-2",
+        id: "app-notion",
         title: "Notion - Connected Workspace",
         url: "https://www.notion.so/",
+        tag: "APP",
         category: "app",
         badge: "TOP PICK",
         badgeType: "top",
         icon: "📝",
-        desc: "Organize your life, study notes, project workflows, and habit tracking in one sleek app."
+        desc: "Organize your life, study notes, project workflows, and habit tracking in one sleek mobile & desktop app."
       },
       {
-        id: "link-3",
+        id: "app-snapseed",
+        title: "Snapseed Photo Editor by Google",
+        url: "https://play.google.com/store/apps/details?id=com.niksoftware.snapseed",
+        tag: "APP",
+        category: "app",
+        badge: "GOOGLE",
+        badgeType: "top",
+        icon: "📸",
+        desc: "Professional photo tuning by Google. Includes curves, selective editing, healing brush, and RAW support."
+      },
+      {
+        id: "app-canva",
+        title: "Canva Design & Video Studio",
+        url: "https://www.canva.com/",
+        tag: "APP",
+        category: "app",
+        badge: "CREATIVE",
+        badgeType: "free",
+        icon: "🎨",
+        desc: "Design Instagram carousels, thumbnails, reels graphics, posters, and resumes in minutes with thousands of templates."
+      },
+      {
+        id: "app-bitwarden",
+        title: "Bitwarden Password Vault",
+        url: "https://bitwarden.com/",
+        tag: "APP",
+        category: "app",
+        badge: "SECURITY",
+        badgeType: "free",
+        icon: "🔒",
+        desc: "Open-source, end-to-end encrypted password vault. Keep your logins safe across Android, iPhone, and PC."
+      },
+
+      // --- USEFUL WEBSITES SECTION ([WEBSITE] TAG) ---
+      {
+        id: "web-perplexity",
         title: "Perplexity AI Answer Engine",
         url: "https://www.perplexity.ai/",
-        category: "ai",
+        tag: "WEBSITE",
+        category: "website",
         badge: "SMART AI",
         badgeType: "ai",
         icon: "🧠",
         desc: "Interactive AI knowledge engine that provides accurate answers backed by real-time web citations."
       },
       {
-        id: "link-4",
-        title: "Canva Graphic Design Studio",
-        url: "https://www.canva.com/",
-        category: "app",
-        badge: "FREE",
-        badgeType: "free",
-        icon: "🎨",
-        desc: "Design Instagram carousels, YouTube thumbnails, posters, and resumes in minutes with thousands of templates."
-      },
-      {
-        id: "link-5",
+        id: "web-removebg",
         title: "Remove.bg - AI Background Remover",
         url: "https://www.remove.bg/",
-        category: "ai",
+        tag: "WEBSITE",
+        category: "website",
         badge: "AI TOOL",
         badgeType: "ai",
         icon: "✂️",
         desc: "Remove any photo background automatically in 5 seconds with 100% precision. Zero manual masking required."
       },
       {
-        id: "link-6",
-        title: "Snapseed by Google",
-        url: "https://play.google.com/store/apps/details?id=com.niksoftware.snapseed",
-        category: "app",
-        badge: "TOP PICK",
-        badgeType: "top",
-        icon: "📸",
-        desc: "Professional photo tuning by Google. Includes curves, selective editing, healing brush, and RAW support."
-      },
-      {
-        id: "link-7",
-        title: "TinyPNG / TinyJPG Compressor",
+        id: "web-tinypng",
+        title: "TinyPNG Image Compressor",
         url: "https://tinypng.com/",
+        tag: "WEBSITE",
         category: "website",
         badge: "UTILITY",
         badgeType: "util",
@@ -1118,29 +1338,10 @@
         desc: "Compress WebP, PNG, and JPEG files by up to 75% without visible quality loss. Speeds up sites & saves storage."
       },
       {
-        id: "link-8",
-        title: "Bitwarden Password Manager",
-        url: "https://bitwarden.com/",
-        category: "app",
-        badge: "SECURITY",
-        badgeType: "free",
-        icon: "🔒",
-        desc: "Open-source, end-to-end encrypted password vault. Keep your logins safe across iPhone, Android, and PC."
-      },
-      {
-        id: "link-9",
-        title: "12ft Ladder - Clean Reader",
-        url: "https://12ft.io/",
-        category: "website",
-        badge: "UTILITY",
-        badgeType: "util",
-        icon: "🪜",
-        desc: "Clean distraction-free web article reader. Read important tech articles without cluttered ads and popups."
-      },
-      {
-        id: "link-10",
+        id: "web-tempmail",
         title: "Temp-Mail Disposable Inbox",
         url: "https://temp-mail.org/",
+        tag: "WEBSITE",
         category: "website",
         badge: "PRIVACY",
         badgeType: "util",
@@ -1148,31 +1349,102 @@
         desc: "Instant anonymous, disposable email address to register on websites and keep your main inbox spam-free."
       },
       {
-        id: "link-11",
-        title: "Telegram Official Channel",
-        url: "https://t.me",
-        category: "hot",
-        badge: "VIRAL",
-        badgeType: "hot",
-        icon: "✈️",
-        desc: "Join our daily Telegram community for exclusive apk links, discount coupons, and daily tech updates."
-      },
-      {
-        id: "link-12",
+        id: "web-wolfram",
         title: "Wolfram Alpha Computational Engine",
         url: "https://www.wolframalpha.com/",
+        tag: "WEBSITE",
         category: "website",
         badge: "EDUCATION",
         badgeType: "top",
         icon: "🔬",
         desc: "Expert-level computation, formula solving, and factual knowledge across math, physics, coding, and nutrition."
+      },
+
+      // --- QUICK LINKS SECTION ([LINK] TAG) ---
+      {
+        id: "link-capcut-guide",
+        title: "CapCut Mobile Editing Masterclass Guide",
+        url: "guides/capcut-mobile-editing-guide.html",
+        tag: "LINK",
+        category: "link",
+        badge: "TUTORIAL",
+        badgeType: "top",
+        icon: "📖",
+        desc: "Comprehensive 8-page walkthrough on velocity speed ramps, 4K export bitrates, and keyframe animations."
+      },
+      {
+        id: "link-ai-guide",
+        title: "Top 7 AI Tools Guide (2026 Edition)",
+        url: "guides/best-ai-tools-2026.html",
+        tag: "LINK",
+        category: "link",
+        badge: "AI GUIDE",
+        badgeType: "ai",
+        icon: "🚀",
+        desc: "In-depth breakdown of the best AI tools for creators, students, and software developers."
+      },
+      {
+        id: "link-notion-guide",
+        title: "Notion Second Brain System Blueprint",
+        url: "guides/notion-productivity-system.html",
+        tag: "LINK",
+        category: "link",
+        badge: "PRODUCTIVITY",
+        badgeType: "free",
+        icon: "⚡",
+        desc: "Step-by-step setup guide for the PARA productivity method and social media content calendars."
+      },
+      {
+        id: "link-security-guide",
+        title: "Mobile Privacy & Cybersecurity Blueprint",
+        url: "guides/mobile-security-privacy-guide.html",
+        tag: "LINK",
+        category: "link",
+        badge: "SECURITY",
+        badgeType: "util",
+        icon: "🛡️",
+        desc: "Actionable security steps to prevent account hacking, data brokers, and phishing attacks."
+      },
+      {
+        id: "link-12ft",
+        title: "12ft Ladder Clean Web Reader",
+        url: "https://12ft.io/",
+        tag: "LINK",
+        category: "link",
+        badge: "UTILITY",
+        badgeType: "util",
+        icon: "🪜",
+        desc: "Clean distraction-free web article reader. Read important tech articles without cluttered ads and popups."
       }
     ];
 
-    // LocalStorage Key
-    const STORAGE_KEY = "coinrush_bio_links";
+    // LocalStorage Key - updated to v3 for tag and section support
+    const STORAGE_KEY = "techtelugu_bio_links_v3";
     let activeCategory = "all";
     let searchQuery = "";
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function getSourceDomain(url) {
+      if (!url) return "Source Page";
+      if (url.startsWith("download-capcut.html")) return "CapCut Setup Page (820MB)";
+      if (url.startsWith("guides/")) return "Editorial Guide Page";
+      if (!url.startsWith("http")) return "Direct Page";
+      try {
+        const u = new URL(url);
+        return u.hostname.replace(/^www\./, "");
+      } catch (e) {
+        return "Source Web Link";
+      }
+    }
 
     function loadLinks() {
       try {
@@ -1191,41 +1463,179 @@
 
     let allLinks = loadLinks();
 
+    function renderCard(link) {
+      const badgeClass = link.badgeType ? `badge-${link.badgeType}` : "badge-util";
+      const tagClass = `type-${(link.tag || 'LINK').toLowerCase()}`;
+      const isExternal = link.url.startsWith("http");
+      const targetAttr = isExternal ? 'target="_blank" rel="noopener"' : '';
+      const domainText = getSourceDomain(link.url);
+
+      return `
+        <div class="link-card" onclick="openLinkSource('${link.url}', '${link.id}')" role="button" tabindex="0">
+          <div class="link-icon-box">${link.icon || "🔗"}</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag ${tagClass}">[${link.tag || 'LINK'}]</span>
+              <span class="link-title">${escapeHtml(link.title)}</span>
+              ${link.badge ? `<span class="link-badge ${badgeClass}">${escapeHtml(link.badge)}</span>` : ""}
+            </div>
+            <div class="link-desc">${escapeHtml(link.desc)}</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">${escapeHtml(domainText)}</span>
+            </div>
+          </div>
+          <a href="${link.url}" ${targetAttr} class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      `;
+    }
+
     function renderLinks() {
       const container = document.getElementById("linksContainer");
       const emptyState = document.getElementById("emptyState");
+      const clearBtn = document.getElementById("searchClearBtn");
       if (!container) return;
 
       const q = searchQuery.toLowerCase().trim();
-      const filtered = allLinks.filter(l => {
-        const matchesCategory = activeCategory === "all" || l.category === activeCategory || (activeCategory === "hot" && l.badgeType === "hot");
-        const matchesSearch = !q || l.title.toLowerCase().includes(q) || l.desc.toLowerCase().includes(q) || (l.badge && l.badge.toLowerCase().includes(q));
-        return matchesCategory && matchesSearch;
-      });
 
-      if (filtered.length === 0) {
-        container.innerHTML = "";
-        emptyState.style.display = "block";
+      if (clearBtn) {
+        clearBtn.style.display = q ? "inline-flex" : "none";
+      }
+
+      // If user is searching
+      if (q) {
+        const filtered = allLinks.filter(l => {
+          const title = (l.title || "").toLowerCase();
+          const desc = (l.desc || "").toLowerCase();
+          const tag = (l.tag || "").toLowerCase();
+          const badge = (l.badge || "").toLowerCase();
+          const url = (l.url || "").toLowerCase();
+          return title.includes(q) || desc.includes(q) || tag.includes(q) || badge.includes(q) || url.includes(q);
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div class="search-feedback-banner">
+              <span>No sources found matching "<strong>${escapeHtml(searchQuery)}</strong>"</span>
+              <button class="btn-clear-search" onclick="clearSearch()">View All Sections ✕</button>
+            </div>
+          `;
+          emptyState.style.display = "block";
+          return;
+        }
+
+        emptyState.style.display = "none";
+        container.innerHTML = `
+          <div class="search-feedback-banner">
+            <span>🔍 Found <strong>${filtered.length}</strong> matching source(s) for "<strong>${escapeHtml(searchQuery)}</strong>"</span>
+            <button class="btn-clear-search" onclick="clearSearch()">View All Sections ✕</button>
+          </div>
+          ${filtered.map(renderCard).join("")}
+        `;
         return;
       }
 
-      emptyState.style.display = "none";
-      container.innerHTML = filtered.map(link => {
-        const badgeClass = link.badgeType ? `badge-${link.badgeType}` : "badge-util";
-        return `
-          <a href="${link.url}" target="_blank" rel="noopener" class="link-card" onclick="trackClick('${link.id}')">
-            <div class="link-icon-box">${link.icon || "🔗"}</div>
-            <div class="link-info">
-              <div class="link-header">
-                <span class="link-title">${link.title}</span>
-                ${link.badge ? `<span class="link-badge ${badgeClass}">${link.badge}</span>` : ""}
+      // If specific category filter is active (not 'all')
+      if (activeCategory !== "all") {
+        const filtered = allLinks.filter(l => {
+          if (activeCategory === "hot") return l.badgeType === "hot";
+          return l.category === activeCategory;
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = "";
+          emptyState.style.display = "block";
+          return;
+        }
+
+        emptyState.style.display = "none";
+        let catTitle = "Selected Sources";
+        let catTag = "";
+        if (activeCategory === "app") { catTitle = "Mobile Applications"; catTag = "[APP]"; }
+        else if (activeCategory === "website") { catTitle = "Useful Websites & Web Tools"; catTag = "[WEBSITE]"; }
+        else if (activeCategory === "link") { catTitle = "Quick Links & Editorial Resources"; catTag = "[LINK]"; }
+        else if (activeCategory === "hot") { catTitle = "Trending & Viral Sources"; }
+
+        container.innerHTML = `
+          <div class="section-divider">
+            <div class="section-title-wrap">
+              <span class="section-icon">${activeCategory === 'app' ? '📱' : activeCategory === 'website' ? '🌐' : activeCategory === 'link' ? '🔗' : '🔥'}</span>
+              <div>
+                <h2 class="section-heading">${catTitle}</h2>
+                <span class="section-subheading">Filtered view displaying ${catTag} verified sources</span>
               </div>
-              <div class="link-desc">${link.desc}</div>
             </div>
-            <div class="link-action">↗</div>
-          </a>
+            <span class="section-count-badge">${filtered.length} items</span>
+          </div>
+          ${filtered.map(renderCard).join("")}
         `;
-      }).join("");
+        return;
+      }
+
+      // Default: ALL SECTIONS (Section 1: APPS, Section 2: WEBSITES, Section 3: QUICK LINKS)
+      emptyState.style.display = "none";
+
+      const appLinks = allLinks.filter(l => l.category === "app");
+      const websiteLinks = allLinks.filter(l => l.category === "website");
+      const linkItems = allLinks.filter(l => l.category === "link" || (!["app", "website"].includes(l.category)));
+
+      let html = "";
+
+      // Section 1: Mobile Apps
+      if (appLinks.length > 0) {
+        html += `
+          <div class="section-divider">
+            <div class="section-title-wrap">
+              <span class="section-icon">📱</span>
+              <div>
+                <h2 class="section-heading">Featured Mobile Apps</h2>
+                <span class="section-subheading">Verified Android &amp; iOS Applications with [APP] Tag</span>
+              </div>
+            </div>
+            <span class="section-count-badge">${appLinks.length} Apps</span>
+          </div>
+          ${appLinks.map(renderCard).join("")}
+        `;
+      }
+
+      // Section 2: Websites & Web Tools
+      if (websiteLinks.length > 0) {
+        html += `
+          <div class="section-divider">
+            <div class="section-title-wrap">
+              <span class="section-icon">🌐</span>
+              <div>
+                <h2 class="section-heading">Websites &amp; Web Tools</h2>
+                <span class="section-subheading">Browser-Based Utilities, AI Platforms &amp; Web Services with [WEBSITE] Tag</span>
+              </div>
+            </div>
+            <span class="section-count-badge">${websiteLinks.length} Websites</span>
+          </div>
+          ${websiteLinks.map(renderCard).join("")}
+        `;
+      }
+
+      // Section 3: Quick Links & Guides
+      if (linkItems.length > 0) {
+        html += `
+          <div class="section-divider">
+            <div class="section-title-wrap">
+              <span class="section-icon">🔗</span>
+              <div>
+                <h2 class="section-heading">Quick Links &amp; Direct Resources</h2>
+                <span class="section-subheading">Tutorial Guides, Setup Archives &amp; Direct Resources with [LINK] Tag</span>
+              </div>
+            </div>
+            <span class="section-count-badge">${linkItems.length} Links</span>
+          </div>
+          ${linkItems.map(renderCard).join("")}
+        `;
+      }
+
+      container.innerHTML = html;
     }
 
     function filterCategory(cat, btn) {
@@ -1240,8 +1650,48 @@
       renderLinks();
     }
 
+    function handleSearchKey(e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        executeSearch();
+      }
+    }
+
+    function executeSearch() {
+      const input = document.getElementById("searchInput");
+      if (input) searchQuery = input.value;
+      renderLinks();
+      const container = document.getElementById("linksContainer");
+      if (container) {
+        container.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function clearSearch() {
+      searchQuery = "";
+      const input = document.getElementById("searchInput");
+      if (input) {
+        input.value = "";
+        input.focus();
+      }
+      activeCategory = "all";
+      document.querySelectorAll(".filter-chip").forEach((b, i) => {
+        b.classList.toggle("active", i === 0);
+      });
+      renderLinks();
+    }
+
+    function openLinkSource(url, id) {
+      trackClick(id);
+      if (url.startsWith("http")) {
+        window.open(url, "_blank", "noopener");
+      } else {
+        window.location.href = url;
+      }
+    }
+
     function trackClick(id) {
-      console.log("Clicked link:", id);
+      console.log("Clicked source link:", id);
     }
 
     // Modal Controls
@@ -1267,6 +1717,10 @@
       const icon = document.getElementById("linkIcon").value.trim() || "🔗";
       const desc = document.getElementById("linkDesc").value.trim();
 
+      let tag = "LINK";
+      if (category === "app") tag = "APP";
+      else if (category === "website") tag = "WEBSITE";
+
       let badgeType = "util";
       if (badge === "HOT" || badge === "VIRAL") badgeType = "hot";
       else if (badge === "FREE") badgeType = "free";
@@ -1274,9 +1728,10 @@
       else if (badge === "TOP" || badge.includes("PICK")) badgeType = "top";
 
       const newLink = {
-        id: "link-" + Date.now(),
+        id: "custom-" + Date.now(),
         title,
         url,
+        tag,
         category,
         badge,
         badgeType,
@@ -1288,7 +1743,7 @@
       saveLinks(allLinks);
       closeAddModal();
       renderLinks();
-      showToast("New link published successfully!");
+      showToast("New " + tag + " source published successfully!");
     }
 
     function showToast(msg) {
@@ -1302,7 +1757,7 @@
 
     function handleSharePage() {
       const shareData = {
-        title: "CoinRush Hub • Top Apps & Websites",
+        title: "Tech Telugu • Top Apps & Websites Directory",
         text: "Check out this curated directory of top mobile apps and useful websites!",
         url: window.location.href
       };
@@ -1322,7 +1777,17 @@
       });
     }
 
-    
+    function handleNewsletter(e) {
+      e.preventDefault();
+      const input = document.getElementById("newsEmail");
+      const msg = document.getElementById("newsMsg");
+      if (input && msg) {
+        input.value = "";
+        msg.style.display = "block";
+        setTimeout(() => { msg.style.display = "none"; }, 4000);
+      }
+    }
+
     function checkCookieConsent() {
       if (!localStorage.getItem('coinrush_cookie_accepted')) {
         const b = document.getElementById('cookieConsentBanner');
