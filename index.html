@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5301014611783028"
-     crossorigin="anonymous"></script>
   <meta name="google-adsense-account" content="ca-pub-5301014611783028">
   <!-- Google AdSense Verification -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5301014611783028"
      crossorigin="anonymous"></script>
+
+  <!-- Google Analytics / Google Tag (gtag.js) for Tracking Visitors & Outbound Clicks -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TRACKINGID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-TRACKINGID', { 'anonymize_ip': true });
+  </script>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,10 +22,10 @@
   <meta name="keywords" content="Instagram bio link, best apps, top websites, tech tools, AI tools, free productivity apps">
   
   <!-- Open Graph for Social Sharing -->
-  <meta property="og:title" content="CoinRush Hub • Top Apps &amp; Useful Websites">
+  <meta property="og:title" content="Tech Telugu Hub • Top Apps &amp; Useful Websites">
   <meta property="og:description" content="Direct links to trending mobile apps, top web tools, and exclusive resources.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://techtelugu.online">
+  <meta property="og:url" content="https://mycoinrush.online">
 
   <!-- Clean Modern Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -779,6 +786,116 @@
     }
     .btn-primary:hover { background: var(--accent-hover); }
 
+    /* Creator Analytics Dashboard Modal & Anti-Spam */
+    .analytics-modal-box {
+      max-width: 620px;
+      width: 100%;
+    }
+    .stat-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      background: #f8fafc;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px 10px;
+      text-align: center;
+    }
+    .stat-card-val {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .stat-card-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .security-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 800;
+    }
+    .click-item-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .click-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .click-item-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .click-progress-wrap {
+      width: 100%;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+    .click-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #4f46e5, #06b6d4);
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+    .click-count-badge {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--text-main);
+      background: #f1f5f9;
+      border: 1px solid var(--card-border);
+      padding: 3px 10px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+    .recent-activity-box {
+      max-height: 150px;
+      overflow-y: auto;
+      background: #f8fafc;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    .recent-activity-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+    .recent-activity-item:last-child {
+      border-bottom: none;
+    }
+
     /* Footer */
     footer {
       max-width: 680px;
@@ -852,14 +969,14 @@
     "@graph": [
       {
         "@type": "WebSite",
-        "@id": "https://techtelugu.online/#website",
-        "url": "https://techtelugu.online/",
-        "name": "CoinRush Hub",
+        "@id": "https://mycoinrush.online/#website",
+        "url": "https://mycoinrush.online/",
+        "name": "Tech Telugu Hub",
         "description": "Curated directory of top mobile apps, productive websites, AI tools, and digital resources.",
         "publisher": {
           "@type": "Organization",
-          "name": "CoinRush Media",
-          "url": "https://techtelugu.online/"
+          "name": "Tech Telugu Media",
+          "url": "https://mycoinrush.online/"
         }
       },
       {
@@ -867,7 +984,7 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "Are the apps and websites featured on CoinRush Hub free to use?",
+            "name": "Are the apps and websites featured on Tech Telugu Hub free to use?",
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "Yes, our directory strictly prioritizes free, freemium, or open-source mobile apps and web tools. Whenever a paid tier exists, the free tier provides full core functionality."
@@ -875,7 +992,7 @@
           },
           {
             "@type": "Question",
-            "name": "How does CoinRush Hub verify the safety of recommended apps?",
+            "name": "How does Tech Telugu Hub verify the safety of recommended apps?",
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "Every app and website is manually tested by our team. We ensure all download links direct users to official sources such as the Google Play Store, Apple App Store, or verified HTTPS web domains."
@@ -886,7 +1003,7 @@
             "name": "How can I suggest a new mobile app or website to be featured?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "You can submit tool recommendations through our Contact & Submissions page or by reaching out to support@techtelugu.online."
+              "text": "You can submit tool recommendations through our Contact & Submissions page or by reaching out to support@mycoinrush.online."
             }
           }
         ]
@@ -897,6 +1014,9 @@
 
 </head>
 <body>
+
+  <!-- Anti-Bot & Anti-Scraper Honeypot Trap (Invisible to Humans) -->
+  <a href="#verify-human-session" class="honeypot-trap" tabindex="-1" aria-hidden="true" onclick="triggerHoneypot(event)" style="display:none;position:absolute;left:-9999px;opacity:0;">Support System Check</a>
 
   <!-- Topbar -->
   <header class="topbar">
@@ -966,6 +1086,28 @@
       <button class="filter-chip" onclick="filterCategory('hot', this)">🔥 Trending</button>
     </div>
 
+    <!-- Instagram Reel Featured Spotlight: Google Antigravity -->
+    <div class="featured-card" style="background: linear-gradient(135deg, #1e1b4b, #4338ca); border: 1px solid #6366f1; margin-bottom: 18px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+        <div class="featured-tag" style="background: #ef4444; color: #ffffff;">🔥 Featured in Today's Instagram Reel</div>
+        <span style="font-size: 11px; font-weight: 800; color: #c7d2fe; letter-spacing: 0.5px; text-transform: uppercase;">Build with AI Prompts</span>
+      </div>
+      <div class="featured-title" style="font-size: 20px;">Google Antigravity: Build Any Website or App Using Simple Prompts</div>
+      <div class="featured-desc">
+        Watched our latest reel? Don't write code line-by-line! Learn how to command Google Antigravity AI to write full-stack code, build interactive web apps, and deploy with simple English prompts. Includes 5 copy-paste prompt templates.
+      </div>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px;">
+        <a href="guides/google-antigravity-prompt-to-app-guide.html" class="featured-btn">
+          <span>📖 Open Prompt Guide &amp; Templates</span>
+          <span>↗</span>
+        </a>
+        <a href="https://antigravity.google/" target="_blank" rel="noopener" class="featured-btn" style="background: rgba(255,255,255,0.15); color: #ffffff; border: 1px solid rgba(255,255,255,0.3);">
+          <span>🚀 Launch Antigravity</span>
+          <span>↗</span>
+        </a>
+      </div>
+    </div>
+
     <!-- Featured Hero App Spotlight -->
     <div class="featured-card" id="featuredCard">
       <div class="featured-tag">⭐ Featured Pick of the Week</div>
@@ -1021,6 +1163,30 @@
         </div>
         <span style="font-size:12.5px;color:var(--text-muted);font-weight:600">Updated for 2026</span>
       </div>
+
+      <!-- Article 0: Google Antigravity In-Depth Guide -->
+      <article style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius-md);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-sm)">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <span style="font-size:28px">🚀</span>
+          <div>
+            <h3 style="font-size:17.5px;font-weight:800;color:var(--text-main);margin:0">Google Antigravity: How to Build Websites &amp; Apps with Simple Prompts</h3>
+            <div style="margin-top:6px"><a href="guides/google-antigravity-prompt-to-app-guide.html" style="color:var(--accent);font-size:13px;font-weight:800;text-decoration:none">Read Full Reel Guide &amp; 5 Prompt Templates ➜</a></div>
+            <span style="font-size:12px;color:var(--text-muted)">Category: Agentic AI Coding • Rating: 5.0/5 • Featured in Reel</span>
+          </div>
+        </div>
+        <p style="font-size:13.5px;color:var(--text-sub);line-height:1.65;margin-bottom:12px">
+          As showcased in our viral Instagram Reel, <strong>Google Antigravity</strong> fundamentally reinvents programming. Instead of writing code line-by-line, creators, founders, and students can describe their dream website or mobile application in natural language prompts, and the agent autonomously writes, tests, and deploys it.
+        </p>
+        <h4 style="font-size:14.5px;font-weight:800;color:var(--text-main);margin:14px 0 6px">What You Can Build with Prompts:</h4>
+        <ul style="padding-left:20px;font-size:13px;color:var(--text-sub);line-height:1.6;margin-bottom:14px">
+          <li><strong>Bio-Link Hubs &amp; Portfolios:</strong> Launch customized, high-converting creator landing pages in minutes.</li>
+          <li><strong>Interactive Web Tools:</strong> Calculators, currency converters, AI prompt generators, and media converters.</li>
+          <li><strong>Full-Stack Database Backends:</strong> Automated Node.js servers, REST APIs, and responsive mobile layouts.</li>
+        </ul>
+        <div style="background:#eff6ff;border-left:3px solid var(--accent);padding:10px 14px;border-radius:6px;font-size:12.5px;color:var(--text-sub)">
+          <strong>🔥 Instagram Reel Access:</strong> Click below to get the 5 copy-paste prompt templates we used in our video and start building your own apps today.
+        </div>
+      </article>
 
       <!-- Article 1: CapCut In-Depth Review -->
       <article style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius-md);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-sm)">
@@ -1123,7 +1289,7 @@
       <div style="background:#f8fafc;border:1px solid var(--card-border);border-radius:var(--radius-md);padding:22px;margin-bottom:24px">
         <h3 style="font-size:16px;font-weight:800;color:var(--text-main);margin-bottom:8px">⚖️ Our Editorial Curation Standards</h3>
         <p style="font-size:13px;color:var(--text-muted);line-height:1.6;margin:0">
-          CoinRush Hub independently reviews and selects applications based on utility, performance, data security, and free-tier value. We do not accept payment to rank low-quality apps favorably. Outbound links connect directly to verified vendor repositories, the Apple App Store, and the Google Play Store.
+          Tech Telugu Hub independently reviews and selects applications based on utility, performance, data security, and free-tier value. We do not accept payment to rank low-quality apps favorably. Outbound links connect directly to verified vendor repositories, the Apple App Store, and the Google Play Store.
         </p>
       </div>
 
@@ -1163,14 +1329,14 @@
         <details style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:14px 16px;margin-bottom:10px;cursor:pointer">
           <summary style="font-size:14px;font-weight:700;color:var(--text-main)">How can I submit my own application or website for an editorial review?</summary>
           <p style="font-size:13px;color:var(--text-muted);line-height:1.55;margin-top:8px">
-            App developers and startup creators can submit their software for evaluation via our Contact &amp; Submissions page or by emailing support@techtelugu.online.
+            App developers and startup creators can submit their software for evaluation via our Contact &amp; Submissions page or by emailing support@mycoinrush.online.
           </p>
         </details>
 
         <details style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:14px 16px;margin-bottom:10px;cursor:pointer">
           <summary style="font-size:14px;font-weight:700;color:var(--text-main)">Do you store any personal information when I visit this website?</summary>
           <p style="font-size:13px;color:var(--text-muted);line-height:1.55;margin-top:8px">
-            No. CoinRush Hub does not require account creation or personal profile tracking. When you add custom links using our built-in link manager, those preferences are saved strictly on your local browser using HTML5 localStorage.
+            No. Tech Telugu Hub does not require account creation or personal profile tracking. When you add custom links using our built-in link manager, those preferences are saved strictly on your local browser using HTML5 localStorage.
           </p>
         </details>
       </div>
@@ -1196,6 +1362,11 @@
     <p style="font-size:11.5px;color:#94a3b8">
       All product names, logos, and brands are property of their respective owners. Links are provided for educational and discovery purposes.
     </p>
+    <div style="margin-top: 14px;">
+      <button class="manage-links-btn" onclick="openAnalyticsModal()" title="View live traffic & clicks" style="border-style: solid; border-color: #cbd5e1; color: var(--text-main); font-weight: 700; background: #ffffff;">
+        <span>📊</span> Creator Analytics &amp; Clicks <span>🔒</span>
+      </button>
+    </div>
   </footer>
 
   <!-- Modal for Adding / Editing Links -->
@@ -1236,6 +1407,133 @@
         </div>
         <button type="submit" class="btn-primary">Save &amp; Publish Link</button>
       </form>
+    </div>
+  </div>
+
+  <!-- Password-Protected Creator Analytics Modal -->
+  <div class="modal-overlay" id="analyticsModal" onclick="closeAnalyticsOnBackdrop(event)">
+    <div class="modal-box analytics-modal-box">
+      
+      <!-- Screen 1: Password Prompt (Locked) -->
+      <div id="analyticsLockScreen">
+        <div class="modal-header">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:22px">🔒</span>
+            <div>
+              <h3 style="margin:0;font-size:17px">Creator Analytics Portal</h3>
+              <span style="font-size:11.5px;color:var(--text-muted)">Protected Creator Access</span>
+            </div>
+          </div>
+          <button class="modal-close-btn" onclick="closeAnalyticsModal()">✕</button>
+        </div>
+        <p style="font-size:13.5px;color:var(--text-muted);margin-bottom:18px;line-height:1.5">
+          Enter your creator password to unlock real-time traffic, link clicks per app/website, and anti-spam protection metrics.
+        </p>
+        <form onsubmit="handleUnlockAnalytics(event)">
+          <div class="form-group">
+            <label for="adminPasswordInput">Creator Password</label>
+            <div style="position:relative">
+              <input type="password" id="adminPasswordInput" class="form-input" required placeholder="Enter password..." autocomplete="current-password" style="padding-right:40px">
+              <button type="button" onclick="togglePasswordVisibility()" title="Show/Hide Password" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:16px">👁️</button>
+            </div>
+          </div>
+          <div id="analyticsPassError" style="display:none;color:#dc2626;font-size:12.5px;font-weight:700;margin-bottom:12px">❌ Incorrect password. Please try again.</div>
+          <div id="analyticsLockoutMsg" style="display:none;color:#dc2626;font-size:12.5px;font-weight:700;margin-bottom:12px">⚠️ Too many failed attempts. Locked for 60 seconds.</div>
+          <button type="submit" class="btn-primary" id="unlockBtn">Unlock Analytics Dashboard ➔</button>
+        </form>
+        <div style="margin-top:16px;background:#f8fafc;border:1px dashed var(--card-border);padding:12px 14px;border-radius:8px;font-size:12px;color:var(--text-muted);line-height:1.5">
+          🔑 <strong>Default Password:</strong> <code style="color:var(--accent);font-weight:800;background:#eff6ff;padding:2px 6px;border-radius:4px">TechTelugu@2026</code><br>
+          <span style="font-size:11px;color:#94a3b8">You can change your password anytime from the dashboard settings.</span>
+        </div>
+      </div>
+
+      <!-- Screen 2: Unlocked Live Analytics Dashboard -->
+      <div id="analyticsDashboardScreen" style="display:none">
+        <div class="modal-header">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:22px">📊</span>
+            <div>
+              <h3 style="margin:0;font-size:17px">Creator Traffic &amp; Click Hub</h3>
+              <span style="font-size:11.5px;color:var(--text-muted);font-weight:600">Real-Time Metrics • Anti-Spam Active</span>
+            </div>
+          </div>
+          <button class="modal-close-btn" onclick="closeAnalyticsModal()">✕</button>
+        </div>
+
+        <!-- Security & Spam Status Pill -->
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+          <div class="security-status-badge">
+            <span>🛡️</span>
+            <span>Spam &amp; Bot Click Shield: Active</span>
+          </div>
+          <button onclick="refreshAnalyticsUI()" style="background:#f1f5f9;border:1px solid var(--card-border);color:var(--text-main);padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">🔄 Refresh</button>
+        </div>
+
+        <!-- Metric Stat Cards -->
+        <div class="stat-cards-grid">
+          <div class="stat-card">
+            <div class="stat-card-val" id="statPageViews">0</div>
+            <div class="stat-card-label">Total Visits</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-val" id="statUniqueVisitors">0</div>
+            <div class="stat-card-label">Unique Users</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-val" id="statTotalClicks" style="color:var(--accent)">0</div>
+            <div class="stat-card-label">Total Clicks</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-val" id="statSpamBlocked" style="color:#059669">0</div>
+            <div class="stat-card-label">Spam Blocked</div>
+          </div>
+        </div>
+
+        <!-- Leaderboard: App & Website Click Breakdown -->
+        <div style="margin-bottom:20px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <h4 style="font-size:14px;font-weight:800;color:var(--text-main);margin:0">🏆 Most Clicked Apps &amp; Websites</h4>
+            <span style="font-size:11px;color:var(--text-muted)">Ranked by user clicks</span>
+          </div>
+          <div id="analyticsLeaderboard" style="max-height:220px;overflow-y:auto;padding-right:4px">
+            <!-- Dynamically populated rows -->
+          </div>
+        </div>
+
+        <!-- Recent Real-time Clicks Log -->
+        <div style="margin-bottom:20px">
+          <h4 style="font-size:13px;font-weight:800;color:var(--text-main);margin:0 0 8px">🕒 Recent Live Click Activity</h4>
+          <div class="recent-activity-box" id="analyticsRecentFeed">
+            <div style="color:var(--text-muted);text-align:center;padding:10px">No clicks recorded yet. Clicks will appear here in real time.</div>
+          </div>
+        </div>
+
+        <!-- Dashboard Actions -->
+        <div style="display:flex;gap:10px;flex-wrap:wrap;border-top:1px solid var(--card-border);padding-top:14px">
+          <button onclick="toggleChangePasswordUI()" style="flex:1;background:#f8fafc;border:1px solid var(--card-border);padding:8px 12px;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--text-sub)">
+            🔑 Change Password
+          </button>
+          <button onclick="confirmResetAnalytics()" style="background:#fff1f2;border:1px solid #fecdd3;color:#e11d48;padding:8px 12px;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer">
+            🗑️ Reset Stats
+          </button>
+          <button onclick="lockAnalyticsDashboard()" style="background:#0f172a;color:#ffffff;border:none;padding:8px 14px;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer">
+            🔒 Lock &amp; Exit
+          </button>
+        </div>
+
+        <!-- Change Password Sub-Form (Hidden by default) -->
+        <div id="changePasswordBox" style="display:none;margin-top:14px;background:#f8fafc;border:1px solid var(--card-border);padding:14px;border-radius:10px">
+          <h5 style="font-size:13px;font-weight:800;margin-bottom:8px">Set New Creator Password</h5>
+          <form onsubmit="handleSaveNewPassword(event)">
+            <div class="form-group" style="margin-bottom:8px">
+              <input type="password" id="newPasswordInput" class="form-input" required placeholder="Enter new password (min 6 chars)..." minlength="6">
+            </div>
+            <button type="submit" class="btn-primary" style="padding:8px 12px;font-size:13px">Save New Password</button>
+          </form>
+        </div>
+
+      </div>
+
     </div>
   </div>
 
@@ -1307,6 +1605,17 @@
 
       // --- USEFUL WEBSITES SECTION ([WEBSITE] TAG) ---
       {
+        id: "web-antigravity",
+        title: "Google Antigravity AI - Prompt to App / Web Builder",
+        url: "guides/google-antigravity-prompt-to-app-guide.html",
+        tag: "WEBSITE",
+        category: "website",
+        badge: "BUILD WITH PROMPT 🔥",
+        badgeType: "hot",
+        icon: "⚡",
+        desc: "Build complete websites and mobile apps simply by describing what you want in prompts! Featured in our Instagram Reel. Includes 5 copy-paste prompt templates."
+      },
+      {
         id: "web-perplexity",
         title: "Perplexity AI Answer Engine",
         url: "https://www.perplexity.ai/",
@@ -1364,6 +1673,17 @@
 
       // --- QUICK LINKS SECTION ([LINK] TAG) ---
       {
+        id: "link-antigravity-guide",
+        title: "Google Antigravity Prompt-to-App Masterclass",
+        url: "guides/google-antigravity-prompt-to-app-guide.html",
+        tag: "LINK",
+        category: "link",
+        badge: "REEL BLUEPRINT 🔥",
+        badgeType: "hot",
+        icon: "🤖",
+        desc: "Step-by-step masterclass & 5 copy-paste prompts: How to command Google Antigravity to build, debug, and publish websites and mobile apps."
+      },
+      {
         id: "link-capcut-guide",
         title: "CapCut Mobile Editing Masterclass Guide",
         url: "guides/capcut-mobile-editing-guide.html",
@@ -1420,8 +1740,8 @@
       }
     ];
 
-    // LocalStorage Key - updated to v3 for tag and section support
-    const STORAGE_KEY = "techtelugu_bio_links_v3";
+    // LocalStorage Key - updated to v4 for Antigravity prompt-to-app support
+    const STORAGE_KEY = "techtelugu_bio_links_v4";
     let activeCategory = "all";
     let searchQuery = "";
 
@@ -1437,6 +1757,8 @@
 
     function getSourceDomain(url) {
       if (!url) return "Source Page";
+      if (url.includes("google-antigravity")) return "Antigravity Reel Blueprint";
+      if (url.includes("antigravity.google")) return "antigravity.google";
       if (url.startsWith("download-capcut.html")) return "CapCut Setup Page (820MB)";
       if (url.startsWith("guides/")) return "Editorial Guide Page";
       if (!url.startsWith("http")) return "Direct Page";
@@ -1692,8 +2014,390 @@
       }
     }
 
+    // ==========================================
+    // CREATOR ANALYTICS, CLICK TRACKER & ANTI-SPAM SHIELD
+    // ==========================================
+    const STORAGE_ANALYTICS_KEY = "techtelugu_analytics_store_v2";
+    const STORAGE_PASS_HASH_KEY = "techtelugu_creator_pass_hash";
+    // Default SHA-256 hash for password: TechTelugu@2026
+    const DEFAULT_PASS_HASH = "65b538223989ca6c97936adea13c66863d28d4e447485665e9ebc3bba75cd3a3";
+
+    // Anti-Spam Throttle Constants
+    const SPAM_WINDOW_MS = 2500;
+    const MAX_CLICKS_IN_WINDOW = 3;
+    let recentClickTimestamps = [];
+    let failedLoginAttempts = 0;
+    let lockoutUntilTime = 0;
+
+    function getAnalyticsData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_ANALYTICS_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === "object") return parsed;
+        }
+      } catch (e) {}
+      return {
+        totalViews: 0,
+        uniqueVisitors: 0,
+        totalClicks: 0,
+        spamBlocked: 0,
+        clicksByItem: {},
+        recentClicks: []
+      };
+    }
+
+    function saveAnalyticsData(data) {
+      try {
+        localStorage.setItem(STORAGE_ANALYTICS_KEY, JSON.stringify(data));
+      } catch (e) {}
+    }
+
+    // Anti-Bot & Anti-Click-Fraud Shield
+    function isSpamClick(id) {
+      const now = Date.now();
+      // Check 1: Honeypot triggered
+      if (sessionStorage.getItem("tt_bot_flag") === "1") {
+        incrementSpamCount("Automated Crawler Honeypot");
+        return true;
+      }
+      // Check 2: Headless automation (Puppeteer, Selenium, Webdriver)
+      if (navigator.webdriver) {
+        incrementSpamCount("Headless Webdriver Bot");
+        return true;
+      }
+      // Check 3: Click frequency throttle (rapid multi-clicks in 2.5s window)
+      recentClickTimestamps = recentClickTimestamps.filter(t => (now - t) < SPAM_WINDOW_MS);
+      if (recentClickTimestamps.length >= MAX_CLICKS_IN_WINDOW) {
+        incrementSpamCount("Rapid Click Spam Throttle");
+        return true;
+      }
+      recentClickTimestamps.push(now);
+      return false;
+    }
+
+    function incrementSpamCount(reason) {
+      const data = getAnalyticsData();
+      data.spamBlocked = (data.spamBlocked || 0) + 1;
+      saveAnalyticsData(data);
+      console.warn("[Shield Defended]: " + reason + " blocked.");
+    }
+
+    function triggerHoneypot(e) {
+      e.preventDefault();
+      sessionStorage.setItem("tt_bot_flag", "1");
+      incrementSpamCount("Hidden Trap Link Triggered");
+    }
+
+    // Pageview & Unique Visitor Tracker
+    function initPageViewTracker() {
+      // Don't count bot visits if headless
+      if (navigator.webdriver) return;
+
+      const data = getAnalyticsData();
+      data.totalViews = (data.totalViews || 0) + 1;
+
+      // Unique visitor detection via session
+      if (!sessionStorage.getItem("tt_visited_session")) {
+        sessionStorage.setItem("tt_visited_session", "1");
+        data.uniqueVisitors = (data.uniqueVisitors || 0) + 1;
+      }
+
+      saveAnalyticsData(data);
+
+      // Async beacon to Node.js server if active
+      try {
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon("/api/analytics/track", JSON.stringify({ type: "view", url: window.location.pathname }));
+        }
+      } catch (e) {}
+    }
+
+    // Link Click Tracker per App/Website
     function trackClick(id) {
-      console.log("Clicked source link:", id);
+      // Run Anti-Spam & Fraud checks
+      if (isSpamClick(id)) {
+        return;
+      }
+
+      const data = getAnalyticsData();
+      data.totalClicks = (data.totalClicks || 0) + 1;
+
+      // Find item details
+      const foundItem = allLinks.find(l => l.id === id);
+      const itemTitle = foundItem ? foundItem.title : id;
+      const itemIcon = foundItem ? foundItem.icon : "🔗";
+      const itemTag = foundItem ? foundItem.tag : "LINK";
+
+      if (!data.clicksByItem) data.clicksByItem = {};
+      if (!data.clicksByItem[id]) {
+        data.clicksByItem[id] = {
+          title: itemTitle,
+          icon: itemIcon,
+          tag: itemTag,
+          clicks: 0
+        };
+      }
+      data.clicksByItem[id].clicks += 1;
+      data.clicksByItem[id].lastClicked = new Date().toISOString();
+
+      // Recent clicks feed (keep last 20)
+      if (!data.recentClicks) data.recentClicks = [];
+      const timeStr = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+      const dateStr = new Date().toLocaleDateString([], { month: "short", day: "numeric" });
+      data.recentClicks.unshift({
+        id: id,
+        title: itemTitle,
+        icon: itemIcon,
+        tag: itemTag,
+        time: timeStr,
+        date: dateStr
+      });
+      if (data.recentClicks.length > 20) data.recentClicks.pop();
+
+      saveAnalyticsData(data);
+
+      // Google Tag / Analytics Event
+      if (typeof gtag === "function") {
+        gtag("event", "link_click", {
+          event_category: "Creator Links",
+          event_label: itemTitle,
+          value: 1
+        });
+      }
+
+      // Async beacon to server
+      try {
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon("/api/analytics/track", JSON.stringify({ type: "click", id: id, title: itemTitle }));
+        }
+      } catch (e) {}
+    }
+
+    // SHA-256 Password Hash Helper (Web Crypto API)
+    async function hashPassword(str) {
+      const enc = new TextEncoder().encode(str);
+      const buf = await crypto.subtle.digest("SHA-256", enc);
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+    }
+
+    // Creator Analytics Modal Controls
+    function openAnalyticsModal() {
+      const modal = document.getElementById("analyticsModal");
+      if (!modal) return;
+      modal.style.display = "flex";
+
+      const isUnlocked = sessionStorage.getItem("tt_admin_unlocked") === "1";
+      const lockScreen = document.getElementById("analyticsLockScreen");
+      const dashScreen = document.getElementById("analyticsDashboardScreen");
+
+      if (isUnlocked) {
+        if (lockScreen) lockScreen.style.display = "none";
+        if (dashScreen) dashScreen.style.display = "block";
+        refreshAnalyticsUI();
+      } else {
+        if (lockScreen) lockScreen.style.display = "block";
+        if (dashScreen) dashScreen.style.display = "none";
+        const passInput = document.getElementById("adminPasswordInput");
+        if (passInput) {
+          passInput.value = "";
+          setTimeout(() => passInput.focus(), 100);
+        }
+      }
+    }
+
+    function closeAnalyticsModal() {
+      const modal = document.getElementById("analyticsModal");
+      if (modal) modal.style.display = "none";
+      const err = document.getElementById("analyticsPassError");
+      if (err) err.style.display = "none";
+    }
+
+    function closeAnalyticsOnBackdrop(e) {
+      if (e.target.id === "analyticsModal") closeAnalyticsModal();
+    }
+
+    function togglePasswordVisibility() {
+      const input = document.getElementById("adminPasswordInput");
+      if (input) {
+        input.type = input.type === "password" ? "text" : "password";
+      }
+    }
+
+    async function handleUnlockAnalytics(e) {
+      e.preventDefault();
+      const now = Date.now();
+      const lockoutMsg = document.getElementById("analyticsLockoutMsg");
+      const passError = document.getElementById("analyticsPassError");
+
+      if (now < lockoutUntilTime) {
+        if (lockoutMsg) lockoutMsg.style.display = "block";
+        return;
+      }
+
+      const input = document.getElementById("adminPasswordInput");
+      const enteredPassword = input ? input.value : "";
+      const enteredHash = await hashPassword(enteredPassword);
+      const storedHash = localStorage.getItem(STORAGE_PASS_HASH_KEY) || DEFAULT_PASS_HASH;
+
+      if (enteredHash === storedHash) {
+        failedLoginAttempts = 0;
+        sessionStorage.setItem("tt_admin_unlocked", "1");
+        document.getElementById("analyticsLockScreen").style.display = "none";
+        document.getElementById("analyticsDashboardScreen").style.display = "block";
+        if (passError) passError.style.display = "none";
+        if (lockoutMsg) lockoutMsg.style.display = "none";
+        refreshAnalyticsUI();
+        showToast("🔓 Analytics Dashboard Unlocked!");
+      } else {
+        failedLoginAttempts++;
+        if (passError) passError.style.display = "block";
+        if (failedLoginAttempts >= 5) {
+          lockoutUntilTime = Date.now() + 60000;
+          if (lockoutMsg) lockoutMsg.style.display = "block";
+        }
+      }
+    }
+
+    function refreshAnalyticsUI() {
+      const data = getAnalyticsData();
+
+      // Update stat cards
+      const elViews = document.getElementById("statPageViews");
+      const elUniques = document.getElementById("statUniqueVisitors");
+      const elClicks = document.getElementById("statTotalClicks");
+      const elSpam = document.getElementById("statSpamBlocked");
+
+      if (elViews) elViews.textContent = (data.totalViews || 0).toLocaleString();
+      if (elUniques) elUniques.textContent = (data.uniqueVisitors || 0).toLocaleString();
+      if (elClicks) elClicks.textContent = (data.totalClicks || 0).toLocaleString();
+      if (elSpam) elSpam.textContent = (data.spamBlocked || 0).toLocaleString();
+
+      // Render Leaderboard
+      const leaderboardEl = document.getElementById("analyticsLeaderboard");
+      if (leaderboardEl) {
+        // Collect click data for all known items
+        const itemMap = {};
+        allLinks.forEach(l => {
+          itemMap[l.id] = {
+            id: l.id,
+            title: l.title,
+            icon: l.icon || "🔗",
+            tag: l.tag || "LINK",
+            clicks: 0
+          };
+        });
+
+        // Merge recorded clicks
+        if (data.clicksByItem) {
+          Object.keys(data.clicksByItem).forEach(id => {
+            if (!itemMap[id]) {
+              itemMap[id] = {
+                id: id,
+                title: data.clicksByItem[id].title || id,
+                icon: data.clicksByItem[id].icon || "🔗",
+                tag: data.clicksByItem[id].tag || "LINK",
+                clicks: data.clicksByItem[id].clicks || 0
+              };
+            } else {
+              itemMap[id].clicks = data.clicksByItem[id].clicks || 0;
+            }
+          });
+        }
+
+        const sorted = Object.values(itemMap).sort((a, b) => b.clicks - a.clicks);
+        const maxClicks = Math.max(...sorted.map(s => s.clicks), 1);
+        const totalClicks = data.totalClicks || 1;
+
+        leaderboardEl.innerHTML = sorted.map(item => {
+          const pctOfTotal = totalClicks > 0 ? Math.round((item.clicks / totalClicks) * 100) : 0;
+          const barWidth = Math.max(Math.round((item.clicks / maxClicks) * 100), item.clicks > 0 ? 5 : 0);
+          const tagClass = `type-${(item.tag || "link").toLowerCase()}`;
+
+          return `
+            <div class="click-item-row">
+              <span style="font-size:22px;line-height:1">${item.icon}</span>
+              <div class="click-item-info">
+                <div class="click-item-title">
+                  <span class="type-tag ${tagClass}">[${item.tag}]</span>
+                  <span>${escapeHtml(item.title)}</span>
+                </div>
+                <div class="click-progress-wrap">
+                  <div class="click-progress-bar" style="width: ${barWidth}%"></div>
+                </div>
+              </div>
+              <div style="text-align:right">
+                <span class="click-count-badge">${item.clicks} clicks</span>
+                <div style="font-size:10px;color:var(--text-muted);margin-top:2px">${pctOfTotal}% of total</div>
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      // Render Recent Activity Feed
+      const recentFeedEl = document.getElementById("analyticsRecentFeed");
+      if (recentFeedEl) {
+        if (!data.recentClicks || data.recentClicks.length === 0) {
+          recentFeedEl.innerHTML = `<div style="color:var(--text-muted);text-align:center;padding:10px">No clicks recorded yet. Clicks will appear here in real time.</div>`;
+        } else {
+          recentFeedEl.innerHTML = data.recentClicks.map(r => `
+            <div class="recent-activity-item">
+              <div>
+                <span>${r.icon}</span>
+                <strong style="color:var(--text-main)">${escapeHtml(r.title)}</strong>
+              </div>
+              <span style="color:var(--text-muted);font-size:11px">${r.time} • ${r.date}</span>
+            </div>
+          `).join("");
+        }
+      }
+    }
+
+    function toggleChangePasswordUI() {
+      const box = document.getElementById("changePasswordBox");
+      if (box) {
+        box.style.display = box.style.display === "none" ? "block" : "none";
+      }
+    }
+
+    async function handleSaveNewPassword(e) {
+      e.preventDefault();
+      const input = document.getElementById("newPasswordInput");
+      const newPass = input ? input.value.trim() : "";
+      if (newPass.length < 6) {
+        alert("Password must be at least 6 characters long.");
+        return;
+      }
+      const newHash = await hashPassword(newPass);
+      localStorage.setItem(STORAGE_PASS_HASH_KEY, newHash);
+      if (input) input.value = "";
+      document.getElementById("changePasswordBox").style.display = "none";
+      showToast("✅ Creator Password successfully changed!");
+    }
+
+    function confirmResetAnalytics() {
+      if (confirm("Are you sure you want to reset all visitor and click analytics? This cannot be undone.")) {
+        const fresh = {
+          totalViews: 0,
+          uniqueVisitors: 0,
+          totalClicks: 0,
+          spamBlocked: 0,
+          clicksByItem: {},
+          recentClicks: []
+        };
+        saveAnalyticsData(fresh);
+        refreshAnalyticsUI();
+        showToast("🗑️ Analytics stats have been reset.");
+      }
+    }
+
+    function lockAnalyticsDashboard() {
+      sessionStorage.removeItem("tt_admin_unlocked");
+      document.getElementById("analyticsDashboardScreen").style.display = "none";
+      document.getElementById("analyticsLockScreen").style.display = "block";
+      closeAnalyticsModal();
+      showToast("🔒 Dashboard locked.");
     }
 
     // Modal Controls
@@ -1807,7 +2511,8 @@
     }
     setTimeout(checkCookieConsent, 600);
 
-    // Initial render
+    // Initial render & Pageview Tracking
+    initPageViewTracker();
     renderLinks();
   </script>
 
