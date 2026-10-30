@@ -456,6 +456,12 @@
       border: 1px solid #e9d5ff;
     }
 
+    .type-student {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
     .link-source-url {
       font-size: 11.5px;
       color: var(--text-muted);
@@ -960,6 +966,239 @@
       gap: 8px;
     }
     .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* Video Hub & Learning Studio for Student Tools */
+    .video-hub-card {
+      background: linear-gradient(135deg, #0f172a, #1e1b4b);
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px -3px rgba(15, 23, 42, 0.4);
+      border: 1px solid #334155;
+    }
+    .video-hub-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .video-badge-live {
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .video-tag-free {
+      background: rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+    .video-hub-title {
+      font-size: 19px;
+      font-weight: 900;
+      letter-spacing: -0.4px;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .video-hub-desc {
+      font-size: 13.5px;
+      color: #cbd5e1;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .video-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s ease;
+    }
+    .video-card:hover {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+    .video-thumb {
+      position: relative;
+      background: #1e293b;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .video-thumb-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.7));
+    }
+    .video-play-btn {
+      width: 48px;
+      height: 48px;
+      background: #ef4444;
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5);
+      transition: transform 0.2s;
+      z-index: 2;
+    }
+    .video-thumb:hover .video-play-btn {
+      transform: scale(1.1);
+      background: #dc2626;
+    }
+    .video-duration {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      z-index: 2;
+    }
+    .video-chip {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(79, 70, 229, 0.9);
+      color: #ffffff;
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    .video-content {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .video-card-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .video-card-desc {
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.45;
+      margin-bottom: 12px;
+      flex: 1;
+    }
+    .video-card-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn-watch-video {
+      background: #4f46e5;
+      color: #ffffff;
+      border: none;
+      padding: 7px 12px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.15s;
+    }
+    .btn-watch-video:hover {
+      background: #4338ca;
+    }
+    .btn-video-guide {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 7px 12px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s;
+    }
+    .btn-video-guide:hover {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+    }
+
+    /* Video Player Modal Box */
+    .video-modal-box {
+      max-width: 760px;
+      width: 100%;
+      background: #0f172a;
+      color: #ffffff;
+    }
+    .video-player-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000000;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      border: 1px solid #334155;
+    }
+    .video-player-element {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .video-modal-details {
+      padding: 4px 0;
+    }
+    .video-prompt-box {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 10px 0 14px;
+    }
+    .video-prompt-text {
+      font-family: monospace;
+      font-size: 12px;
+      color: #e2e8f0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.5;
+    }
   </style>
 
   <!-- Structured Data JSON-LD for Google AdSense & SEO -->
@@ -1080,49 +1319,440 @@
     <!-- Category Filters -->
     <div class="filter-scroll" id="filterContainer">
       <button class="filter-chip active" onclick="filterCategory('all', this)">All Sections</button>
-      <button class="filter-chip" onclick="filterCategory('app', this)">📱 [APP] Apps</button>
+      <button class="filter-chip" onclick="filterCategory('student', this)">🎓 Student Tools &amp; Videos</button>
+      <button class="filter-chip" onclick="filterCategory('app', this)">📱 [APP] Mobile Apps</button>
       <button class="filter-chip" onclick="filterCategory('website', this)">🌐 [WEBSITE] Websites</button>
-      <button class="filter-chip" onclick="filterCategory('link', this)">🔗 [LINK] Quick Links</button>
       <button class="filter-chip" onclick="filterCategory('hot', this)">🔥 Trending</button>
     </div>
 
-    <!-- Instagram Reel Featured Spotlight: Google Antigravity -->
-    <div class="featured-card" style="background: linear-gradient(135deg, #1e1b4b, #4338ca); border: 1px solid #6366f1; margin-bottom: 18px;">
-      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
-        <div class="featured-tag" style="background: #ef4444; color: #ffffff;">🔥 Featured in Today's Instagram Reel</div>
-        <span style="font-size: 11px; font-weight: 800; color: #c7d2fe; letter-spacing: 0.5px; text-transform: uppercase;">Build with AI Prompts</span>
+    <!-- 3 Core Sections: Student Tools (AI & Videos), Mobile Apps, Websites -->
+    <div class="links-grid" id="linksContainer">
+<!-- Section 1: Student Tools & AI Learning (with Video Classroom) -->
+      <div class="section-divider" id="section-student">
+        <div class="section-title-wrap">
+          <span class="section-icon">🎓</span>
+          <div>
+            <h2 class="section-heading">Student Tools &amp; AI Learning Hub</h2>
+            <span class="section-subheading">Learn to Build Websites &amp; Apps with AI (ChatGPT, Antigravity, Gemini)</span>
+          </div>
+        </div>
+        <span class="section-count-badge">5 AI Tools &amp; Guides</span>
       </div>
-      <div class="featured-title" style="font-size: 20px;">Google Antigravity: Build Any Website or App Using Simple Prompts</div>
-      <div class="featured-desc">
-        Watched our latest reel? Don't write code line-by-line! Learn how to command Google Antigravity AI to write full-stack code, build interactive web apps, and deploy with simple English prompts. Includes 5 copy-paste prompt templates.
-      </div>
-      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px;">
-        <a href="guides/google-antigravity-prompt-to-app-guide.html" class="featured-btn">
-          <span>📖 Open Prompt Guide &amp; Templates</span>
-          <span>↗</span>
-        </a>
-        <a href="https://antigravity.google/" target="_blank" rel="noopener" class="featured-btn" style="background: rgba(255,255,255,0.15); color: #ffffff; border: 1px solid rgba(255,255,255,0.3);">
-          <span>🚀 Launch Antigravity</span>
-          <span>↗</span>
-        </a>
-      </div>
-    </div>
+      
+        <div class="video-hub-card">
+          <div class="video-hub-header">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="video-badge-live">🎬 VIDEO CLASSROOM</span>
+              <span style="font-size:12px;color:#cbd5e1;font-weight:700">Watch &amp; Build with AI</span>
+            </div>
+            <span class="video-tag-free">100% FREE TUTORIALS</span>
+          </div>
+          <h3 class="video-hub-title">Learn How to Create Websites &amp; Apps Using AI Tools</h3>
+          <p class="video-hub-desc">
+            No coding background needed! Watch our step-by-step video masterclasses in Telugu &amp; English. Learn how to write simple English prompts in <strong>Google Antigravity</strong>, <strong>ChatGPT</strong>, and <strong>Google Gemini</strong> to generate full-stack websites, mobile utilities, and live web apps.
+          </p>
 
-    <!-- Featured Hero App Spotlight -->
-    <div class="featured-card" id="featuredCard">
-      <div class="featured-tag">⭐ Featured Pick of the Week</div>
-      <div class="featured-title">CapCut Pro Video Editor (Mobile &amp; PC)</div>
-      <div class="featured-desc">
-        The #1 viral video editing app for Instagram Reels &amp; TikTok. Includes AI auto-captions, 4K export, smooth velocity curves, and trending sound sync.
+          <div class="video-grid">
+            <!-- Video 1 -->
+            <div class="video-card">
+              <div class="video-thumb" onclick="openVideoModal('video-antigravity')">
+                <div class="video-thumb-overlay"></div>
+                <div class="video-play-btn">▶</div>
+                <span class="video-chip">Antigravity AI</span>
+                <span class="video-duration">5:20 min</span>
+              </div>
+              <div class="video-content">
+                <h4 class="video-card-title">How to Build Any Website or App Using Google Antigravity Prompts</h4>
+                <p class="video-card-desc">Watch how to command Google Antigravity AI to generate, test, and deploy interactive web applications and tools in 5 minutes.</p>
+                <div class="video-card-actions">
+                  <button class="btn-watch-video" onclick="openVideoModal('video-antigravity')">
+                    <span>▶️ Watch Video</span>
+                  </button>
+                  <a href="google-antigravity.html" class="btn-video-guide">
+                    <span>📖 Prompt Guide &amp; Templates ↗</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="video-card">
+              <div class="video-thumb" onclick="openVideoModal('video-chatgpt')">
+                <div class="video-thumb-overlay"></div>
+                <div class="video-play-btn">▶</div>
+                <span class="video-chip">ChatGPT + Gemini</span>
+                <span class="video-duration">8:45 min</span>
+              </div>
+              <div class="video-content">
+                <h4 class="video-card-title">ChatGPT &amp; Gemini: Create Web Calculators, Tools &amp; Mobile Pages</h4>
+                <p class="video-card-desc">Step-by-step blueprint for students to prompt ChatGPT and Gemini for single-page apps, calculators, and responsive portfolios.</p>
+                <div class="video-card-actions">
+                  <button class="btn-watch-video" onclick="openVideoModal('video-chatgpt')">
+                    <span>▶️ Watch Video</span>
+                  </button>
+                  <button class="btn-video-guide" onclick="copyPrompt('chatgpt-starter')">
+                    <span>📋 Copy Starter Prompt</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      
+        <div class="link-card" onclick="openLinkSource('google-antigravity.html', 'student-antigravity')" role="button" tabindex="0">
+          <div class="link-icon-box">⚡</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-student">[STUDENT]</span>
+              <span class="link-title">Google Antigravity AI - Prompt to App / Web Builder</span>
+              <span class="link-badge badge-hot">BUILD WITH PROMPT 🔥</span>
+            </div>
+            <div class="link-desc">Build complete websites and mobile apps simply by describing what you want in prompts! Featured in our Instagram Reel. Includes 5 copy-paste prompt templates.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">Antigravity AI Builder</span>
+            </div>
+          </div>
+          <a href="google-antigravity.html"  class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      
+        <div class="link-card" onclick="openLinkSource('https://chatgpt.com/', 'student-chatgpt')" role="button" tabindex="0">
+          <div class="link-icon-box">🤖</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-student">[STUDENT]</span>
+              <span class="link-title">ChatGPT AI Web &amp; App Generator</span>
+              <span class="link-badge badge-ai">AI CODER</span>
+            </div>
+            <div class="link-desc">Command ChatGPT to generate complete single-page websites, JavaScript calculators, quizzes, and landing pages with zero coding experience.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">chatgpt.com</span>
+            </div>
+          </div>
+          <a href="https://chatgpt.com/" target="_blank" rel="noopener" class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      
+        <div class="link-card" onclick="openLinkSource('https://gemini.google.com/', 'student-gemini')" role="button" tabindex="0">
+          <div class="link-icon-box">🧠</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-student">[STUDENT]</span>
+              <span class="link-title">Google Gemini AI Code Studio</span>
+              <span class="link-badge badge-ai">GOOGLE AI</span>
+            </div>
+            <div class="link-desc">Google&#039;s intelligent multimodal AI to write, debug, and explain Python, HTML/CSS, React, and Android code for students.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">gemini.google.com</span>
+            </div>
+          </div>
+          <a href="https://gemini.google.com/" target="_blank" rel="noopener" class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      
+        <div class="link-card" onclick="openLinkSource('google-antigravity.html', 'student-antigravity-guide')" role="button" tabindex="0">
+          <div class="link-icon-box">📖</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-student">[STUDENT]</span>
+              <span class="link-title">Google Antigravity Prompt-to-App Masterclass</span>
+              <span class="link-badge badge-top">MASTERCLASS 🚀</span>
+            </div>
+            <div class="link-desc">Step-by-step masterclass &amp; 5 copy-paste prompts: How to command Google Antigravity to build, debug, and publish websites and mobile apps.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">Antigravity AI Builder</span>
+            </div>
+          </div>
+          <a href="google-antigravity.html"  class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      
+        <div class="link-card" onclick="openLinkSource('guides/best-ai-tools-2026.html', 'student-ai-guide')" role="button" tabindex="0">
+          <div class="link-icon-box">🚀</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-student">[STUDENT]</span>
+              <span class="link-title">Top 7 AI Tools Guide for Students (2026 Edition)</span>
+              <span class="link-badge badge-ai">AI GUIDE</span>
+            </div>
+            <div class="link-desc">In-depth breakdown of the best AI tools for creators, students, and software developers.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">Editorial Guide Page</span>
+            </div>
+          </div>
+          <a href="guides/best-ai-tools-2026.html"  class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      
+
+      <!-- Section 2: Mobile Apps (Strictly Apps) -->
+      <div class="section-divider" id="section-apps" style="margin-top: 36px;">
+        <div class="section-title-wrap">
+          <span class="section-icon">📱</span>
+          <div>
+            <h2 class="section-heading">Mobile Applications</h2>
+            <span class="section-subheading">Verified Android &amp; iOS Applications with [APP] Tag (Strictly Apps)</span>
+          </div>
+        </div>
+        <span class="section-count-badge">5 Apps</span>
       </div>
-      <a href="download-capcut.html" class="featured-btn">
-        <span>📥 Download CapCut Setup (820MB) &amp; Guide</span>
-        <span>↗</span>
-      </a>
+      
+        <div class="link-card" onclick="openLinkSource('download-capcut.html', 'app-capcut')" role="button" tabindex="0">
+          <div class="link-icon-box">🎬</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-app">[APP]</span>
+              <span class="link-title">CapCut Video Editor (Mobile &amp; PC Setup)</span>
+              <span class="link-badge badge-hot">SETUP .ZIP &amp; GUIDE</span>
+            </div>
+            <div class="link-desc">Download the complete 820MB CapCut PC setup archive + mobile editing guides. Auto-captions, velocity curves, and 4K export.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">CapCut Setup Page (820MB)</span>
+            </div>
+          </div>
+          <a href="download-capcut.html"  class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      
+        <div class="link-card" onclick="openLinkSource('https://www.notion.so/', 'app-notion')" role="button" tabindex="0">
+          <div class="link-icon-box">📝</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-app">[APP]</span>
+              <span class="link-title">Notion - Connected Workspace App</span>
+              <span class="link-badge badge-top">TOP PICK</span>
+            </div>
+            <div class="link-desc">Organize your life, study notes, project workflows, and habit tracking in one sleek mobile &amp; desktop app.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">notion.so</span>
+            </div>
+          </div>
+          <a href="https://www.notion.so/" target="_blank" rel="noopener" class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      
+        <div class="link-card" onclick="openLinkSource('https://play.google.com/store/apps/details?id=com.niksoftware.snapseed', 'app-snapseed')" role="button" tabindex="0">
+          <div class="link-icon-box">📸</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-app">[APP]</span>
+              <span class="link-title">Snapseed Photo Editor by Google</span>
+              <span class="link-badge badge-top">GOOGLE</span>
+            </div>
+            <div class="link-desc">Professional photo tuning by Google. Includes curves, selective editing, healing brush, and RAW support.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">play.google.com</span>
+            </div>
+          </div>
+          <a href="https://play.google.com/store/apps/details?id=com.niksoftware.snapseed" target="_blank" rel="noopener" class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      
+        <div class="link-card" onclick="openLinkSource('https://www.canva.com/', 'app-canva')" role="button" tabindex="0">
+          <div class="link-icon-box">🎨</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-app">[APP]</span>
+              <span class="link-title">Canva Design &amp; Video Studio App</span>
+              <span class="link-badge badge-free">CREATIVE</span>
+            </div>
+            <div class="link-desc">Design Instagram carousels, thumbnails, reels graphics, posters, and resumes in minutes with thousands of templates.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">canva.com</span>
+            </div>
+          </div>
+          <a href="https://www.canva.com/" target="_blank" rel="noopener" class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      
+        <div class="link-card" onclick="openLinkSource('https://bitwarden.com/', 'app-bitwarden')" role="button" tabindex="0">
+          <div class="link-icon-box">🔒</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-app">[APP]</span>
+              <span class="link-title">Bitwarden Password Vault</span>
+              <span class="link-badge badge-free">SECURITY</span>
+            </div>
+            <div class="link-desc">Open-source, end-to-end encrypted password vault. Keep your logins safe across Android, iPhone, and PC.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">bitwarden.com</span>
+            </div>
+          </div>
+          <a href="https://bitwarden.com/" target="_blank" rel="noopener" class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      
+      <div style="background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;padding:12px 16px;margin-top:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <span style="font-size:12.5px;color:var(--text-muted);font-weight:600">📱 Have a mobile app you want featured here?</span>
+        <a href="contact.html" style="font-size:12px;font-weight:800;color:var(--accent);text-decoration:none">Request App Link ↗</a>
+      </div>
+
+      <!-- Section 3: Websites & Web Tools (Strictly Websites) -->
+      <div class="section-divider" id="section-websites" style="margin-top: 36px;">
+        <div class="section-title-wrap">
+          <span class="section-icon">🌐</span>
+          <div>
+            <h2 class="section-heading">Websites &amp; Web Tools</h2>
+            <span class="section-subheading">Browser-Based Utilities, AI Platforms &amp; Web Services with [WEBSITE] Tag (Strictly Websites)</span>
+          </div>
+        </div>
+        <span class="section-count-badge">6 Websites</span>
+      </div>
+      
+        <div class="link-card" onclick="openLinkSource('https://www.perplexity.ai/', 'web-perplexity')" role="button" tabindex="0">
+          <div class="link-icon-box">🧠</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-website">[WEBSITE]</span>
+              <span class="link-title">Perplexity AI Answer Engine</span>
+              <span class="link-badge badge-ai">SMART AI</span>
+            </div>
+            <div class="link-desc">Interactive AI knowledge engine that provides accurate answers backed by real-time web citations.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">perplexity.ai</span>
+            </div>
+          </div>
+          <a href="https://www.perplexity.ai/" target="_blank" rel="noopener" class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      
+        <div class="link-card" onclick="openLinkSource('https://www.remove.bg/', 'web-removebg')" role="button" tabindex="0">
+          <div class="link-icon-box">✂️</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-website">[WEBSITE]</span>
+              <span class="link-title">Remove.bg - AI Background Remover</span>
+              <span class="link-badge badge-ai">AI TOOL</span>
+            </div>
+            <div class="link-desc">Remove any photo background automatically in 5 seconds with 100% precision. Zero manual masking required.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">remove.bg</span>
+            </div>
+          </div>
+          <a href="https://www.remove.bg/" target="_blank" rel="noopener" class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      
+        <div class="link-card" onclick="openLinkSource('https://tinypng.com/', 'web-tinypng')" role="button" tabindex="0">
+          <div class="link-icon-box">🐼</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-website">[WEBSITE]</span>
+              <span class="link-title">TinyPNG Image Compressor</span>
+              <span class="link-badge badge-util">UTILITY</span>
+            </div>
+            <div class="link-desc">Compress WebP, PNG, and JPEG files by up to 75% without visible quality loss. Speeds up sites &amp; saves storage.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">tinypng.com</span>
+            </div>
+          </div>
+          <a href="https://tinypng.com/" target="_blank" rel="noopener" class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      
+        <div class="link-card" onclick="openLinkSource('https://temp-mail.org/', 'web-tempmail')" role="button" tabindex="0">
+          <div class="link-icon-box">📬</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-website">[WEBSITE]</span>
+              <span class="link-title">Temp-Mail Disposable Inbox</span>
+              <span class="link-badge badge-util">PRIVACY</span>
+            </div>
+            <div class="link-desc">Instant anonymous, disposable email address to register on websites and keep your main inbox spam-free.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">temp-mail.org</span>
+            </div>
+          </div>
+          <a href="https://temp-mail.org/" target="_blank" rel="noopener" class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      
+        <div class="link-card" onclick="openLinkSource('https://www.wolframalpha.com/', 'web-wolfram')" role="button" tabindex="0">
+          <div class="link-icon-box">🔬</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-website">[WEBSITE]</span>
+              <span class="link-title">Wolfram Alpha Computational Engine</span>
+              <span class="link-badge badge-top">EDUCATION</span>
+            </div>
+            <div class="link-desc">Expert-level computation, formula solving, and factual knowledge across math, physics, coding, and nutrition.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">wolframalpha.com</span>
+            </div>
+          </div>
+          <a href="https://www.wolframalpha.com/" target="_blank" rel="noopener" class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
+      
+        <div class="link-card" onclick="openLinkSource('https://12ft.io/', 'web-12ft')" role="button" tabindex="0">
+          <div class="link-icon-box">🪜</div>
+          <div class="link-info">
+            <div class="link-header">
+              <span class="type-tag type-website">[WEBSITE]</span>
+              <span class="link-title">12ft Ladder Clean Web Reader</span>
+              <span class="link-badge badge-util">UTILITY</span>
+            </div>
+            <div class="link-desc">Clean distraction-free web article reader. Read important tech articles without cluttered ads and popups.</div>
+            <div class="link-source-url">
+              <span>Source:</span>
+              <span class="source-domain">12ft.io</span>
+            </div>
+          </div>
+          <a href="https://12ft.io/" target="_blank" rel="noopener" class="link-action-btn" onclick="event.stopPropagation()">
+            <span>Open Source</span>
+            <span>↗</span>
+          </a>
+        </div>
     </div>
 
     <!-- Google AdSense Placement 1 -->
-    <div class="ad-card">
+    <div class="ad-card" style="margin-top:28px">
       <div class="ad-label">Advertisement</div>
       <ins class="adsbygoogle"
            style="display:block"
@@ -1131,13 +1761,8 @@
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
       <script>
-           (adsbygoogle = window.adsbygoogle || []).push({});
+           try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e){}
       </script>
-    </div>
-
-    <!-- Links List -->
-    <div class="links-grid" id="linksContainer">
-      <!-- Populated dynamically by JavaScript -->
     </div>
 
     <!-- Empty Search State -->
@@ -1170,7 +1795,7 @@
           <span style="font-size:28px">🚀</span>
           <div>
             <h3 style="font-size:17.5px;font-weight:800;color:var(--text-main);margin:0">Google Antigravity: How to Build Websites &amp; Apps with Simple Prompts</h3>
-            <div style="margin-top:6px"><a href="guides/google-antigravity-prompt-to-app-guide.html" style="color:var(--accent);font-size:13px;font-weight:800;text-decoration:none">Read Full Reel Guide &amp; 5 Prompt Templates ➜</a></div>
+            <div style="margin-top:6px"><a href="google-antigravity.html" style="color:var(--accent);font-size:13px;font-weight:800;text-decoration:none">Read Full Reel Guide &amp; 5 Prompt Templates ➜</a></div>
             <span style="font-size:12px;color:var(--text-muted)">Category: Agentic AI Coding • Rating: 5.0/5 • Featured in Reel</span>
           </div>
         </div>
@@ -1223,7 +1848,7 @@
              data-ad-client="ca-pub-5301014611783028"
              data-ad-slot="auto"></ins>
         <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
+             try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e){}
         </script>
       </div>
 
@@ -1388,9 +2013,9 @@
         <div class="form-group">
           <label for="linkCategory">Section &amp; Tag *</label>
           <select id="linkCategory" class="form-input" required>
-            <option value="app">📱 [APP] Mobile App</option>
+            <option value="student">🎓 [STUDENT] AI Learning &amp; Student Tool</option>
+            <option value="app" selected>📱 [APP] Mobile App</option>
             <option value="website">🌐 [WEBSITE] Website / Online Tool</option>
-            <option value="link">🔗 [LINK] Quick Link / Guide</option>
           </select>
         </div>
         <div class="form-group">
@@ -1537,6 +2162,66 @@
     </div>
   </div>
 
+  <!-- Video Masterclass & Tutorial Modal for Students -->
+  <div class="modal-overlay" id="videoModal" onclick="closeVideoOnBackdrop(event)">
+    <div class="modal-box video-modal-box">
+      <div class="modal-header" style="border-bottom: 1px solid #334155;">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:22px">🎬</span>
+          <div>
+            <h3 id="videoModalTitle" style="margin:0;font-size:16.5px;color:#ffffff">Watch &amp; Build with AI Tutorial</h3>
+            <span id="videoModalBadge" style="font-size:11.5px;color:#94a3b8;font-weight:600">Student AI Blueprint</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeVideoModal()" style="color:#94a3b8">✕</button>
+      </div>
+
+      <!-- Responsive Video Player Container -->
+      <div class="video-player-container" id="videoPlayerContainer">
+        <video id="videoPlayerElement" class="video-player-element" controls playsinline preload="metadata">
+          <source src="final_output_2.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Video Details & Prompt Box -->
+      <div class="video-modal-details">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+          <div style="font-size:13px;font-weight:800;color:#e2e8f0;display:flex;align-items:center;gap:6px">
+            <span>📋</span> Copy Master AI Prompt Used in This Video:
+          </div>
+          <button class="btn-primary" style="width:auto;padding:5px 12px;font-size:11.5px;border-radius:6px;background:#4f46e5" onclick="copyVideoPrompt()">
+            <span>📋 Copy Prompt</span>
+          </button>
+        </div>
+
+        <div class="video-prompt-box">
+          <div class="video-prompt-text" id="videoPromptText">Act as an expert full-stack developer. Create a modern, responsive web application for [your idea]. Include clean HTML5 structure, modern CSS variables, smooth animations, and single-file executable JavaScript logic. Ensure 100% mobile responsiveness.</div>
+        </div>
+
+        <div style="background:#1e293b;border-radius:8px;padding:12px;border:1px solid #334155;margin-bottom:14px">
+          <div style="font-size:12.5px;font-weight:800;color:#f8fafc;margin-bottom:6px">🚀 Step-by-Step Learning Guide:</div>
+          <ol style="font-size:12px;color:#94a3b8;padding-left:18px;line-height:1.6">
+            <li>Click <strong>Copy Prompt</strong> above to save the template to your clipboard.</li>
+            <li>Open the AI tool (Google Antigravity, ChatGPT, or Google Gemini) using the button below.</li>
+            <li>Paste the prompt, describe what you want to build (e.g. calculator, portfolio, tool), and hit Enter!</li>
+          </ol>
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a href="google-antigravity.html" id="videoLaunchToolBtn" class="btn-primary" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px">
+            <span>🚀 Open Prompt Guide &amp; Templates</span>
+            <span>↗</span>
+          </a>
+          <button onclick="closeVideoModal()" style="background:#334155;color:#ffffff;border:none;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer">
+            Close
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div class="toast" id="toastBox">
     <span>✅</span>
@@ -1544,9 +2229,70 @@
   </div>
 
   <script>
-    // Curated Apps, Websites & Links Data with tags [APP], [WEBSITE], [LINK]
+    // Curated 3-Section Directory: Student Tools & AI Learning, Mobile Apps, and Websites
     const DEFAULT_LINKS = [
-      // --- MOBILE APPS SECTION ([APP] TAG) ---
+      // ==========================================
+      // SECTION 1: 🎓 STUDENT TOOLS & AI LEARNING ([STUDENT] TAG)
+      // ==========================================
+      {
+        id: "student-antigravity",
+        title: "Google Antigravity AI - Prompt to App / Web Builder",
+        url: "google-antigravity.html",
+        tag: "STUDENT",
+        category: "student",
+        badge: "BUILD WITH PROMPT 🔥",
+        badgeType: "hot",
+        icon: "⚡",
+        desc: "Build complete websites and mobile apps simply by describing what you want in prompts! Featured in our Instagram Reel. Includes 5 copy-paste prompt templates."
+      },
+      {
+        id: "student-chatgpt",
+        title: "ChatGPT AI Web & App Generator",
+        url: "https://chatgpt.com/",
+        tag: "STUDENT",
+        category: "student",
+        badge: "AI CODER",
+        badgeType: "ai",
+        icon: "🤖",
+        desc: "Command ChatGPT to generate complete single-page websites, JavaScript calculators, quizzes, and landing pages with zero coding experience."
+      },
+      {
+        id: "student-gemini",
+        title: "Google Gemini AI Code Studio",
+        url: "https://gemini.google.com/",
+        tag: "STUDENT",
+        category: "student",
+        badge: "GOOGLE AI",
+        badgeType: "ai",
+        icon: "🧠",
+        desc: "Google's intelligent multimodal AI to write, debug, and explain Python, HTML/CSS, React, and Android code for students."
+      },
+      {
+        id: "student-antigravity-guide",
+        title: "Google Antigravity Prompt-to-App Masterclass",
+        url: "google-antigravity.html",
+        tag: "STUDENT",
+        category: "student",
+        badge: "MASTERCLASS 🚀",
+        badgeType: "top",
+        icon: "📖",
+        desc: "Step-by-step masterclass & 5 copy-paste prompts: How to command Google Antigravity to build, debug, and publish websites and mobile apps."
+      },
+      {
+        id: "student-ai-guide",
+        title: "Top 7 AI Tools Guide for Students (2026 Edition)",
+        url: "guides/best-ai-tools-2026.html",
+        tag: "STUDENT",
+        category: "student",
+        badge: "AI GUIDE",
+        badgeType: "ai",
+        icon: "🚀",
+        desc: "In-depth breakdown of the best AI tools for creators, students, and software developers."
+      },
+
+      // ==========================================
+      // SECTION 2: 📱 MOBILE APPS ([APP] TAG - STRICTLY APPS)
+      // ==========================================
       {
         id: "app-capcut",
         title: "CapCut Video Editor (Mobile & PC Setup)",
@@ -1560,7 +2306,7 @@
       },
       {
         id: "app-notion",
-        title: "Notion - Connected Workspace",
+        title: "Notion - Connected Workspace App",
         url: "https://www.notion.so/",
         tag: "APP",
         category: "app",
@@ -1582,7 +2328,7 @@
       },
       {
         id: "app-canva",
-        title: "Canva Design & Video Studio",
+        title: "Canva Design & Video Studio App",
         url: "https://www.canva.com/",
         tag: "APP",
         category: "app",
@@ -1603,18 +2349,9 @@
         desc: "Open-source, end-to-end encrypted password vault. Keep your logins safe across Android, iPhone, and PC."
       },
 
-      // --- USEFUL WEBSITES SECTION ([WEBSITE] TAG) ---
-      {
-        id: "web-antigravity",
-        title: "Google Antigravity AI - Prompt to App / Web Builder",
-        url: "guides/google-antigravity-prompt-to-app-guide.html",
-        tag: "WEBSITE",
-        category: "website",
-        badge: "BUILD WITH PROMPT 🔥",
-        badgeType: "hot",
-        icon: "⚡",
-        desc: "Build complete websites and mobile apps simply by describing what you want in prompts! Featured in our Instagram Reel. Includes 5 copy-paste prompt templates."
-      },
+      // ==========================================
+      // SECTION 3: 🌐 USEFUL WEBSITES ([WEBSITE] TAG - STRICTLY WEBSITES)
+      // ==========================================
       {
         id: "web-perplexity",
         title: "Perplexity AI Answer Engine",
@@ -1670,69 +2407,12 @@
         icon: "🔬",
         desc: "Expert-level computation, formula solving, and factual knowledge across math, physics, coding, and nutrition."
       },
-
-      // --- QUICK LINKS SECTION ([LINK] TAG) ---
       {
-        id: "link-antigravity-guide",
-        title: "Google Antigravity Prompt-to-App Masterclass",
-        url: "guides/google-antigravity-prompt-to-app-guide.html",
-        tag: "LINK",
-        category: "link",
-        badge: "REEL BLUEPRINT 🔥",
-        badgeType: "hot",
-        icon: "🤖",
-        desc: "Step-by-step masterclass & 5 copy-paste prompts: How to command Google Antigravity to build, debug, and publish websites and mobile apps."
-      },
-      {
-        id: "link-capcut-guide",
-        title: "CapCut Mobile Editing Masterclass Guide",
-        url: "guides/capcut-mobile-editing-guide.html",
-        tag: "LINK",
-        category: "link",
-        badge: "TUTORIAL",
-        badgeType: "top",
-        icon: "📖",
-        desc: "Comprehensive 8-page walkthrough on velocity speed ramps, 4K export bitrates, and keyframe animations."
-      },
-      {
-        id: "link-ai-guide",
-        title: "Top 7 AI Tools Guide (2026 Edition)",
-        url: "guides/best-ai-tools-2026.html",
-        tag: "LINK",
-        category: "link",
-        badge: "AI GUIDE",
-        badgeType: "ai",
-        icon: "🚀",
-        desc: "In-depth breakdown of the best AI tools for creators, students, and software developers."
-      },
-      {
-        id: "link-notion-guide",
-        title: "Notion Second Brain System Blueprint",
-        url: "guides/notion-productivity-system.html",
-        tag: "LINK",
-        category: "link",
-        badge: "PRODUCTIVITY",
-        badgeType: "free",
-        icon: "⚡",
-        desc: "Step-by-step setup guide for the PARA productivity method and social media content calendars."
-      },
-      {
-        id: "link-security-guide",
-        title: "Mobile Privacy & Cybersecurity Blueprint",
-        url: "guides/mobile-security-privacy-guide.html",
-        tag: "LINK",
-        category: "link",
-        badge: "SECURITY",
-        badgeType: "util",
-        icon: "🛡️",
-        desc: "Actionable security steps to prevent account hacking, data brokers, and phishing attacks."
-      },
-      {
-        id: "link-12ft",
+        id: "web-12ft",
         title: "12ft Ladder Clean Web Reader",
         url: "https://12ft.io/",
-        tag: "LINK",
-        category: "link",
+        tag: "WEBSITE",
+        category: "website",
         badge: "UTILITY",
         badgeType: "util",
         icon: "🪜",
@@ -1740,10 +2420,111 @@
       }
     ];
 
-    // LocalStorage Key - updated to v4 for Antigravity prompt-to-app support
-    const STORAGE_KEY = "techtelugu_bio_links_v4";
+    // LocalStorage Key - updated to v7 for Bulletproof Pre-rendered 3-Section layout
+    const STORAGE_KEY = "techtelugu_bio_links_v7";
     let activeCategory = "all";
     let searchQuery = "";
+
+    // Video Tutorials Data for Students
+    const STUDENT_VIDEOS = {
+      "video-antigravity": {
+        title: "How to Build Any Website or App Using Google Antigravity Prompts",
+        badge: "Google Antigravity • Telugu & English",
+        videoSrc: "final_output_2.mp4",
+        prompt: "Act as an expert full-stack developer. Create a modern, responsive web application for [insert idea, e.g. Student CGPA Calculator or Habit Tracker]. Include clean HTML5, modern CSS styling with dark/light mode toggle, and single-file executable vanilla JavaScript logic. Ensure 100% mobile responsiveness and clear user controls.",
+        toolUrl: "google-antigravity.html",
+        toolName: "Open Antigravity Guide & Templates"
+      },
+      "video-chatgpt": {
+        title: "ChatGPT & Gemini: Create Web Calculators, Tools & Mobile Pages",
+        badge: "ChatGPT + Gemini • Zero Coding",
+        videoSrc: "final_output.mp4",
+        prompt: "Act as a senior software engineer. I want to build a functional web utility [e.g. Student Task Manager or File Converter UI]. Write clean, semantic HTML5, modern CSS with card components, and robust JavaScript calculation logic. Provide full single-file code that I can save as index.html and run directly in any web browser.",
+        toolUrl: "https://chatgpt.com/",
+        toolName: "Open ChatGPT"
+      }
+    };
+
+    function openVideoModal(videoId) {
+      const videoData = STUDENT_VIDEOS[videoId] || STUDENT_VIDEOS["video-antigravity"];
+      const modal = document.getElementById("videoModal");
+      const titleEl = document.getElementById("videoModalTitle");
+      const badgeEl = document.getElementById("videoModalBadge");
+      const playerEl = document.getElementById("videoPlayerElement");
+      const promptEl = document.getElementById("videoPromptText");
+      const toolBtn = document.getElementById("videoLaunchToolBtn");
+
+      if (titleEl) titleEl.textContent = videoData.title;
+      if (badgeEl) badgeEl.textContent = videoData.badge;
+      if (promptEl) promptEl.textContent = videoData.prompt;
+      if (toolBtn) {
+        toolBtn.href = videoData.toolUrl;
+        const span = toolBtn.querySelector("span");
+        if (span) span.textContent = videoData.toolName;
+      }
+
+      if (playerEl) {
+        playerEl.src = videoData.videoSrc;
+        playerEl.load();
+        playerEl.play().catch(e => console.log("Auto-play prevented:", e));
+      }
+
+      if (modal) {
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+    }
+
+    function closeVideoModal() {
+      const modal = document.getElementById("videoModal");
+      const playerEl = document.getElementById("videoPlayerElement");
+      if (playerEl) {
+        playerEl.pause();
+        playerEl.src = "";
+      }
+      if (modal) {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+    }
+
+    function closeVideoOnBackdrop(e) {
+      if (e.target && e.target.id === "videoModal") {
+        closeVideoModal();
+      }
+    }
+
+    function copyVideoPrompt() {
+      const promptEl = document.getElementById("videoPromptText");
+      const text = promptEl ? promptEl.textContent : "";
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast("Master AI Prompt copied to clipboard!");
+        }).catch(() => {
+          showToast("Prompt copied!");
+        });
+      } else {
+        showToast("Prompt copied!");
+      }
+    }
+
+    function copyPrompt(type) {
+      let text = "Act as an expert full-stack developer. Create a modern, responsive web application for students. Include clean HTML5 structure, modern CSS variables, smooth animations, and single-file executable JavaScript logic.";
+      if (type === "chatgpt-starter") {
+        text = "Act as an expert full-stack developer. Create a modern web utility for students (e.g. CGPA Calculator and To-Do list). Provide complete single-file HTML, CSS, and JavaScript with interactive animations and zero external dependencies.";
+      } else if (type === "antigravity-starter") {
+        text = "Act as an agentic AI coding assistant. Build a complete, responsive mobile-friendly web application with clean design, dark/light theme toggle, and interactive JavaScript logic. Structure code in a single executable file.";
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast("AI Prompt copied to clipboard!");
+        }).catch(() => {
+          showToast("Prompt copied!");
+        });
+      } else {
+        showToast("Prompt copied!");
+      }
+    }
 
     function escapeHtml(str) {
       if (!str) return "";
@@ -1757,8 +2538,10 @@
 
     function getSourceDomain(url) {
       if (!url) return "Source Page";
-      if (url.includes("google-antigravity")) return "Antigravity Reel Blueprint";
+      if (url.includes("google-antigravity")) return "Antigravity AI Builder";
       if (url.includes("antigravity.google")) return "antigravity.google";
+      if (url.includes("chatgpt.com")) return "chatgpt.com";
+      if (url.includes("gemini.google")) return "gemini.google.com";
       if (url.startsWith("download-capcut.html")) return "CapCut Setup Page (820MB)";
       if (url.startsWith("guides/")) return "Editorial Guide Page";
       if (!url.startsWith("http")) return "Direct Page";
@@ -1775,8 +2558,16 @@
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
           const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          const hasStudent = Array.isArray(parsed) && parsed.some(l => l.category === "student");
+          const hasApp = Array.isArray(parsed) && parsed.some(l => l.category === "app");
+          const hasWebsite = Array.isArray(parsed) && parsed.some(l => l.category === "website");
+          if (hasStudent && hasApp && hasWebsite) return parsed;
         }
+      } catch (e) {}
+      try {
+        localStorage.removeItem("techtelugu_bio_links_v5");
+        localStorage.removeItem("techtelugu_bio_links_v6");
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_LINKS));
       } catch (e) {}
       return DEFAULT_LINKS;
     }
@@ -1786,6 +2577,70 @@
     }
 
     let allLinks = loadLinks();
+
+    function renderVideoHub() {
+      return `
+        <div class="video-hub-card">
+          <div class="video-hub-header">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="video-badge-live">🎬 VIDEO CLASSROOM</span>
+              <span style="font-size:12px;color:#cbd5e1;font-weight:700">Watch &amp; Build with AI</span>
+            </div>
+            <span class="video-tag-free">100% FREE TUTORIALS</span>
+          </div>
+          <h3 class="video-hub-title">Learn How to Create Websites &amp; Apps Using AI Tools</h3>
+          <p class="video-hub-desc">
+            No coding background needed! Watch our step-by-step video masterclasses in Telugu &amp; English. Learn how to write simple English prompts in <strong>Google Antigravity</strong>, <strong>ChatGPT</strong>, and <strong>Google Gemini</strong> to generate full-stack websites, mobile utilities, and live web apps.
+          </p>
+
+          <div class="video-grid">
+            <!-- Video 1 -->
+            <div class="video-card">
+              <div class="video-thumb" onclick="openVideoModal('video-antigravity')">
+                <div class="video-thumb-overlay"></div>
+                <div class="video-play-btn">▶</div>
+                <span class="video-chip">Antigravity AI</span>
+                <span class="video-duration">5:20 min</span>
+              </div>
+              <div class="video-content">
+                <h4 class="video-card-title">How to Build Any Website or App Using Google Antigravity Prompts</h4>
+                <p class="video-card-desc">Watch how to command Google Antigravity AI to generate, test, and deploy interactive web applications and tools in 5 minutes.</p>
+                <div class="video-card-actions">
+                  <button class="btn-watch-video" onclick="openVideoModal('video-antigravity')">
+                    <span>▶️ Watch Video</span>
+                  </button>
+                  <a href="google-antigravity.html" class="btn-video-guide">
+                    <span>📖 Prompt Guide &amp; Templates ↗</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="video-card">
+              <div class="video-thumb" onclick="openVideoModal('video-chatgpt')">
+                <div class="video-thumb-overlay"></div>
+                <div class="video-play-btn">▶</div>
+                <span class="video-chip">ChatGPT + Gemini</span>
+                <span class="video-duration">8:45 min</span>
+              </div>
+              <div class="video-content">
+                <h4 class="video-card-title">ChatGPT &amp; Gemini: Create Web Calculators, Tools &amp; Mobile Pages</h4>
+                <p class="video-card-desc">Step-by-step blueprint for students to prompt ChatGPT and Gemini for single-page apps, calculators, and responsive portfolios.</p>
+                <div class="video-card-actions">
+                  <button class="btn-watch-video" onclick="openVideoModal('video-chatgpt')">
+                    <span>▶️ Watch Video</span>
+                  </button>
+                  <button class="btn-video-guide" onclick="copyPrompt('chatgpt-starter')">
+                    <span>📋 Copy Starter Prompt</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
 
     function renderCard(link) {
       const badgeClass = link.badgeType ? `badge-${link.badgeType}` : "badge-util";
@@ -1878,84 +2733,114 @@
         emptyState.style.display = "none";
         let catTitle = "Selected Sources";
         let catTag = "";
-        if (activeCategory === "app") { catTitle = "Mobile Applications"; catTag = "[APP]"; }
-        else if (activeCategory === "website") { catTitle = "Useful Websites & Web Tools"; catTag = "[WEBSITE]"; }
-        else if (activeCategory === "link") { catTitle = "Quick Links & Editorial Resources"; catTag = "[LINK]"; }
-        else if (activeCategory === "hot") { catTitle = "Trending & Viral Sources"; }
+        let catSub = "Filtered verified sources";
+        let catIcon = "🔗";
 
-        container.innerHTML = `
+        if (activeCategory === "student") {
+          catTitle = "Student Tools & AI Learning Hub";
+          catTag = "[STUDENT]";
+          catSub = "Learn to Build Websites & Apps with AI (ChatGPT, Antigravity, Gemini)";
+          catIcon = "🎓";
+        } else if (activeCategory === "app") {
+          catTitle = "Mobile Applications";
+          catTag = "[APP]";
+          catSub = "Verified Android & iOS Applications with [APP] Tag (Strictly Apps)";
+          catIcon = "📱";
+        } else if (activeCategory === "website") {
+          catTitle = "Websites & Online Tools";
+          catTag = "[WEBSITE]";
+          catSub = "Browser-Based Utilities, AI Platforms & Web Services with [WEBSITE] Tag (Strictly Websites)";
+          catIcon = "🌐";
+        } else if (activeCategory === "hot") {
+          catTitle = "Trending & Viral Sources";
+          catSub = "Most clicked and trending tools across all categories";
+          catIcon = "🔥";
+        }
+
+        let catHtml = `
           <div class="section-divider">
             <div class="section-title-wrap">
-              <span class="section-icon">${activeCategory === 'app' ? '📱' : activeCategory === 'website' ? '🌐' : activeCategory === 'link' ? '🔗' : '🔥'}</span>
+              <span class="section-icon">${catIcon}</span>
               <div>
                 <h2 class="section-heading">${catTitle}</h2>
-                <span class="section-subheading">Filtered view displaying ${catTag} verified sources</span>
+                <span class="section-subheading">${catSub}</span>
               </div>
             </div>
             <span class="section-count-badge">${filtered.length} items</span>
           </div>
-          ${filtered.map(renderCard).join("")}
         `;
+
+        if (activeCategory === "student") {
+          catHtml += renderVideoHub();
+        }
+
+        catHtml += filtered.map(renderCard).join("");
+        container.innerHTML = catHtml;
         return;
       }
 
-      // Default: ALL SECTIONS (Section 1: APPS, Section 2: WEBSITES, Section 3: QUICK LINKS)
+      // Default: ALL SECTIONS (Section 1: STUDENT TOOLS + VIDEOS, Section 2: MOBILE APPS, Section 3: WEBSITES)
       emptyState.style.display = "none";
 
+      const studentLinks = allLinks.filter(l => l.category === "student");
       const appLinks = allLinks.filter(l => l.category === "app");
       const websiteLinks = allLinks.filter(l => l.category === "website");
-      const linkItems = allLinks.filter(l => l.category === "link" || (!["app", "website"].includes(l.category)));
 
       let html = "";
 
-      // Section 1: Mobile Apps
+      // Section 1: Student Tools & AI Learning (with Video Classroom)
+      if (studentLinks.length > 0) {
+        html += `
+          <div class="section-divider" id="section-student">
+            <div class="section-title-wrap">
+              <span class="section-icon">🎓</span>
+              <div>
+                <h2 class="section-heading">Student Tools &amp; AI Learning Hub</h2>
+                <span class="section-subheading">Learn to Build Websites &amp; Apps with AI (ChatGPT, Antigravity, Gemini)</span>
+              </div>
+            </div>
+            <span class="section-count-badge">${studentLinks.length} AI Tools &amp; Guides</span>
+          </div>
+          ${renderVideoHub()}
+          ${studentLinks.map(renderCard).join("")}
+        `;
+      }
+
+      // Section 2: Mobile Apps (Strictly Apps)
       if (appLinks.length > 0) {
         html += `
-          <div class="section-divider">
+          <div class="section-divider" id="section-apps" style="margin-top: 36px;">
             <div class="section-title-wrap">
               <span class="section-icon">📱</span>
               <div>
-                <h2 class="section-heading">Featured Mobile Apps</h2>
-                <span class="section-subheading">Verified Android &amp; iOS Applications with [APP] Tag</span>
+                <h2 class="section-heading">Mobile Applications</h2>
+                <span class="section-subheading">Verified Android &amp; iOS Applications with [APP] Tag (Strictly Apps)</span>
               </div>
             </div>
             <span class="section-count-badge">${appLinks.length} Apps</span>
           </div>
           ${appLinks.map(renderCard).join("")}
+          <div style="background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;padding:12px 16px;margin-top:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+            <span style="font-size:12.5px;color:var(--text-muted);font-weight:600">📱 Have a mobile app you want featured here?</span>
+            <a href="contact.html" style="font-size:12px;font-weight:800;color:var(--accent);text-decoration:none">Request App Link ↗</a>
+          </div>
         `;
       }
 
-      // Section 2: Websites & Web Tools
+      // Section 3: Websites & Web Tools (Strictly Websites)
       if (websiteLinks.length > 0) {
         html += `
-          <div class="section-divider">
+          <div class="section-divider" id="section-websites" style="margin-top: 36px;">
             <div class="section-title-wrap">
               <span class="section-icon">🌐</span>
               <div>
                 <h2 class="section-heading">Websites &amp; Web Tools</h2>
-                <span class="section-subheading">Browser-Based Utilities, AI Platforms &amp; Web Services with [WEBSITE] Tag</span>
+                <span class="section-subheading">Browser-Based Utilities, AI Platforms &amp; Web Services with [WEBSITE] Tag (Strictly Websites)</span>
               </div>
             </div>
             <span class="section-count-badge">${websiteLinks.length} Websites</span>
           </div>
           ${websiteLinks.map(renderCard).join("")}
-        `;
-      }
-
-      // Section 3: Quick Links & Guides
-      if (linkItems.length > 0) {
-        html += `
-          <div class="section-divider">
-            <div class="section-title-wrap">
-              <span class="section-icon">🔗</span>
-              <div>
-                <h2 class="section-heading">Quick Links &amp; Direct Resources</h2>
-                <span class="section-subheading">Tutorial Guides, Setup Archives &amp; Direct Resources with [LINK] Tag</span>
-              </div>
-            </div>
-            <span class="section-count-badge">${linkItems.length} Links</span>
-          </div>
-          ${linkItems.map(renderCard).join("")}
         `;
       }
 
@@ -1970,7 +2855,7 @@
     }
 
     function handleSearch(val) {
-      searchQuery = val;
+      searchQuery = val || "";
       renderLinks();
     }
 
@@ -1983,7 +2868,11 @@
 
     function executeSearch() {
       const input = document.getElementById("searchInput");
-      if (input) searchQuery = input.value;
+      if (input) searchQuery = input.value || "";
+      activeCategory = "all";
+      document.querySelectorAll(".filter-chip").forEach((b, i) => {
+        b.classList.toggle("active", i === 0);
+      });
       renderLinks();
       const container = document.getElementById("linksContainer");
       if (container) {
@@ -2423,9 +3312,10 @@
       const icon = document.getElementById("linkIcon").value.trim() || "🔗";
       const desc = document.getElementById("linkDesc").value.trim();
 
-      let tag = "LINK";
-      if (category === "app") tag = "APP";
+      let tag = "APP";
+      if (category === "student") tag = "STUDENT";
       else if (category === "website") tag = "WEBSITE";
+      else if (category === "app") tag = "APP";
 
       let badgeType = "util";
       if (badge === "HOT" || badge === "VIRAL") badgeType = "hot";
@@ -2512,8 +3402,12 @@
     setTimeout(checkCookieConsent, 600);
 
     // Initial render & Pageview Tracking
-    initPageViewTracker();
-    renderLinks();
+    try { initPageViewTracker(); } catch (e) {}
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", renderLinks);
+    } else {
+      renderLinks();
+    }
   </script>
 
   <!-- Google Compliant Cookie Consent Banner -->
